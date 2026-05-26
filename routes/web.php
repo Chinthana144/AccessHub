@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -19,6 +20,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/home', function(){
         return view('home');
     });
+
+    //testing
+    Route::get('/testing', [TestController::class, 'index'])->name('test.index');
+    Route::post('/getSheetNames', [TestController::class, 'getSheetNames'])->name('test.sheetNames');
 });
 
 require __DIR__.'/auth.php';

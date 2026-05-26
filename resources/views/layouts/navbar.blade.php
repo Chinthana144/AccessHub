@@ -11,14 +11,19 @@
         </div>
         <ul class="sidebar-nav">
 
-            @can('access-home')
-                <li class="sidebar-item">
-                    <a href="/home" class="sidebar-link">
-                        <i class="bx bx-home fs-3"></i>
-                        <span>Home</span>
-                    </a>
-                </li>
-            @endcan
+            <li class="sidebar-item">
+                <a href="/home" class="sidebar-link">
+                    <i class="bx bx-home fs-3"></i>
+                    <span>Home</span>
+                </a>
+            </li>
+
+            <li class="sidebar-item">
+                <a href="/testing" class="sidebar-link">
+                    <i class="bx bx-home fs-3"></i>
+                    <span>Testing</span>
+                </a>
+            </li>
 
             @can('access-invoice')
                 <li class="sidebar-item">
