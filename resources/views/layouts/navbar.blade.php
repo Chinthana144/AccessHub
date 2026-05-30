@@ -32,6 +32,22 @@
                 </a>
             </li>
 
+            <li class="sidebar-item">
+                <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                    data-bs-target="#auth" aria-expanded="false" aria-controls="auth">
+                    <i class="bx bx-slider fs-3"></i>
+                    <span>Control</span>
+                </a>
+                <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                    <li class="sidebar-item">
+                        <a href="#" class="sidebar-link">User Access</a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="/camp_access" class="sidebar-link">Camp Access</a>
+                    </li>
+                </ul>
+            </li>
+
             @can('access-invoice')
                 <li class="sidebar-item">
                     <a href="/invoice" class="sidebar-link">

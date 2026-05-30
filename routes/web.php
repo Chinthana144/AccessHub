@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CampAccessController;
 use App\Http\Controllers\CampController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TestController;
@@ -18,15 +19,23 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+    Route::get('/camp_portal', [CampAccessController::class, 'campPortal'])->name('camp_portal');
+    Route::get('/goto_camp/{camp_id}', [CampAccessController::class, 'gotoCamp'])->name('gotoCamp');
+
     Route::get('/home', function(){
         return view('home');
-    });
+    })->name('home');
 
     //camps
     Route::get('/camps', [CampController::class, 'index'])->name('camps.index');
     Route::post('/store-camp', [CampController::class, 'store'])->name('camps.store');
     Route::put('/update-camp', [CampController::class, 'update'])->name('camps.update');
     Route::get('/getOneCamp', [CampController::class, 'getOneCamp']);
+
+    //camp access
+    Route::get('/camp_access', [CampAccessController::class, 'index'])->name('campAccess.index');
+    Route::post('/store-camp_access', [CampAccessController::class, 'store'])->name('campAccess.store');
+    Route::delete('/remove-camp_access', [CampAccessController::class, 'remove'])->name('campAccess.remove');
 
     //testing
     Route::get('/testing', [TestController::class, 'index'])->name('test.index');

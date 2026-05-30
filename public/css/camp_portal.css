@@ -1,0 +1,43 @@
+*{
+    margin: 0;
+}
+body{
+    box-sizing: border-box;
+}
+
+#div_top_bar{
+    padding: 10px 10px;
+    width: 100%;
+    border-radius: 10px;
+    background-color: #090451;
+    color: #eee;
+}
+#div_top_bar h4{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+
+}
+
+#div_content{
+    padding: 10px;
+    border: 1px solid blue;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 20px; 
+}
+.camp_link{
+    text-decoration: none;
+    color: black;
+}
+.camp_card{
+    padding: 20px 10px;
+    border-radius: 10px;
+    border: 1px solid blue;
+    box-shadow: 2px 2px 5px gray;
+    justify-content: center;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+.camp_card:hover{
+    transform: scale(1.01);
+    box-shadow: 2px 4px 8px gray;
+}
