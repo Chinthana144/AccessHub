@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CampController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Route;
@@ -20,6 +21,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/home', function(){
         return view('home');
     });
+
+    //camps
+    Route::get('/camps', [CampController::class, 'index'])->name('camps.index');
+    Route::post('/store-camp', [CampController::class, 'store'])->name('camps.store');
 
     //testing
     Route::get('/testing', [TestController::class, 'index'])->name('test.index');

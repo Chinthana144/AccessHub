@@ -18,6 +18,9 @@ class GoogleSheetService{
         return $data->json();
     }//get sheet names
 
-    
+    public function searchByUsername()
+    {
+
+    }//search by username
 
 }//class

@@ -25,6 +25,13 @@
                 </a>
             </li>
 
+            <li class="sidebar-item">
+                <a href="/camps" class="sidebar-link">
+                    <i class="bx bx-building fs-3"></i>
+                    <span>Camps</span>
+                </a>
+            </li>
+
             @can('access-invoice')
                 <li class="sidebar-item">
                     <a href="/invoice" class="sidebar-link">

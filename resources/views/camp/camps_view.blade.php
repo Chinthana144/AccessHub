@@ -1,0 +1,49 @@
+@extends('layouts.layout')
+
+@section('content')
+    <div class="card">
+        <div class="card-header">
+            <h5>
+                Camps
+                <button class="btn btn-primary btn-sm float-end" id="btn_add_camp">Add Camp</button>
+            </h5>
+        </div>
+        <div class="card-body">
+            <table class="table" id="tbl_camps">
+                <tr>
+                    <th>Camp</th>
+                    <th>Contact</th>
+                    <th>Mikrotik</th>
+                    <th>Sheet ID</th>
+                    <th>Action</th>
+                </tr>
+                @foreach ($camps as $camp)
+                    <tr data-id="{{ $camp->id }}">
+                        <td>
+                            {{ $camp->name }} <br>
+                            {{ $camp->address }}
+                        </td>
+                        <td>
+                            {{ $camp->contactPerson }} <br>
+                            {{ $camp->contactNo }}
+                        </td>
+                        <td>
+                            {{ $camp->mikrotikHost }} <br>
+                            {{ $camp->mikrotikPort }}
+                        </td>
+                        <td>
+                            {{ $camp->sheetID }}
+                        </td>
+                        <td>
+                            <button class="btn btn-outline-warning btn-sm btn_edit_camp">Edit</button>
+                        </td>
+                    </tr>
+                @endforeach
+            </table>
+        </div>
+    </div>
+
+    @include('camp.camp_add_modal')
+    <script src="{{ asset('js/camps.js') }}"></script>
+    
+@endsection
