@@ -32,4 +32,35 @@ class CampController extends Controller
 
         return redirect()->route('camps.index');
     }//store
+
+    public function update(Request $request)
+    {
+        $camp_id = $request->input("hide_camp_id");
+        $camp = Camps::find($camp_id);
+
+        $camp->name = $request->input('name');
+        $camp->address = $request->input('address');
+        $camp->contactPerson = $request->input('contactPerson');
+        $camp->contactNo = $request->input('contactNo');
+        $camp->mikrotikHost = $request->input('mikrotikHost');
+        $camp->mikrotikPort = $request->input('mikrotikPort');
+        $camp->mikrotikUsername = $request->input('mikrotikUsername');
+        $camp->mikrotikPassword = $request->input('mikrotikPassword');
+        $camp->sheetID = $request->input('sheetID');
+
+        $camp->save();
+
+        return redirect()->route('camps.index');
+
+    }//update
+
+    //============================ AJAX ==========================//
+    public function getOneCamp(Request $request)
+    {
+        $camp_id = $request->input("id");
+
+        $camp = Camps::find($camp_id);
+
+        return response()->json($camp);
+    }
 }

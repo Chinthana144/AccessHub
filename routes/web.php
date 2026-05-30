@@ -25,6 +25,8 @@ Route::middleware('auth')->group(function () {
     //camps
     Route::get('/camps', [CampController::class, 'index'])->name('camps.index');
     Route::post('/store-camp', [CampController::class, 'store'])->name('camps.store');
+    Route::put('/update-camp', [CampController::class, 'update'])->name('camps.update');
+    Route::get('/getOneCamp', [CampController::class, 'getOneCamp']);
 
     //testing
     Route::get('/testing', [TestController::class, 'index'])->name('test.index');

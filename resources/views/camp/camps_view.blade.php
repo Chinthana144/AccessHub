@@ -40,10 +40,15 @@
                     </tr>
                 @endforeach
             </table>
+            <div class="d-flex justify-content-center">
+                {{ $camps->links() }}
+            </div>
         </div>
     </div>
 
     @include('camp.camp_add_modal')
+    @include('camp.camp_edit_modal')
+
     <script src="{{ asset('js/camps.js') }}"></script>
     
 @endsection
