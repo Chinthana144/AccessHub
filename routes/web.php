@@ -3,6 +3,7 @@
 use App\Http\Controllers\CampAccessController;
 use App\Http\Controllers\CampController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SheetController;
 use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,6 +26,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/home', function(){
         return view('home');
     })->name('home');
+
+    //sheets
+    Route::get('/sheets', [SheetController::class, 'index'])->name('sheets.index');
+    Route::get('/fetchGoogleSheets', [SheetController::class, 'fetchGoogleSheets']);
 
     //camps
     Route::get('/camps', [CampController::class, 'index'])->name('camps.index');

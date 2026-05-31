@@ -6,7 +6,7 @@
                 <i class="bx bx-grid-alt"></i>
             </button>
             <div class="sidebar-logo">
-                <a href="/dashboard">TRIZENT</a>
+                <a href="/camp_portal">TRIZENT</a>
             </div>
         </div>
         <ul class="sidebar-nav">
@@ -34,6 +34,22 @@
 
             <li class="sidebar-item">
                 <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                    data-bs-target="#sheet" aria-expanded="false" aria-controls="auth">
+                    <i class="bx bx-file fs-3"></i>
+                    <span>Sheets</span>
+                </a>
+                <ul id="sheet" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                    <li class="sidebar-item">
+                        <a href="/sheets" class="sidebar-link">Sheets</a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="#" class="sidebar-link">Sheets</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="sidebar-item">
+                <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
                     data-bs-target="#auth" aria-expanded="false" aria-controls="auth">
                     <i class="bx bx-slider fs-3"></i>
                     <span>Control</span>
@@ -47,6 +63,7 @@
                     </li>
                 </ul>
             </li>
+            
 
             @can('access-invoice')
                 <li class="sidebar-item">

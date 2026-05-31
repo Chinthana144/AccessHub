@@ -8,7 +8,7 @@ class GoogleSheetService{
 
     protected $script_url = "https://script.google.com/macros/s/AKfycbxRASq0U64ioWartszay5WV1EPLkWFFNGaA7d5JSvmfuMdZ2DSFSsEzuTVeP5osbIV0/exec";
 
-    public function getSheetNames($sheet_id)
+    public function getSheetNames(string $sheet_id)
     {
         $data = Http::get($this->script_url, [
             'sheet_id' => $sheet_id,
