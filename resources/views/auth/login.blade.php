@@ -62,10 +62,10 @@
     <div id="div_main">
         <div id="div_login_form">
             <h5>Access Hub</h5>
-            <form action="" method="post">
+            <form action="{{ route('login') }}" method="post">
                 @csrf
                 <label for="" class="login_label">Email</label>
-                <input type="text" name="username" class="login_input">
+                <input type="text" name="email" class="login_input">
 
                 <label for="" class="login_label">Password</label>
                 <input type="password" name="password" class="login_input">

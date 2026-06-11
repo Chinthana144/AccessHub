@@ -13,7 +13,7 @@ class AdminSeeder extends Seeder
      */
     public function run(): void
     {
-        User::created([
+        User::create([
             'name' => 'Chinthana',
             'email' => 'chinthana144@gmail.com',
             'password' => '$2y$12$zoSCnmKYGIJEFz6Ixa1xW.3oHBGOx2aYKe8awQamJyehsyZQQve56',
