@@ -30,6 +30,8 @@ Route::middleware('auth')->group(function () {
     //sheets
     Route::get('/sheets', [SheetController::class, 'index'])->name('sheets.index');
     Route::get('/fetchGoogleSheets', [SheetController::class, 'fetchGoogleSheets']);
+    Route::post('/saveSheetNames', [SheetController::class, 'saveSheetNames']);
+    Route::get('/getSheetByID', [SheetController::class, 'getSheetByID']);
 
     //camps
     Route::get('/camps', [CampController::class, 'index'])->name('camps.index');
