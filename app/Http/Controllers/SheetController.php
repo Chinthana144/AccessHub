@@ -102,6 +102,15 @@ class SheetController extends Controller
         return response()->json($sheet);
     }//get sheet by id
 
+    public function getSheetByCampID(Request $request)
+    {
+        $camp_id = $request->input('camp_id');
+
+        $sheets = Sheets::where('camp_id', $camp_id)->get();
+
+        return response()->json($sheets);
+    }//get sheet by camp id
+
     public function fetchGoogleSheets()
     {
         $camp_id = Session::get('active_camp_id');

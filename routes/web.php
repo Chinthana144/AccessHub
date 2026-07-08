@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CampAccessController;
 use App\Http\Controllers\CampController;
+use App\Http\Controllers\CodeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SheetController;
 use App\Http\Controllers\TestController;
@@ -33,6 +34,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/saveSheetNames', [SheetController::class, 'saveSheetNames']);
     Route::get('/getSheetByID', [SheetController::class, 'getSheetByID']);
     Route::put('/updateSheet', [SheetController::class, 'update'])->name("update.sheet");
+    Route::get('/getSheetByCampID', [SheetController::class, 'getSheetByCampID']);
+
+    //codes
+    Route::get('/codes', [CodeController::class, 'index'])->name('codes.index');
+    Route::get('/getCodes', [CodeController::class, 'getCodes']);
 
     //camps
     Route::get('/camps', [CampController::class, 'index'])->name('camps.index');
