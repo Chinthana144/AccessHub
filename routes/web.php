@@ -32,6 +32,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/fetchGoogleSheets', [SheetController::class, 'fetchGoogleSheets']);
     Route::post('/saveSheetNames', [SheetController::class, 'saveSheetNames']);
     Route::get('/getSheetByID', [SheetController::class, 'getSheetByID']);
+    Route::put('/updateSheet', [SheetController::class, 'update'])->name("update.sheet");
 
     //camps
     Route::get('/camps', [CampController::class, 'index'])->name('camps.index');

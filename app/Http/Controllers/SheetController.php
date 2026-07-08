@@ -73,6 +73,26 @@ class SheetController extends Controller
         ]);
     }//save sheet names
 
+    public function update(Request $request)
+    {
+        $sheet_id = $request->input('hide_sheet_id');
+
+        $sheet = Sheets::find($sheet_id);
+
+        $sheet->start_date = $request->input('start_date');
+        $sheet->end_date = $request->input('end_date');
+
+        $has_code = $request->has('chk_has_code');
+        $status = $request->has('chk_active_sheet');
+
+        $sheet->has_data = $has_code ? 1 : 0;
+        $sheet->status = $status ? 1 : 0;
+
+        $sheet->save();
+
+        return redirect()->route('sheets.index');
+    }//update sheet
+
     public function getSheetByID(Request $request)
     {
         $sheet_id = $request->sheetID;

@@ -131,8 +131,17 @@ $(document).ready(function () {
 
                 $("#edit_sheet_modal").modal('toggle');
 
-                $("#edit_sheet_modal .modal-title").text("Edit sheet " + sheetName);
+                $("#edit_sheet_modal .modal-title").text("Edit sheet - " + sheetName);
                 $("#hide_sheet_id").val(sheetID);
+
+                $("#edit_start_date").val(startDate);
+                $("#edit_end_date").val(endDate);
+
+                $("#p_last_sync").text("Last Sync: " + lastSync);
+                
+                hasData == 1 ? $("#chk_has_code").prop('checked', true) : $("#chk_has_code").prop('checked', false);
+
+                status == 1 ? $("#chk_active_sheet").prop('checked', true) : $("#chk_active_sheet").prop('checked', false);
             }
         });
     });
