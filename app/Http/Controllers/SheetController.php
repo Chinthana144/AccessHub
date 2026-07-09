@@ -14,12 +14,15 @@ class SheetController extends Controller
 {
     public function index()
     {
-        $camp_id = Session::get('active_camp_id');
-        $camp = Camps::find($camp_id);
+        $camps = Camps::where('status', 1)->get();
+        $active_camp_id = Session::get('active_camp_id');
+        $camp = Camps::find($active_camp_id);
 
-        $sheets = Sheets::paginate(10);
+        $sheets = Sheets::where('camp_id', $active_camp_id)
+            ->orderBy('start_date', 'DESC')    
+            ->paginate(10);
 
-        return view('sheets.sheet_view', compact('sheets', 'camp'));
+        return view('sheets.sheet_view', compact('sheets', 'camp', 'camps', 'active_camp_id'));
     }
 
     public function saveSheetNames(Request $request)
@@ -41,29 +44,31 @@ class SheetController extends Controller
             if(!$name_duplicate_exist)
             {
                 //check startdate and end date
-                $sheet_name = Sheets::where("start_date" , $start_date)
+                $sheet_tab = Sheets::where("start_date" , $start_date)
                     ->where('end_date', $end_date)
                     ->first();
 
-                if($sheet_name)
+                if($sheet_tab)
                 {
-                    $sheet_name_id = $sheet_name->id;
+                    $sheet_name_id = $sheet_tab->id;
                     $old_sheet = Sheets::find($sheet_name_id);
                     $old_sheet->name = $sheet_name;
                     $old_sheet->last_synced_at = $last_synced;
 
                     $old_sheet->save();
                 }//data exists
-
-                Sheets::create([
-                    'camp_id' => $camp_id,
-                    'name' => $sheet_name,
-                    'start_date' => $start_date,
-                    'end_date' => $end_date,
-                    'last_synced_at' => $last_synced,
-                    'has_data' => $has_data,
-                    'status' => 0,
-                ]);
+                else
+                {
+                    Sheets::create([
+                        'camp_id' => $camp_id,
+                        'name' => $sheet_name,
+                        'start_date' => $start_date,
+                        'end_date' => $end_date,
+                        'last_synced_at' => $last_synced,
+                        'has_data' => $has_data,
+                        'status' => 0,
+                    ]);
+                }//else
             }//name 
         }//foreach
 
@@ -106,14 +111,27 @@ class SheetController extends Controller
     {
         $camp_id = $request->input('camp_id');
 
-        $sheets = Sheets::where('camp_id', $camp_id)->get();
+        $sheets = Sheets::where('camp_id', $camp_id)
+            ->orderBy("start_date", "DESC")
+            ->get();
 
         return response()->json($sheets);
     }//get sheet by camp id
 
-    public function fetchGoogleSheets()
+    public function getActiveSheets(Request $request)
     {
-        $camp_id = Session::get('active_camp_id');
+        $camp_id = $request->input('camp_id');
+        $sheets = Sheets::where('camp_id', $camp_id)
+            ->where('status', 1)
+            ->get();
+
+        return response()->json($sheets);
+    }//get active sheets
+
+    public function fetchGoogleSheets(Request $request)
+    {
+
+        $camp_id = $request->input('camp_id');
         $camp = Camps::find($camp_id);
         $sheet_id = $camp->sheetID;
 

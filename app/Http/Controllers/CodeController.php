@@ -30,4 +30,19 @@ class CodeController extends Controller
         return response()->json($sheet_data);
 
     }//get codes
+
+    public function getCodesByDate(Request $request)
+    {
+        $sheet_date = $request->input("sheet_date");
+        $camp_id = $request->input('camp_id');
+        $camp = Camps::find($camp_id);
+        $sheet_link_id = $camp->sheetID;
+        $sheet_name = $request->input('sheet_name');
+
+        $sheet_service = new GoogleSheetService();
+
+        $data = $sheet_service->getCodesByDate($sheet_link_id, $sheet_name, $sheet_date);
+
+        return response()->json($data);
+    }
 }//class

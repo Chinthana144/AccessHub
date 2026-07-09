@@ -10,42 +10,17 @@
         </div>
         <div class="card-body">
             <p>content {{ $camp->name }}</p>
-            <table class="table" id="tbl_sheets">
-                <tr>
-                    <th>Sheet Name</th>
-                    <th>Start Date</th>
-                    <th>End Date</th>
-                    <th>Last Sync</th>
-                    <th>Codes</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-                </tr>
-                @foreach ($sheets as $sheet)
-                    <tr data-id={{$sheet->id}}>
-                        <td>{{ $sheet->name }}</td>
-                        <td>{{ $sheet->start_date }}</td>
-                        <td>{{ $sheet->end_date }}</td>
-                        <td>{{ $sheet->last_synced_at }}</td>
-                        <td>
-                            @if ($sheet->has_data == 1)
-                                <p class="badge badge-success bg-success">Code</p>
-                            @else
-                                <span class="badge badge-secondary bg-secondary">No Codes</span>
-                            @endif
-                        </td>
-                        <td>
-                            @if ($sheet->status == 1)
-                                <span class="badge bg-success">Active</span>                                
-                            @else
-                                <span class="badge bg-secondary">Inactive</span>
-                            @endif
-                        </td>
-                        <td>
-                            <button class="btn btn-sm btn-outline-warning btn_edit_sheet">Edit</button>
-                        </td>
-                    </tr>
-                @endforeach
-            </table>
+            <div class="col-md-6">
+                <input type="hidden" id="hide_camp_id" value="{{ $active_camp_id }}">
+                <select name="cmb_camp" id="cmb_camp" class="form-select">
+                    @foreach ($camps as $camp)
+                        <option value="{{ $camp->id }}" @selected($camp->id == $active_camp_id)>{{ $camp->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            
+            <table class="table mt-2" id="tbl_sheets"></table>
+
             <div class="d-flex justify-content-center">
                 {{ $sheets->links() }}
             </div>

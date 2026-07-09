@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Http;
 
 class GoogleSheetService{
 
-    protected $script_url = "https://script.google.com/macros/s/AKfycbwo0AA1Ejz0_-YiR2PIXeb1nmk-w3BgvpRhGT3MDqJBuJExHSUtlNCOZ5_hSi_4gZ-K/exec";
+    protected $script_url = "https://script.google.com/macros/s/AKfycbxI94FOcXwsYQNY4kzragwiSVpBaZXyz03VBQtOldA8QEP7ubnGGAEPoUh5dadQ2S7j/exec";
 
     public function getSheetNames(string $sheet_id)
     {
@@ -31,11 +31,11 @@ class GoogleSheetService{
 
     public function getCodesByDate(string $sheet_id, string $sheet_name, string $sheet_date)
     {
-       $data = Http::get($this->script_url, [
+        $data = Http::get($this->script_url, [
             'sheet_id' => $sheet_id,
             'sheet_name' => $sheet_name,
             'sheet_date' => $sheet_date,
-            'action' => 'getCodeByDate',
+            'action' => 'filterByDate',
         ]);
 
         return $data->json(); 

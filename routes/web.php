@@ -39,6 +39,7 @@ Route::middleware('auth')->group(function () {
     //codes
     Route::get('/codes', [CodeController::class, 'index'])->name('codes.index');
     Route::get('/getCodes', [CodeController::class, 'getCodes']);
+    Route::get('/getCodesByDate', [CodeController::class, 'getCodesByDate']);
 
     //camps
     Route::get('/camps', [CampController::class, 'index'])->name('camps.index');

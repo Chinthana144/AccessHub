@@ -1,12 +1,21 @@
 $(document).ready(function () {
     $("#btn_synchronize").prop('disabled', true);
 
+    //load sheets
+    var campID = $("#hide_camp_id").val();
+    loadSheets(campID);
+
     $("#btn_sync_sheets").click(function (e) { 
         e.preventDefault();
+
+        var campID = $("#cmb_camp").val();
+
         $.ajax({
             type: "get",
             url: "/fetchGoogleSheets",
-            // data: "data",
+            data: {
+                camp_id: campID,
+            },
             // dataType: "dataType",
             beforeSend: function(){
                 $("#sheetSyncedModal").modal('toggle');
@@ -16,7 +25,7 @@ $(document).ready(function () {
                 $("#loader").removeClass("loader").addClass('loader-hidden');
             },
             success: function (response) {
-                console.log(response.length);
+                // console.log(response.length);
                 let dataHtml = "";
                 if(response.length > 0)
                 {   
@@ -34,8 +43,8 @@ $(document).ready(function () {
                     dataHtml += "</thead>";
 
                     dataHtml += "<tbody>";
-                    $.each(response[0], function (key, val) { 
-                        dataHtml += "<tr data-key='"+key+"' data-sheet = '"+val+"'>";
+                    $.each(response, function (key, val) { 
+                        dataHtml += "<tr data-key='"+ key +"' data-sheet ='"+val+"'>";
                         dataHtml += "<td>"+ val +"</td>";
                         dataHtml += "<td><input type='month' class='form-control select_month'></td>";
                         dataHtml += "<td><input type='text' class='form-control start_date' readonly></td>";
@@ -79,7 +88,8 @@ $(document).ready(function () {
 
         $("#div_content tbody tr").each(function () {
 
-        let row = $(this);
+        var row = $(this).closest("tr");
+        var sheetName = row.data("sheet");
 
         sheetData.push({
                 sheet_name: row.data("sheet"),
@@ -145,6 +155,56 @@ $(document).ready(function () {
             }
         });
     });
+
+    //camp changed
+    $("#cmb_camp").on("change", function(){
+        var campID = $(this).val();
+
+        loadSheets(campID);
+    });//camp changed
+
+    function loadSheets(campID)
+    {
+        $.ajax({
+            type: "get",
+            url: "/getSheetByCampID",
+            data: {
+                camp_id: campID,
+            },
+            // dataType: "dataType",
+            success: function (response) {
+                console.log(response);
+                let htmlData = "";
+
+                htmlData +="<tr>";
+                htmlData +="<th>Sheet Name</th>";
+                htmlData +="<th>Start Date</th>";
+                htmlData +="<th>End Date</th>";
+                htmlData +="<th>Last Sync</th>";
+                htmlData +="<th>Code</th>";
+                htmlData +="<th>Status</th>";
+                htmlData +="<th>Action</th>";
+                htmlData +="</tr>";
+
+                $.each(response, function (key, value) { 
+                    var hasCode =  value['has_data'] == 1 ? "<span class='badge bg-success text-white'>Code Sheet</span>" : "<span class='badge bg-secondary text-white'>no codes</span>";
+                    var status = value['status'] == 1 ? "<span class='badge bg-primary text-white'>Active</span>" : "<span class='badge bg-secondary text-white'>Inactive</span>";
+
+                    htmlData +="<tr data-id='" + value['id'] + "'>";
+                    htmlData +="<td>"+ value['name'] +"</td>";
+                    htmlData +="<td>"+ value['start_date'] +"</td>";
+                    htmlData +="<td>"+ value['end_date'] +"</td>";
+                    htmlData +="<td>"+ value['last_synced_at'] +"</td>";
+                    htmlData +="<td>"+ hasCode +"</td>";
+                    htmlData +="<td>"+ status +"</td>";
+                    htmlData +="<td><button class='btn btn-outline-warning btn-sm btn_edit_sheet'>Edit</button></td>";
+                    htmlData +="</tr>";
+                });
+
+                $("#tbl_sheets").html(htmlData);
+            }
+        });
+    }//load sheets
 
     //date formatter
     function formatDate(date) {

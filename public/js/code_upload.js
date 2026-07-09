@@ -45,6 +45,31 @@ $(document).ready(function () {
                 console.log(response);
             }
         });
+    });
+
+    $("#btn_fetch_by_date").click(function (e) { 
+        e.preventDefault();
+        
+        var campID = $("#cmb_camp").val();
+        var sheetName = $("#cmb_sheet").val();
+        var sheet_date = $("#sheet_date").val();
+
+        $.ajax({
+            type: "get",
+            url: "/getCodesByDate",
+            data: {
+                camp_id: campID,
+                sheet_name: sheetName,
+                sheet_date: sheet_date
+            },
+            // dataType: "dataType",
+            success: function (response) {
+                console.log(response);
+
+                var dataHtml = "";
+                
+            }
+        });
 
     });
 
