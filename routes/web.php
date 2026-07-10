@@ -3,6 +3,7 @@
 use App\Http\Controllers\CampAccessController;
 use App\Http\Controllers\CampController;
 use App\Http\Controllers\CodeController;
+use App\Http\Controllers\CodeResetController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SheetController;
 use App\Http\Controllers\TestController;
@@ -40,6 +41,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/codes', [CodeController::class, 'index'])->name('codes.index');
     Route::get('/getCodes', [CodeController::class, 'getCodes']);
     Route::get('/getCodesByDate', [CodeController::class, 'getCodesByDate']);
+
+    //code reset
+    Route::get('/code_reset', [CodeResetController::class, 'index'])->name('codeReset.index');
+    Route::get('/getIdentity', [CodeResetController::class, 'getIdentity']);
+    Route::get('/getUserManagerUsers', [CodeResetController::class, 'getUserManagerUsers']);
+    Route::get('/getOneUser', [CodeResetController::class, 'getOneUser']);
 
     //camps
     Route::get('/camps', [CampController::class, 'index'])->name('camps.index');

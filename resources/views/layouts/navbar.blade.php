@@ -29,7 +29,7 @@
                         <a href="{{ route('codes.index') }}" class="sidebar-link">Code Upload</a>
                     </li>
                     <li class="sidebar-item">
-                        <a href="#" class="sidebar-link">Codes</a>
+                        <a href="/code_reset" class="sidebar-link">Codes</a>
                     </li>
                 </ul>
             </li>
