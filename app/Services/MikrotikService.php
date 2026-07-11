@@ -71,5 +71,34 @@ class MikrotikService{
             ->read();
     }//get one user
 
+    public function getSessionByUsername(string $username)
+    {
+        if (!$this->isConnected) {
+            return [];
+        }
+
+        // $query = (new Query('/tool/user-manager/session/print'))->where('user', $username);
+        // $query = (new Query('/ppp/active/print'))->where('name', $username);
+
+        $query = new Query('/tool/user-manager/session/print');
+
+        return $this->client
+            ->query($query)
+            ->read();
+    }//get sessions by user name
+
+    public function getAddress(string $mac)
+    {
+        if (!$this->isConnected) {
+            return [];
+        }
+
+        $query = (new Query('/ip/dhcp-server/lease/print'))
+            ->where('mac-address', $mac);
+
+        return $this->client
+            ->query($query)
+            ->read();   
+    }//get address
 
 }//class

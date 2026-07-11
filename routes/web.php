@@ -47,6 +47,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/getIdentity', [CodeResetController::class, 'getIdentity']);
     Route::get('/getUserManagerUsers', [CodeResetController::class, 'getUserManagerUsers']);
     Route::get('/getOneUser', [CodeResetController::class, 'getOneUser']);
+    Route::get('/getSessionByUsername', [CodeResetController::class, "getSessionByUsername"]);
 
     //camps
     Route::get('/camps', [CampController::class, 'index'])->name('camps.index');

@@ -22,6 +22,7 @@
                     <br>
                     <div class="col-md-6">
                         <button type="button" class="btn btn-primary" id="btn_fetch_user">Fetch User</button>
+                        <button type="button" class="btn btn-success" id="btn_fetch_session">Fetch Session</button>
                     </div>
                 </div>
 
@@ -29,9 +30,12 @@
                 <div class="col-md-6">
                     <div id="div_identity"></div>
 
+                    <input type="hidden" id="end_time" value="">
+
                     <div id="loader" class="loader-hidden"></div>
 
                     <div id="div_content"></div>
+                    <p id="p_countdown"></p>
                 </div>
 
             </div>
