@@ -79,18 +79,25 @@ class CodeResetController extends Controller
             $username = $user_data[0]['username'];
             $password = $user_data[0]['password'];
 
-            $start_time = $user_data[0]['comment'] ?? "N/A";
-            if($user_data[0]['comment'] != "")
+            $start_time = "";
+            if(isset($user_data[0]['comment']))
             {
-                $date_time = new DateTime($user_data[0]['comment']);
-                // $date_time->format("Y-m-d H:i:s");
-                $start_time = $date_time->format("Y-m-d H:i:s");
-            }
+                if($user_data[0]['comment'] != "")
+                {
+                    $date_time = new DateTime($user_data[0]['comment']);
+                    // $date_time->format("Y-m-d H:i:s");
+                    $start_time = $date_time->format("Y-m-d H:i:s");
+                }
+                else
+                {
+                    $start_time = "N/A";   
+                }
+            }//has commet
             else
             {
-                $start_time = "N/A";   
+                $start_time = "N/A";
             }
-
+            
             $lease_data = $mikrotikService->getAddress($mac);
 
             $ip_address = $lease_data[0]['active-address'] ?? "N/A";
@@ -124,7 +131,6 @@ class CodeResetController extends Controller
                 'ip_address' => $ip_address,
                 'device_name' => $device_name,
             ];
-
             return response()->json([
                 'success' => true,
                 'data' => $data,
@@ -136,7 +142,6 @@ class CodeResetController extends Controller
                 'message' => "Username Not Found!",
             ]);
         }//no code
-
     }//get one user
 
     public function getSessionByUsername(Request $request)
@@ -155,11 +160,11 @@ class CodeResetController extends Controller
 
         //fetch user
         $user_data = $mikrotikService->getOneUser($username);
-        $mac = $user_data[0]['caller-id'];
+        // $mac = $user_data[0]['caller-id'];
 
-        $response = $mikrotikService->getAddress($mac);
+        // $response = $mikrotikService->getAddress($mac);
 
-        return response()->json($response);
+        return response()->json($user_data);
     }//get session
 
 

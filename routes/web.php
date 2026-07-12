@@ -5,6 +5,7 @@ use App\Http\Controllers\CampController;
 use App\Http\Controllers\CodeController;
 use App\Http\Controllers\CodeResetController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ResetController;
 use App\Http\Controllers\SheetController;
 use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Route;
@@ -63,6 +64,15 @@ Route::middleware('auth')->group(function () {
     //testing
     Route::get('/testing', [TestController::class, 'index'])->name('test.index');
     Route::post('/getSheetNames', [TestController::class, 'getSheetNames'])->name('test.sheetNames');
+});
+
+//reset codes
+Route::get('/reset', [ResetController::class, 'index'])->name('reset.index');
+Route::post('/resetLogin', [ResetController::class, 'resetLogin'])->name('reset.login');
+
+//reset middleware
+Route::middleware('reset')->group(function(){
+    Route::get('/reset_page', [ResetController::class, 'resetPage'])->name('reset.page');
 });
 
 require __DIR__.'/auth.php';
