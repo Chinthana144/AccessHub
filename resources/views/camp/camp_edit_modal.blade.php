@@ -24,6 +24,11 @@
 
                     <label for="">Contact No</label>
                     <input type="text" name="contactNo" id="contactNo" class="form-control mb-2" required>
+
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" id="chk_edit_upload_sheet" name="chk_edit_upload_sheet">
+                      <label class="form-check-label" for="chk_edit_upload_sheet">Upload Sheets</label>
+                    </div>
                 </div>
 
                 <div class="col-md-6">
@@ -38,6 +43,11 @@
 
                     <label for="">Mikrotik Password</label>
                     <input type="text" name="mikrotikPassword" id="mikrotikPassword" class="form-control mb-2" required>
+
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" id="chk_edit_active" name="chk_edit_active">
+                      <label class="form-check-label" for="chk_edit_active">Active</label>
+                    </div>
                 </div>
 
                 <div class="col-md-12">

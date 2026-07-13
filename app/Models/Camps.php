@@ -16,6 +16,7 @@ class Camps extends Model
         'mikrotikUsername',
         'mikrotikPassword',
         'sheetID',
+        'is_upload',
         'status',
     ];
 }

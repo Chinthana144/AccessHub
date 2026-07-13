@@ -30,15 +30,30 @@
                     </div>
 
                     <div class="col-md-3">
-                        <button type="button" id="btn_fetch_codes" class="btn btn-primary">Fetch</button>
+                        <button type="button" class="btn btn-success mt-4" id="btn_fetch_by_date">Fetch by Date</button>
                     </div>
                 </div>
 
-                <div class="col-md-4 mt-2">
-                    <button type="button" class="btn btn-success w-50" id="btn_fetch_by_date">Fetch by Date</button>
-                </div>
-
             </form>
+
+            <div id="div_table">
+
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <button type="button" id="btn_submit" class="btn btn-primary">Submit</button>
+                    </div>
+                    <div class="col-md-6">
+                        <div id="div_totals"></div>
+                    </div>
+                </div>
+                
+
+                <table id="tbl_codes" class="table table-bordered mt-2">
+                    
+                </table>    
+
+                <div id="loader" class="loader-hidden"></div>
+            </div>
 
         </div>
     </div>

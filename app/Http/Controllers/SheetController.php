@@ -118,6 +118,18 @@ class SheetController extends Controller
         return response()->json($sheets);
     }//get sheet by camp id
 
+    public function getActiveSheetByCampID(Request $request)
+    {
+        $camp_id = $request->input('camp_id');
+
+        $sheets = Sheets::where('camp_id', $camp_id)
+            ->where('status', 1)
+            ->where('has_data', 1)
+            ->get();
+
+        return response()->json($sheets);
+    }//get active sheets
+
     public function getActiveSheets(Request $request)
     {
         $camp_id = $request->input('camp_id');

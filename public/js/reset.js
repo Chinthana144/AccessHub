@@ -110,7 +110,36 @@ $(document).ready(function () {
     });
 
     //reset button
-    
+    $("#btn_reset_user").click(function (e) { 
+        e.preventDefault();
+        
+        var username = $("#username").val();
+        var campID = $("#cmb_camp").val();
+
+        $.ajax({
+            type: "get",
+            url: "/resetCode",
+            data: {
+                username: username,
+                camp_id: campID,
+            },
+            // dataType: "dataType",
+            beforeSend: function(){
+                $("#div_content").html("");
+                $("#end_time").val("");
+                $("#loader").removeClass("loader-hidden").addClass('loader');
+            },
+            complete: function(){
+                $("#loader").removeClass("loader").addClass('loader-hidden');
+            },
+            success: function (response) {
+                console.log(response);
+                
+            }
+        });
+
+    });
+
     //get identity
     function getIdentity(campID)
     {

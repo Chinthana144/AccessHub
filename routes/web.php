@@ -37,6 +37,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/getSheetByID', [SheetController::class, 'getSheetByID']);
     Route::put('/updateSheet', [SheetController::class, 'update'])->name("update.sheet");
     Route::get('/getSheetByCampID', [SheetController::class, 'getSheetByCampID']);
+    Route::get('/getActiveSheetByCampID', [SheetController::class, 'getActiveSheetByCampID']);
 
     //codes
     Route::get('/codes', [CodeController::class, 'index'])->name('codes.index');

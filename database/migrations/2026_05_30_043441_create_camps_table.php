@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('mikrotikUsername');
             $table->string('mikrotikPassword');
             $table->string('sheetID');
+            $table->tinyInteger('is_upload');
             $table->tinyInteger('status');
             $table->timestamps();
         });

@@ -34,6 +34,7 @@
                     <div id="button_row">
                         <button id="btn_fetch_user" class="btn_input">Fetch User</button>
                         <button id="btn_reset_user" class="btn_input">Reset</button>
+                        <br>
                         <button id="btn_disable_user" class="btn_input">Disable</button>
                         <button id="btn_enable_user" class="btn_input">Enable</button>
                     </div>

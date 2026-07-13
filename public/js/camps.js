@@ -20,6 +20,12 @@ $(document).ready(function () {
             success: function (response) {
                 // console.log(response);                
                 // alert(response["name"]);
+                var is_upload = response['is_upload'];
+                var is_active = response['status'];
+
+                is_upload == 1 ? $("#chk_edit_upload_sheet").prop('checked', true) : $("#chk_edit_upload_sheet").prop('checked', false);
+                is_active == 1 ? $("#chk_edit_active").prop('checked', true) : $("#chk_edit_active").prop('checked', false);
+
                 $("#campEditModal").modal('toggle');
 
                 $("#name").val(response['name']);
