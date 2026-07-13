@@ -35,6 +35,7 @@
                         <button id="btn_fetch_user" class="btn_input">Fetch User</button>
                         <button id="btn_reset_user" class="btn_input">Reset</button>
                         <button id="btn_disable_user" class="btn_input">Disable</button>
+                        <button id="btn_enable_user" class="btn_input">Enable</button>
                     </div>
 
                 </div>
@@ -57,6 +58,6 @@
     </div>
 
     <script src="{{ asset('js/jquery-3.7.1.min.js') }}"></script>
-    <script src="{{ asset('js/code_reset.js') }}"></script>
+    <script src="{{ asset('js/reset.js') }}"></script>
 </body>
 </html>

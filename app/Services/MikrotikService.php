@@ -71,6 +71,21 @@ class MikrotikService{
             ->read();
     }//get one user
 
+    public function resetMac(string $id)
+    {
+        if (!$this->isConnected) {
+            return [];
+        }
+
+        $query = (new Query('/tool/user-manager/user/set'))
+            ->equal('.id', $id)
+            ->equal('caller-id', 'bind');
+
+        return $this->client
+            ->query($query)
+            ->read();
+    }//reset mac address
+
     public function getSessionByUsername(string $username)
     {
         if (!$this->isConnected) {

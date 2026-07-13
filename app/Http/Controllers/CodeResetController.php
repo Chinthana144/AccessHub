@@ -144,6 +144,47 @@ class CodeResetController extends Controller
         }//no code
     }//get one user
 
+    public function resetCode(Request $request)
+    {
+        $username = $request->input('username');
+        $camp_id = $request->input('camp_id');
+        $camp = Camps::find($camp_id);
+        
+        $host = $camp->mikrotikHost;
+        $user = $camp->mikrotikUsername;
+        $pwd = $camp->mikrotikPassword;
+        $port = $camp->mikrotikPort;
+
+        $mikrotikService = new MikrotikService($host, $user, $pwd, $port);
+
+        $user_data = $mikrotikService->getOneUser($username);
+
+        if(count($user_data))
+        {
+            $code_id = $user_data[0]['.id'];
+
+            $reset_data = $mikrotikService->resetMac($code_id);
+
+            $data = [
+                'code_id' => $user_data[0]['.id'],
+                'username'=> $user_data[0]['username'],
+                'password' => $user_data[0]['password'],
+            ];
+
+            return response()->json([
+                'success' => true,
+                'data' => $data,
+            ]);
+
+        }//has user
+        else{
+            return response()->json([
+                'success'=> false,
+                'message'=>'User not found!'
+            ]);
+        }//no user
+    }//reset user
+
     public function getSessionByUsername(Request $request)
     {
         $camp_id = $request->input('camp_id');

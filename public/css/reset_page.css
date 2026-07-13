@@ -89,9 +89,31 @@ body{
     background-color: firebrick;
     color: whitesmoke;
 }
+.text-success{
+    background-color: green;
+    color: whitesmoke;
+}
+.warning{
+    background-color: rgb(232, 201, 50);
+    color: antiquewhite;
+    padding: 5px;
+    border-radius: 5px;
+}
 
 /* unique buttons */
 #btn_fetch_user{
-    background-color: green;
+    background-color: rgb(31, 160, 31);
+    color: antiquewhite;
+}
+#btn_reset_user{
+    background-color: rgb(42, 42, 227);
+    color: antiquewhite;
+}
+#btn_disable_user{
+    background-color: firebrick;
+    color: antiquewhite;
+}
+#btn_enable_user{
+    background-color: rgb(41, 169, 41);
     color: antiquewhite;
 }

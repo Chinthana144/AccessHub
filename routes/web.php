@@ -73,6 +73,15 @@ Route::post('/resetLogin', [ResetController::class, 'resetLogin'])->name('reset.
 //reset middleware
 Route::middleware('reset')->group(function(){
     Route::get('/reset_page', [ResetController::class, 'resetPage'])->name('reset.page');
+
+    //code reset
+    Route::get('/code_reset', [CodeResetController::class, 'index'])->name('codeReset.index');
+    Route::get('/getIdentity', [CodeResetController::class, 'getIdentity']);
+    Route::get('/getUserManagerUsers', [CodeResetController::class, 'getUserManagerUsers']);
+    Route::get('/getOneUser', [CodeResetController::class, 'getOneUser']);
+    Route::get('/getSessionByUsername', [CodeResetController::class, "getSessionByUsername"]);
+
+    Route::get('/resetCode', [CodeResetController::class, 'resetCode']);
 });
 
 require __DIR__.'/auth.php';
