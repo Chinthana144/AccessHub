@@ -134,11 +134,121 @@ $(document).ready(function () {
             },
             success: function (response) {
                 console.log(response);
+
+                let htmlData = "";
+                if(response['success'])
+                {
+                    htmlData += "<h5 class='text-success'>Code Reset Complete!</h5>";
+                    htmlData = "<p class='bg-success'>";
+                    htmlData += "Username: " + response['data']['username'] + "</br>";
+                    htmlData += "Password: " + response['data']['password'] + "</br>";
+                    htmlData += "</p>";
+                }//reset success
+                else{
+                    htmlData += "<h5 class='warning'>Code Reset Failed!</h5>";
+                    htmlData += "<p class='warning'>";
+                    htmlData += "Message: " + response['message'];
+                    htmlData += "</p>";
+                }
                 
+                $("#div_content").html(htmlData);
             }
         });
+    });//reset user
 
-    });
+    //disable user
+    $("#btn_disable_user").click(function (e) { 
+        e.preventDefault();
+        
+        var username = $("#username").val();
+        var campID = $("#cmb_camp").val();
+
+        $.ajax({
+            type: "get",
+            url: "/disableUser",
+            data: {
+                username: username,
+                camp_id: campID,
+            },
+            // dataType: "dataType",
+            beforeSend: function(){
+                $("#div_content").html("");
+                $("#end_time").val("");
+                $("#loader").removeClass("loader-hidden").addClass('loader');
+            },
+            complete: function(){
+                $("#loader").removeClass("loader").addClass('loader-hidden');
+            },
+            success: function (response) {
+                console.log(response);
+
+                let htmlData = "";
+                if(response['success'])
+                {
+                    htmlData += "<h5 class='text-success'>Code Disabled Successfully!</h5>";
+                    htmlData = "<p class='bg-success'>";
+                    htmlData += "Username: " + response['data']['username'] + "</br>";
+                    htmlData += "Password: " + response['data']['password'] + "</br>";
+                    htmlData += "</p>";
+                }//reset success
+                else{
+                    htmlData += "<h5 class='warning'>Code Reset Failed!</h5>";
+                    htmlData += "<p class='warning'>";
+                    htmlData += "Message: " + response['message'];
+                    htmlData += "</p>";
+                }
+                
+                $("#div_content").html(htmlData);
+            }
+        });
+    });//disable user
+
+    //enable user
+    $("#btn_enable_user").click(function (e) { 
+        e.preventDefault();
+        
+        var username = $("#username").val();
+        var campID = $("#cmb_camp").val();
+
+        $.ajax({
+            type: "get",
+            url: "/enableUser",
+            data: {
+                username: username,
+                camp_id: campID,
+            },
+            // dataType: "dataType",
+            beforeSend: function(){
+                $("#div_content").html("");
+                $("#end_time").val("");
+                $("#loader").removeClass("loader-hidden").addClass('loader');
+            },
+            complete: function(){
+                $("#loader").removeClass("loader").addClass('loader-hidden');
+            },
+            success: function (response) {
+                console.log(response);
+
+                let htmlData = "";
+                if(response['success'])
+                {
+                    htmlData += "<h5 class='text-success'>Code Enabled Successfully!</h5>";
+                    htmlData = "<p class='bg-success'>";
+                    htmlData += "Username: " + response['data']['username'] + "</br>";
+                    htmlData += "Password: " + response['data']['password'] + "</br>";
+                    htmlData += "</p>";
+                }//reset success
+                else{
+                    htmlData += "<h5 class='warning'>Code Reset Failed!</h5>";
+                    htmlData += "<p class='warning'>";
+                    htmlData += "Message: " + response['message'];
+                    htmlData += "</p>";
+                }
+                
+                $("#div_content").html(htmlData);
+            }
+        });
+    });//enable user
 
     //get identity
     function getIdentity(campID)

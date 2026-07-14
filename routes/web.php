@@ -83,6 +83,8 @@ Route::middleware('reset')->group(function(){
     Route::get('/getSessionByUsername', [CodeResetController::class, "getSessionByUsername"]);
 
     Route::get('/resetCode', [CodeResetController::class, 'resetCode']);
+    Route::get('/disableUser', [CodeResetController::class, 'disableUser']);
+    Route::get('/enableUser', [CodeResetController::class, 'enableUser']);
 });
 
 require __DIR__.'/auth.php';

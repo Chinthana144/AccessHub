@@ -86,6 +86,37 @@ class MikrotikService{
             ->read();
     }//reset mac address
 
+    public function disableUser(string $id)
+    {
+        if (!$this->isConnected) {
+            return [];
+        }
+
+        $query = (new Query('/tool/user-manager/user/set'))
+            ->equal('.id', $id)
+            ->equal('caller-id', 'bind')
+            ->equal('disabled', 'true');
+
+        return $this->client
+            ->query($query)
+            ->read();
+    }//disable user
+
+    public function enableUser(string $id)
+    {
+        if (!$this->isConnected) {
+            return [];
+        }
+
+        $query = (new Query('/tool/user-manager/user/set'))
+            ->equal('.id', $id)
+            ->equal('disabled', 'false');
+
+        return $this->client
+            ->query($query)
+            ->read();
+    }//enable user
+
     public function getSessionByUsername(string $username)
     {
         if (!$this->isConnected) {

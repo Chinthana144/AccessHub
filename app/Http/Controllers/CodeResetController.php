@@ -185,6 +185,86 @@ class CodeResetController extends Controller
         }//no user
     }//reset user
 
+    public function disableUser(Request $request)
+    {
+        $username = $request->input('username');
+        $camp_id = $request->input('camp_id');
+        $camp = Camps::find($camp_id);
+        
+        $host = $camp->mikrotikHost;
+        $user = $camp->mikrotikUsername;
+        $pwd = $camp->mikrotikPassword;
+        $port = $camp->mikrotikPort;
+
+        $mikrotikService = new MikrotikService($host, $user, $pwd, $port);
+
+        $user_data = $mikrotikService->getOneUser($username);
+        
+        if(count($user_data) > 0)
+        {
+            $code_id = $user_data[0]['.id'];
+
+            $mikrotikService->disableUser($code_id);
+
+            $data = [
+                'code_id' => $user_data[0]['.id'],
+                'username'=> $user_data[0]['username'],
+                'password' => $user_data[0]['password'],
+            ];
+
+            return response()->json([
+                'success' => true,
+                'data' => $data,
+            ]);
+        }//has user
+        else{
+            return response()->json([
+                'success'=> false,
+                'message'=>'User not found!'
+            ]);
+        }//no user
+    }//disable user
+
+    public function enableUser(Request $request)
+    {
+        $username = $request->input('username');
+        $camp_id = $request->input('camp_id');
+        $camp = Camps::find($camp_id);
+        
+        $host = $camp->mikrotikHost;
+        $user = $camp->mikrotikUsername;
+        $pwd = $camp->mikrotikPassword;
+        $port = $camp->mikrotikPort;
+
+        $mikrotikService = new MikrotikService($host, $user, $pwd, $port);
+
+        $user_data = $mikrotikService->getOneUser($username);
+
+        if(count($user_data) > 0)
+        {
+            $code_id = $user_data[0]['.id'];
+
+            $mikrotikService->enableUser($code_id);
+
+            $data = [
+                'code_id' => $user_data[0]['.id'],
+                'username'=> $user_data[0]['username'],
+                'password' => $user_data[0]['password'],
+            ];
+
+            return response()->json([
+                'success' => true,
+                'data' => $data,
+            ]);
+        }//has user
+        else{
+            return response()->json([
+                'success'=> false,
+                'message'=>'User not found!'
+            ]);
+        }//no user
+    }//enable user
+
     public function getSessionByUsername(Request $request)
     {
         $camp_id = $request->input('camp_id');
