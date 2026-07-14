@@ -14,7 +14,7 @@
                     <th>Camp</th>
                     <th>Contact</th>
                     <th>Mikrotik</th>
-                    <th>Sheet ID</th>
+                    <th>Status</th>
                     <th>Action</th>
                 </tr>
                 @foreach ($camps as $camp)
@@ -32,7 +32,17 @@
                             {{ $camp->mikrotikPort }}
                         </td>
                         <td>
-                            {{ $camp->sheetID }}
+                            @if ($camp->is_upload)
+                                <span class="badge bg-success">Upload Sheet</span>                                
+                            @else
+                                <span class="badge bg-secondary">No Upload</span>
+                            @endif
+                            <br>
+                            @if ($camp->status)
+                                <span class="badge bg-success">Active</span>                                
+                            @else
+                                <span class="badge bg-secondary">Inactive</span>
+                            @endif
                         </td>
                         <td>
                             <button class="btn btn-outline-warning btn-sm btn_edit_camp">Edit</button>

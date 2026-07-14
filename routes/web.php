@@ -2,7 +2,10 @@
 
 use App\Http\Controllers\CampAccessController;
 use App\Http\Controllers\CampController;
+use App\Http\Controllers\CodeController;
+use App\Http\Controllers\CodeResetController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ResetController;
 use App\Http\Controllers\SheetController;
 use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Route;
@@ -32,6 +35,21 @@ Route::middleware('auth')->group(function () {
     Route::get('/fetchGoogleSheets', [SheetController::class, 'fetchGoogleSheets']);
     Route::post('/saveSheetNames', [SheetController::class, 'saveSheetNames']);
     Route::get('/getSheetByID', [SheetController::class, 'getSheetByID']);
+    Route::put('/updateSheet', [SheetController::class, 'update'])->name("update.sheet");
+    Route::get('/getSheetByCampID', [SheetController::class, 'getSheetByCampID']);
+    Route::get('/getActiveSheetByCampID', [SheetController::class, 'getActiveSheetByCampID']);
+
+    //codes
+    Route::get('/codes', [CodeController::class, 'index'])->name('codes.index');
+    Route::get('/getCodes', [CodeController::class, 'getCodes']);
+    Route::get('/getCodesByDate', [CodeController::class, 'getCodesByDate']);
+
+    //code reset
+    Route::get('/code_reset', [CodeResetController::class, 'index'])->name('codeReset.index');
+    Route::get('/getIdentity', [CodeResetController::class, 'getIdentity']);
+    Route::get('/getUserManagerUsers', [CodeResetController::class, 'getUserManagerUsers']);
+    Route::get('/getOneUser', [CodeResetController::class, 'getOneUser']);
+    Route::get('/getSessionByUsername', [CodeResetController::class, "getSessionByUsername"]);
 
     //camps
     Route::get('/camps', [CampController::class, 'index'])->name('camps.index');
@@ -47,6 +65,26 @@ Route::middleware('auth')->group(function () {
     //testing
     Route::get('/testing', [TestController::class, 'index'])->name('test.index');
     Route::post('/getSheetNames', [TestController::class, 'getSheetNames'])->name('test.sheetNames');
+});
+
+//reset codes
+Route::get('/reset', [ResetController::class, 'index'])->name('reset.index');
+Route::post('/resetLogin', [ResetController::class, 'resetLogin'])->name('reset.login');
+
+//reset middleware
+Route::middleware('reset')->group(function(){
+    Route::get('/reset_page', [ResetController::class, 'resetPage'])->name('reset.page');
+
+    //code reset
+    Route::get('/code_reset', [CodeResetController::class, 'index'])->name('codeReset.index');
+    Route::get('/getIdentity', [CodeResetController::class, 'getIdentity']);
+    Route::get('/getUserManagerUsers', [CodeResetController::class, 'getUserManagerUsers']);
+    Route::get('/getOneUser', [CodeResetController::class, 'getOneUser']);
+    Route::get('/getSessionByUsername', [CodeResetController::class, "getSessionByUsername"]);
+
+    Route::get('/resetCode', [CodeResetController::class, 'resetCode']);
+    Route::get('/disableUser', [CodeResetController::class, 'disableUser']);
+    Route::get('/enableUser', [CodeResetController::class, 'enableUser']);
 });
 
 require __DIR__.'/auth.php';

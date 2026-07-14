@@ -22,6 +22,11 @@
 
                     <label for="">Contact No</label>
                     <input type="text" name="contactNo" class="form-control mb-2" required>
+
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" id="chk_upload_sheet" name="chk_upload_sheet">
+                      <label class="form-check-label" for="chk_upload_sheet">Upload Sheets</label>
+                    </div>
                 </div>
 
                 <div class="col-md-6">
@@ -36,9 +41,14 @@
 
                     <label for="">Mikrotik Password</label>
                     <input type="text" name="mikrotikPassword" class="form-control mb-2" required>
+
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" id="chk_active" name="chk_active" checked>
+                      <label class="form-check-label" for="chk_active">Active</label>
+                    </div>
                 </div>
 
-                <div class="col-md-12">
+                <div class="col-md-12 mt-2">
                     <label for="">Google Sheet ID</label>
                     <input type="text" name="sheetID" class="form-control mb-2" required>
                 </div>

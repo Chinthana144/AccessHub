@@ -1,0 +1,124 @@
+*{
+    box-sizing: border-box;
+}
+body{
+    font-family: sans-serif;
+}
+
+#div_main{
+    width: 80%;
+    margin-left: 10%;
+}
+
+#main_row{
+    width: 100%;
+    /* height: 100vh; */
+    display: flex;
+    flex-direction: row;
+}
+.row_column{
+    width: 50%;
+    /* border: 1px solid blue; */
+    padding: 10px;
+    /* border-radius: 10px; */
+}
+
+.row_card{
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 3px 5px 8px rgba(54, 54, 54, 0.3);
+    height: 80vh;
+}
+
+/* reste control */
+.input_label{
+    margin-top: 30px;
+}
+.input{
+    width: 100%;
+    padding: 5px;
+    font-size: 18px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    color: black;
+}
+
+.button_row{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.btn_input{
+    padding: 8px 12px;
+    border-radius: 5px;
+    border: none;
+    width: 40%;
+    margin-top: 10px;
+    opacity: 0.9;
+    transition: 0.3s;
+}
+.btn_input:hover{
+    opacity: 1;
+}
+
+@media screen and (max-width: 768px){
+    #div_main{
+        width: 100%;
+        margin-left: 0;
+    }
+    #main_row{
+        flex-direction: column;
+    }
+    .row_column{
+        width: 100%;
+    }
+    .row_card{
+        height: fit-content;
+    }
+}
+
+/* common classes */
+.badge{
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+.bg-success{
+    background-color: green;
+    color: whitesmoke;
+}
+.bg-danger{
+    background-color: firebrick;
+    color: whitesmoke;
+}
+.text-success{
+    background-color: green;
+    color: whitesmoke;
+    padding: 5px;
+    border-radius: 5px;
+}
+.warning{
+    background-color: rgb(232, 201, 50);
+    color: antiquewhite;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+/* unique buttons */
+#btn_fetch_user{
+    background-color: rgb(31, 160, 31);
+    color: antiquewhite;
+}
+#btn_reset_user{
+    background-color: rgb(42, 42, 227);
+    color: antiquewhite;
+}
+#btn_disable_user{
+    background-color: firebrick;
+    color: antiquewhite;
+}
+#btn_enable_user{
+    background-color: rgb(41, 169, 41);
+    color: antiquewhite;
+}

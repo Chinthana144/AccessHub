@@ -10,7 +10,7 @@ class CampController extends Controller
     public function index()
     {
         //fetch all camps
-        $camps = Camps::where('status', 1)->paginate(10);
+        $camps = Camps::paginate(10);
 
         return view('camp.camps_view', compact('camps'));
     }//index
@@ -27,7 +27,8 @@ class CampController extends Controller
             'mikrotikUsername' => $request->input('mikrotikUsername'),
             'mikrotikPassword' => $request->input('mikrotikPassword'),
             'sheetID' => $request->input('sheetID'),
-            'status' => 1,
+            'is_upload' => $request->has('chk_upload_sheet') ? 1 : 0,
+            'status' => $request->has('chk_active') ? 1 : 0,
         ]);
 
         return redirect()->route('camps.index');
@@ -47,6 +48,8 @@ class CampController extends Controller
         $camp->mikrotikUsername = $request->input('mikrotikUsername');
         $camp->mikrotikPassword = $request->input('mikrotikPassword');
         $camp->sheetID = $request->input('sheetID');
+        $camp->is_upload = $request->has('chk_edit_upload_sheet') ? 1 : 0;
+        $camp->status = $request->has('chk_edit_active') ? 1 : 0;
 
         $camp->save();
 

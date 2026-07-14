@@ -19,10 +19,19 @@
             </li>
 
             <li class="sidebar-item">
-                <a href="/testing" class="sidebar-link">
-                    <i class="bx bx-home fs-3"></i>
-                    <span>Testing</span>
+                <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                    data-bs-target="#sheet" aria-expanded="false" aria-controls="auth">
+                    <i class="bx bx-key fs-3"></i>
+                    <span>Codes</span>
                 </a>
+                <ul id="sheet" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                    <li class="sidebar-item">
+                        <a href="{{ route('codes.index') }}" class="sidebar-link">Code Upload</a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="/code_reset" class="sidebar-link">Codes</a>
+                    </li>
+                </ul>
             </li>
 
             <li class="sidebar-item">
@@ -63,43 +72,6 @@
                     </li>
                 </ul>
             </li>
-            
-
-            @can('access-invoice')
-                <li class="sidebar-item">
-                    <a href="/invoice" class="sidebar-link">
-                        <i class="bx bx-receipt fs-3"></i>
-                        <span>Invoice</span>
-                    </a>
-                </li>
-            @endcan
-
-            @can('view', App\Models\Customer::class)
-                <li class="sidebar-item">
-                    <a href="/customers" class="sidebar-link">
-                        <i class="bx bx-group fs-3"></i>
-                        <span>Customers</span>
-                    </a>
-                </li>
-            @endcan
-
-            @can('view', App\Models\Package::class)
-                <li class="sidebar-item">
-                    <a href="/packages" class="sidebar-link">
-                        <i class="bx bx-layer fs-3"></i>
-                        <span>Packages</span>
-                    </a>
-                </li>
-            @endcan
-
-            @can('view', App\Models\Subscription::class)
-            <li class="sidebar-item">
-                <a href="/view-subscription" class="sidebar-link">
-                    <i class="bx bx-cloud-download fs-3"></i>
-                    <span>Subscriptions</span>
-                </a>
-            </li>
-            @endcan
 
             @can('access-control')
                 <li class="sidebar-item">
