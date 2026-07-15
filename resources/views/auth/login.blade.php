@@ -61,7 +61,12 @@
     
     <div id="div_main">
         <div id="div_login_form">
-            <h5>Access Hub</h5>
+            <h5>Trizent Infratech</h5>
+
+            <div id="div_logo">
+                <img src="{{ asset('images/com_logo_2.png') }}" alt="company logo">
+            </div>
+
             <form action="{{ route('login') }}" method="post">
                 @csrf
                 <label for="" class="login_label">Email</label>

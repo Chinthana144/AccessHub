@@ -1,0 +1,9 @@
+// AccessHub Structure //
+
+1. Code Reset
+2. Code Upload
+3. Users
+4. User camp access
+5. Role based access (RBAC)
+6. Dashboard
+7. Reports

@@ -138,8 +138,8 @@ $(document).ready(function () {
                 let htmlData = "";
                 if(response['success'])
                 {
-                    htmlData += "<h5 class='text-success'>Code Reset Complete!</h5>";
-                    htmlData = "<p class='bg-success'>";
+                    htmlData += "<h5 class='text-success'>Code Reset Completed!</h5>";
+                    htmlData += "<p class='text-success'>";
                     htmlData += "Username: " + response['data']['username'] + "</br>";
                     htmlData += "Password: " + response['data']['password'] + "</br>";
                     htmlData += "</p>";
@@ -149,8 +149,7 @@ $(document).ready(function () {
                     htmlData += "<p class='warning'>";
                     htmlData += "Message: " + response['message'];
                     htmlData += "</p>";
-                }
-                
+                }                
                 $("#div_content").html(htmlData);
             }
         });
@@ -186,7 +185,7 @@ $(document).ready(function () {
                 if(response['success'])
                 {
                     htmlData += "<h5 class='text-success'>Code Disabled Successfully!</h5>";
-                    htmlData = "<p class='bg-success'>";
+                    htmlData += "<p class='bg-success'>";
                     htmlData += "Username: " + response['data']['username'] + "</br>";
                     htmlData += "Password: " + response['data']['password'] + "</br>";
                     htmlData += "</p>";
@@ -233,7 +232,7 @@ $(document).ready(function () {
                 if(response['success'])
                 {
                     htmlData += "<h5 class='text-success'>Code Enabled Successfully!</h5>";
-                    htmlData = "<p class='bg-success'>";
+                    htmlData += "<p class='bg-success'>";
                     htmlData += "Username: " + response['data']['username'] + "</br>";
                     htmlData += "Password: " + response['data']['password'] + "</br>";
                     htmlData += "</p>";

@@ -43,6 +43,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/codes', [CodeController::class, 'index'])->name('codes.index');
     Route::get('/getCodes', [CodeController::class, 'getCodes']);
     Route::get('/getCodesByDate', [CodeController::class, 'getCodesByDate']);
+    Route::get('/codeUpload', [CodeController::class, 'codeUpload']);
 
     //code reset
     Route::get('/code_reset', [CodeResetController::class, 'index'])->name('codeReset.index');

@@ -17,7 +17,7 @@
                                 <option value="{{ $camp->id }}">{{ $camp->name }}</option>                                
                             @endforeach
                         </select>
-                        
+
                     </div>
                     <div class="col-md-3">
                         <label for="">Select Sheet name</label>
@@ -36,7 +36,7 @@
 
             </form>
 
-            <div id="div_table">
+            <div id="div_content">
 
                 <div class="row mt-3">
                     <div class="col-md-6">
@@ -47,12 +47,13 @@
                     </div>
                 </div>
                 
-
-                <table id="tbl_codes" class="table table-bordered mt-2">
-                    
-                </table>    
-
+                <div id="div_table">
+                    <table id="tbl_codes" class="table table-bordered mt-2">                
+                    </table>    
+                </div>
+                
                 <div id="loader" class="loader-hidden"></div>
+                
             </div>
 
         </div>
