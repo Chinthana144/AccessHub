@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CampAccess;
 use App\Models\Camps;
 use App\Models\Codes;
 use App\Models\Sheets;
@@ -15,12 +16,27 @@ class CodeController extends Controller
 {
     public function index()
     {
+        $user_id = Auth::id();
+        $camps = CampAccess::where('user_id', $user_id)
+            ->get();
+
+        $active_camp_id = Session::get('active_camp_id');
+
+        $codes = Codes::where('camp_id', $active_camp_id)
+            ->orderBy('id', 'DESC')
+            ->paginate(50);
+
+        return view("codes.code_view", compact('camps', 'codes'));
+    }
+
+    public function codeUploadView()
+    {
         $camps = Camps::where('status', 1)
             ->where('is_upload', 1)
             ->get();
 
-        return view("codes.code_view", compact('camps'));
-    }
+        return view('codes.code_upload', compact('camps'));
+    }//code upload view
 
     public function getCodes(Request $request)
     {
@@ -55,7 +71,7 @@ class CodeController extends Controller
         $first = $data['data'][0];
 
         //check columns
-        if(isset($first['Date']) && isset($first['Username']) && isset($first['Password']) && isset($first['Name']) && isset($first['Room No']) && isset($first['Amount']))
+        if(isset($first['Date']) && isset($first['Username']) && isset($first['Password']) && isset($first['Name']) && isset($first['Room No']) && isset($first['Amount']) && isset($first['Note']))
         {
             $response = [];
             foreach($data['data'] as $dt)
@@ -67,6 +83,7 @@ class CodeController extends Controller
                     'name' => $dt['Name'],
                     'room_no' => $dt['Room No'],
                     'amount' => $dt['Amount'],
+                    'note' => $dt['Note'],
                 ];
             }//foreach
 
@@ -104,7 +121,7 @@ class CodeController extends Controller
         $first = $data['data'][0];
         
         //check columns
-        if(isset($first['Date']) && isset($first['Username']) && isset($first['Password']) && isset($first['Name']) && isset($first['Room No']) && isset($first['Amount']))
+        if(isset($first['Date']) && isset($first['Username']) && isset($first['Password']) && isset($first['Name']) && isset($first['Room No']) && isset($first['Amount']) && isset($first['Note']))
         {
             foreach($data['data'] as $dt)
             {
@@ -124,7 +141,7 @@ class CodeController extends Controller
                     'customer_name' => $dt['Name'],
                     'room_no' =>$dt['Room No'],
                     'amount' =>$dt['Amount'],
-                    'note' => "",
+                    'note' => $dt['Note'],
                     'status' => 1,
                     'user_id' => $user_id,
                 ]);

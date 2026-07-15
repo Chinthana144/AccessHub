@@ -26,10 +26,13 @@
                 </a>
                 <ul id="sheet" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                     <li class="sidebar-item">
-                        <a href="{{ route('codes.index') }}" class="sidebar-link">Code Upload</a>
+                        <a href="{{ route('codeUpload.view') }}" class="sidebar-link">Code Upload</a>
                     </li>
                     <li class="sidebar-item">
-                        <a href="/code_reset" class="sidebar-link">Codes</a>
+                        <a href="/codes" class="sidebar-link">Codes</a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="/reset" class="sidebar-link">Code Reset</a>
                     </li>
                 </ul>
             </li>

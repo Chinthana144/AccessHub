@@ -41,6 +41,7 @@ Route::middleware('auth')->group(function () {
 
     //codes
     Route::get('/codes', [CodeController::class, 'index'])->name('codes.index');
+    Route::get('/code_upload_view', [CodeController::class, 'codeUploadView'])->name('codeUpload.view');
     Route::get('/getCodes', [CodeController::class, 'getCodes']);
     Route::get('/getCodesByDate', [CodeController::class, 'getCodesByDate']);
     Route::get('/codeUpload', [CodeController::class, 'codeUpload']);

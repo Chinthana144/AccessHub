@@ -71,6 +71,7 @@ $(document).ready(function () {
                 htmlData += "<th>Name</th>";
                 htmlData += "<th>Room No</th>";
                 htmlData += "<th>Amount</th>";
+                htmlData += "<th>Note</th>";
                 htmlData += "</tr>";
 
                 
@@ -92,6 +93,7 @@ $(document).ready(function () {
                     htmlData += "<td>"+ value['name'] +"</td>";
                     htmlData += "<td>"+ value['room_no'] +"</td>";
                     htmlData += "<td>"+ amount.toFixed(2) +"</td>";
+                    htmlData += "<td>"+ value['note'] +"</td>";
                     htmlData += "</tr>";
                     i++;
                 });//each
