@@ -45,6 +45,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/getCodes', [CodeController::class, 'getCodes']);
     Route::get('/getCodesByDate', [CodeController::class, 'getCodesByDate']);
     Route::get('/codeUpload', [CodeController::class, 'codeUpload']);
+    Route::get('/codeSearch', [CodeController::class, 'codeSearch']);
+    Route::get('/getOneCode', [CodeController::class, 'getOneCode']);
+    Route::put('/update_code',[CodeController::class, 'update'])->name('codes.update');
 
     //code reset
     Route::get('/code_reset', [CodeResetController::class, 'index'])->name('codeReset.index');

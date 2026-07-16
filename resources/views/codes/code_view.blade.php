@@ -6,6 +6,19 @@
             <h5>Codes</h5>
         </div>
         <div class="card-body">
+
+            @if (session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            @if (session('error'))
+                <div class="alert alert-warning">
+                    {{ session('error') }}
+                </div>
+            @endif
+
             <div class="row">
                 <div class="col-md-3">
                     <label for="">Camp</label>
@@ -40,7 +53,7 @@
                             <th>Action</th>
                         </tr>
                         @foreach ($codes as $code)
-                            <tr>
+                            <tr data-id='{{ $code->id }}'>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $code->issue_date }}</td>
                                 <td>{{ $code->username }}</td>
@@ -50,8 +63,8 @@
                                 <td>{{ $code->amount }}</td>
                                 <td>{{ $code->note }}</td>
                                 <td>
-                                    <button class="btn btn-outline-warning btn-sm"><i class="bx bx-edit"></i></button>
-                                    <button class="btn btn-outline-danger btn-sm"><i class="bx bx-trash"></i></button>
+                                    <button class="btn btn-outline-warning btn-sm btn_edit_code"><i class="bx bx-edit"></i></button>
+                                    <button class="btn btn-outline-danger btn-sm btn_delete_code"><i class="bx bx-trash"></i></button>
                                 </td>
                             </tr>
                         @endforeach
@@ -65,5 +78,9 @@
 
         </div>
     </div>
+
+    <script src="{{ asset('js/code_view.js') }}"></script>
+
+    @include('codes.code_edit_modal');
 
 @endsection

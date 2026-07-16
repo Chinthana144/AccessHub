@@ -38,6 +38,37 @@ class CodeController extends Controller
         return view('codes.code_upload', compact('camps'));
     }//code upload view
 
+    public function update(Request $request)
+    {
+        $code_id = $request->input('code_edit_id');
+
+        $code = Codes::find($code_id);
+
+        $issue_date = $request->input('issue_date');
+        $customer_name = $request->input('customer_name');
+
+        if(is_null($issue_date))
+        {
+            return redirect()->route('codes.index')->with('error', 'Please provide valid Issue Date!');   
+        }
+        if(is_null($customer_name))
+        {
+            return redirect()->route('codes.index')->with('error', 'Please provide valid Customer Name!');  
+        }
+
+        $amount = is_numeric($request->input('amount')) ? $request->input('amount') : 0;
+        
+        $code->issue_date = $request->input('issue_date');
+        $code->customer_name = $request->input('customer_name');
+        $code->room_no = $request->input('room_no');
+        $code->amount = $amount;
+        $code->note = $request->input('note') ?? "";
+
+        $code->save();
+
+        return redirect()->route('codes.index')->with('success', 'Code updated successfully!');
+    }//update
+
     public function getCodes(Request $request)
     {
         $camp_id = $request->input('camp_id');
@@ -159,6 +190,34 @@ class CodeController extends Controller
             ]);
         }//wrong column headers
     }//upload code
+
+    public function codeSearch(Request $request)
+    {
+        $camp_id = $request->input('camp_id');
+        $search_term = $request->input('txt_search');
+
+        $codes = Codes::where('status', 1)
+            ->where('camp_id', $camp_id)
+            ->where(function($query) use ($search_term){
+                $query->where('issue_date', 'LIKE', "%{$search_term}%")
+                    ->orWhere('username', 'LIKE', "%{$search_term}%")
+                    ->orWhere('password', 'LIKE', "%{$search_term}%")
+                    ->orWhere('customer_name', 'LIKE', "%{$search_term}%")
+                    ->orWhere('room_no', 'LIKE', "%{$search_term}%");   
+            }) ->orderBy('id', 'DESC')
+            ->get();
+        
+        return response()->json($codes);
+    }//serach code
+
+    public function getOneCode(Request $request)
+    {
+        $code_id = $request->input('code_id');
+
+        $code = Codes::find($code_id);
+
+        return response()->json($code);
+    }//get one code
 
     private function checkDuplicateCode(string $code, string $sheet_date,string $camp_id)
     {
