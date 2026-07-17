@@ -7,3 +7,13 @@
 5. Role based access (RBAC)
 6. Dashboard
 7. Reports
+
+
+//pages
+Dashboard
+Codes
+Camps
+sheets
+control
+Reports
+profile
