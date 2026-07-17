@@ -110,6 +110,7 @@ class MikrotikService{
 
         $query = (new Query('/tool/user-manager/user/set'))
             ->equal('.id', $id)
+            ->equal('caller-id', 'bind')
             ->equal('disabled', 'false');
 
         return $this->client

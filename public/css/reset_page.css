@@ -87,10 +87,14 @@ body{
 .bg-success{
     background-color: green;
     color: whitesmoke;
+    padding: 4px 8px;
+    border-radius: 5px;
 }
 .bg-danger{
     background-color: firebrick;
     color: whitesmoke;
+    padding: 4px 8px;
+    border-radius: 5px;
 }
 .text-success{
     background-color: rgb(14, 112, 14);

@@ -112,9 +112,10 @@ class CodeResetController extends Controller
                 $date = new DateTime($start_time);
                 $date->modify('+'.$days." days");
                 $date = $date->format("Y-m-d H:i:s");
-            } catch (\Throwable $th) {
-                $date = "";
-            }
+                } 
+            catch (\Throwable $th) {
+                    $date = "";
+                }
 
             $data = [
                 'code_id' => $code_id,

@@ -45,7 +45,7 @@ $(document).ready(function () {
                     var status = response['data']['disabled'] == "false" ? "Active" : "Disabled";
                     var status_class = response['data']['disabled'] == "false" ? "bg-success" : "bg-danger";
                     
-                    htmlData += "<p class='mt-2'>Status: <span class='p-1 rounded text-white badge"+ status_class +"'>"+ status +"</span></p>";
+                    htmlData += "<p class='mt-2'>Status: <span class='"+ status_class +"'>"+ status +"</span></p>";
 
                     htmlData += "<p>";
                     htmlData += "Username: <b>"+ response['data']['username'] +"</b></br>";

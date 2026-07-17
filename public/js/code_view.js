@@ -26,7 +26,6 @@ $(document).ready(function () {
                 loadTable(response);
             }//success
         });
-
     });
 
     $("#div_table").on('click', '.btn_edit_code', function(){
