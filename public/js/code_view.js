@@ -23,43 +23,7 @@ $(document).ready(function () {
             success: function (response) {
                 console.log(response);
 
-                let htmlData = "";
-
-                htmlData += "<table class='table'>";
-                htmlData += "<tr>";
-                htmlData += "<th>#</th>";
-                htmlData += "<th>Date</th>";
-                htmlData += "<th>Username</th>";
-                htmlData += "<th>Password</th>";
-                htmlData += "<th>Name</th>";
-                htmlData += "<th>Room No</th>";
-                htmlData += "<th>Amount</th>";
-                htmlData += "<th>Note</th>";
-                htmlData += "<th>Action</th>";
-                htmlData += "</tr>";
-                
-                let i = 1;
-                $.each(response, function (key, value) { 
-                    htmlData += "<tr data-id='"+ value['id'] +"'>";
-                    htmlData += "<td>"+ i +"</td>";
-                    htmlData += "<td>"+ value['issue_date'] +"</td>";
-                    htmlData += "<td>"+ value['username'] +"</td>";
-                    htmlData += "<td>"+ value['password'] +"</td>";
-                    htmlData += "<td>"+ value['customer_name'] +"</td>";
-                    htmlData += "<td>"+ value['room_no'] +"</td>";
-                    htmlData += "<td>"+ value['amount'] +"</td>";
-                    htmlData += "<td>"+ value['note'] +"</td>";
-                    htmlData += "<td>";
-                    htmlData += "<button class='btn btn-outline-warning btn-sm btn_edit_code'><i class='bx bx-edit'></i></button>";
-                    htmlData += "<button class='btn btn-outline-danger btn-sm btn_delete_code'><i class='bx bx-trash'></i></button>";
-                    htmlData += "</td>";
-                    htmlData += "</tr>";
-
-                    i++;
-                });
-                htmlData += "</table>"
-
-                $("#div_table").html(htmlData);
+                loadTable(response);
             }//success
         });
 
@@ -98,6 +62,84 @@ $(document).ready(function () {
         });
     });
 
+    //delete code
+    $("#div_table").on('click', '.btn_delete_code', function(){
+        let row = $(this).closest('tr');
+	    let id = row.data('id');
+        let campID = $("#cmb_camp").val();
+        let txt_search = $("#txt_search").val();
+
+        let result =  confirm("Are you sure you want to delete code?");
+
+        if(result){
+            $.ajax({
+                type: "get",
+                url: "/delete_code",
+                data: {
+                    code_id: id,
+                    camp_id: campID,
+                    txt_search: txt_search
+                },
+                // dataType: "dataType",
+                success: function (response) {
+                    console.log(response);
+                    
+                    if(response['action'] == 'reload')
+                    {
+                        location.reload();
+                    }
+                    else{
+                        loadTable(response['data']);
+                    }
+                }
+            });           
+        }
+        else{
+            return;
+        }//no
+    });
+
+    function loadTable(data)
+    {
+        let htmlData = "";
+
+        htmlData += "<table class='table'>";
+        htmlData += "<tr>";
+        htmlData += "<th>#</th>";
+        htmlData += "<th>Date</th>";
+        htmlData += "<th>Username</th>";
+        htmlData += "<th>Password</th>";
+        htmlData += "<th>Name</th>";
+        htmlData += "<th>Room No</th>";
+        htmlData += "<th>Amount</th>";
+        htmlData += "<th>Note</th>";
+        htmlData += "<th>Action</th>";
+        htmlData += "</tr>";
+        
+        let i = 1;
+        $.each(data, function (key, value) { 
+            htmlData += "<tr data-id='"+ value['id'] +"'>";
+            htmlData += "<td>"+ i +"</td>";
+            htmlData += "<td>"+ value['issue_date'] +"</td>";
+            htmlData += "<td>"+ value['username'] +"</td>";
+            htmlData += "<td>"+ value['password'] +"</td>";
+            htmlData += "<td>"+ value['customer_name'] +"</td>";
+            htmlData += "<td>"+ value['room_no'] +"</td>";
+            htmlData += "<td>"+ value['amount'] +"</td>";
+            htmlData += "<td>"+ value['note'] +"</td>";
+            htmlData += "<td>";
+            htmlData += "<button class='btn btn-outline-warning btn-sm btn_edit_code'><i class='bx bx-edit'></i></button>";
+            htmlData += "<button class='btn btn-outline-danger btn-sm btn_delete_code'><i class='bx bx-trash'></i></button>";
+            htmlData += "</td>";
+            htmlData += "</tr>";
+
+            i++;
+        });
+        htmlData += "</table>"
+
+        $("#div_table").html(htmlData);
+    }//load table
+
     // setTimeout(() => {
     //     $("#txt_search").on('keyup', function(){
     //     var txtSearch = $(this).val();
@@ -106,8 +148,5 @@ $(document).ready(function () {
  
     //     });
     // }, 500);
-
-  
-    
 
 });//jquery

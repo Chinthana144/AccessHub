@@ -69,6 +69,44 @@ class CodeController extends Controller
         return redirect()->route('codes.index')->with('success', 'Code updated successfully!');
     }//update
 
+    public function destroy(Request $request)
+    {
+        $camp_id = $request->input('camp_id');
+        $code_id = $request->input('code_id');
+        $search_term = $request->input('txt_search');
+
+        $code = Codes::find($code_id);
+
+        $code->delete();
+
+        if($camp_id == 0 && is_null($search_term))
+        {
+            return response()->json([
+                'success' => true,
+                'action' => 'reload'
+            ]);
+        }
+        else{
+            $codes = Codes::where('status', 1)
+            ->where('camp_id', $camp_id)
+            ->where(function($query) use ($search_term){
+                $query->where('issue_date', 'LIKE', "%{$search_term}%")
+                    ->orWhere('username', 'LIKE', "%{$search_term}%")
+                    ->orWhere('password', 'LIKE', "%{$search_term}%")
+                    ->orWhere('customer_name', 'LIKE', "%{$search_term}%")
+                    ->orWhere('room_no', 'LIKE', "%{$search_term}%");   
+            }) ->orderBy('id', 'DESC')
+            ->get();
+        
+            return response()->json([
+                'success' => true,
+                'action' => 'load',
+                'data' => $codes
+            ]);
+        }//load result
+        
+    }//destroy code
+
     public function getCodes(Request $request)
     {
         $camp_id = $request->input('camp_id');
