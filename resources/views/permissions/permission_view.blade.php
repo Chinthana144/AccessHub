@@ -9,6 +9,11 @@
             </h5>
         </div>
         <div class="card-body">
+            @if (session('success'))
+                <div class="alert">
+
+                </div>
+            @endif
             <table class="table" id="tbl_permission">
                 <tr>
                     <th>Role</th>
@@ -53,6 +58,7 @@
                         </td>
                         <td>
                             <button class="btn btn-outline-warning btn-sm btn_edit_permission"><i class="bx bx-edit"></i></button>
+                            <button class="btn btn-outline-danger btn-sm btn_delete_permission"><i class="bx bx-trash"></i></button>
                         </td>
                     </tr>
                 @endforeach
@@ -61,6 +67,7 @@
     </div>
 
     @include('permissions.add_permission_modal')
+    @include('permissions.edit_permission_modal')
 
     <script src="{{ asset('js/permission.js') }}"></script>
     

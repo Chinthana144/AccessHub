@@ -72,6 +72,8 @@ Route::middleware('auth')->group(function () {
     //permissions
     Route::get('/permissions', [PermissionController::class, 'index'])->name('permission.index');
     Route::post('/store-permission', [PermissionController::class, 'store'])->name('permission.store');
+    Route::put('/update-permission', [PermissionController::class, 'update'])->name('permission.update');
+    Route::get('delete-permission', [PermissionController::class, 'destroy']);
     Route::get('/getOnePermission', [PermissionController::class, 'getOnePermission']);
 
     //testing
