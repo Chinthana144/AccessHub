@@ -9,6 +9,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ResetController;
 use App\Http\Controllers\SheetController;
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -75,6 +76,10 @@ Route::middleware('auth')->group(function () {
     Route::put('/update-permission', [PermissionController::class, 'update'])->name('permission.update');
     Route::get('delete-permission', [PermissionController::class, 'destroy']);
     Route::get('/getOnePermission', [PermissionController::class, 'getOnePermission']);
+
+    //users
+    Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    Route::post('store-user', [UserController::class, 'store'])->name('users.store');
 
     //testing
     Route::get('/testing', [TestController::class, 'index'])->name('test.index');

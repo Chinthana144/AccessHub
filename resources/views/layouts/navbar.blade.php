@@ -73,6 +73,9 @@
                     <li class="sidebar-item">
                         <a href="/camp_access" class="sidebar-link">Camp Access</a>
                     </li>
+                    <li class="sidebar-item">
+                        <a href="{{ route('users.index') }}" class="sidebar-link">Users</a>
+                    </li>
                 </ul>
             </li>
 
