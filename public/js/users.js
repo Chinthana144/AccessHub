@@ -18,4 +18,29 @@ $(document).ready(function () {
         }
     });
 
+    $("#tbl_users").on('click', '.btn_edit_user', function(){
+        let row = $(this).closest('tr');
+        let id = row.data('id');
+
+        $.ajax({
+            type: "get",
+            url: "/getUser",
+            data: {
+                user_id: id,
+            },
+            // dataType: "dataType",
+            success: function (response) {
+                console.log(response);
+                
+                $("#edit_user_modal").modal('toggle');
+
+                $("#hide_user_id").val(id);
+                $("#cmb_edit_role").val(response['role_id']);
+                $("#edit_name").val(response['name']);
+                $("#edit_email").val(response['email']);
+            }
+        });
+
+    });
+
 });//jquery

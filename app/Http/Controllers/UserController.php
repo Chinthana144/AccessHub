@@ -10,8 +10,8 @@ class UserController extends Controller
 {
     public function index()
     {
-        $roles = Roles::all();
-        $users = User::paginate(10);
+        $roles = Roles::where('id', '>', 1)->get();
+        $users = User::where('id', '>', 1)->paginate(10);
 
         return view('users.users_view', compact('roles', 'users'));
     }//index
@@ -32,5 +32,30 @@ class UserController extends Controller
         ]);
 
         return redirect()->route('users.index');
-    }//store    
+    }//store 
+
+    //update role, name and email
+    public function update(Request $request)
+    {
+        $user_id = $request->input('hide_user_id');
+        $user = User::find($user_id);
+
+        $user->role_id = $request->input('cmb_edit_role');
+        $user->name = $request->input('edit_name');
+        $user->email = $request->input('edit_email');
+
+        $user->save();
+
+        return redirect()->rouet('users.index');
+    }//update
+    
+    //get one user
+    public function getUser (Request $request)
+    {
+        $user_id = $request->input('user_id');
+
+        $user = User::find($user_id);
+
+        return response()->json($user);
+    }//get one user
 }//class

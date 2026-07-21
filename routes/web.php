@@ -79,7 +79,9 @@ Route::middleware('auth')->group(function () {
 
     //users
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
-    Route::post('store-user', [UserController::class, 'store'])->name('users.store');
+    Route::post('/store-user', [UserController::class, 'store'])->name('users.store');
+    Route::put('/update-user', [UserController::class, 'update'])->name('users.update');
+    Route::get('/getUser', [UserController::class, 'getUser']);
 
     //testing
     Route::get('/testing', [TestController::class, 'index'])->name('test.index');
