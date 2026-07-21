@@ -46,8 +46,22 @@ class UserController extends Controller
 
         $user->save();
 
-        return redirect()->rouet('users.index');
+        return redirect()->route('users.index');
     }//update
+
+    public function updatePassword(Request $request)
+    {
+        $user_id = $request->input('pwd_change_id');
+
+        $user = User::find($user_id);
+        $new_password = $request->input('new_password');
+
+        $user->password = bcrypt($new_password);
+
+        $user->save();
+
+        return redirect()->route('users.index')->with('success', 'Password changed successfully!');
+    }//update password
     
     //get one user
     public function getUser (Request $request)

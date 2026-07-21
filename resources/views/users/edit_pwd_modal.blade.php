@@ -9,14 +9,22 @@
       <form action="" method="post">
         @csrf
         @method('PUT')
+        <input type="hidden" name="pwd_change_id" id="pwd_change_id">
         <div class="modal-body">
-            <p>Modal body text goes here.</p>
+            <p id="p_user_data"></p>
+
+            <label for="">New Password</label>
+            <input type="password" name='new_password' id="new_password" class="form-control mb-3" required>
+            
+            <label for="">Re-enter Password</label>
+            <input type="password" name='new_re_password' id="new_re_password" class="form-control mb-3" required>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+            {{-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> --}}
+            <button type="submit" class="btn btn-primary">Change Password</button>
         </div>
       </form>
+
     </div>
   </div>
 </div>

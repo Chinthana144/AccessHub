@@ -36,6 +36,7 @@
 
     @include('users.add_user_modal')
     @include('users.edit_user_modal')
+    @include('users.edit_pwd_modal')
 
     <script src="{{ asset('js/users.js') }}"></script>
 @endsection
