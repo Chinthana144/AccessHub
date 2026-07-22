@@ -81,7 +81,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::post('/store-user', [UserController::class, 'store'])->name('users.store');
     Route::put('/update-user', [UserController::class, 'update'])->name('users.update');
-    Route::put('/updatePassword', [UserController::class, 'updatePassword'])->name('');
+    Route::put('/updatePassword', [UserController::class, 'updatePassword'])->name('users.updatePassword');
     Route::get('/getUser', [UserController::class, 'getUser']);
 
     //testing

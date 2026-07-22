@@ -63,6 +63,9 @@
                     </tr>
                 @endforeach
             </table>
+            <div class='d-flex'>
+                {{$permissions->links();}}
+            </div>
         </div>
     </div>
 

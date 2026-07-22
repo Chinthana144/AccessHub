@@ -8,6 +8,8 @@
 6. Dashboard
 7. Reports
 
+* page access using gates == done
+* create, update & delete policies == pending
 
 //pages
 Dashboard

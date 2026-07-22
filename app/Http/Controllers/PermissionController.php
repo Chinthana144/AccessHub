@@ -11,10 +11,10 @@ class PermissionController extends Controller
 {
     public function index()
     {
-        $roles = Roles::all();
+        $roles = Roles::where('id', '>', 1)->get();
         $pages = Pages::all();
 
-        $permissions = Permissions::orderBy('role_id', 'ASC')->get();
+        $permissions = Permissions::orderBy('role_id', 'ASC')->paginate(10);
 
         return view('permissions.permission_view', compact('roles', 'pages', 'permissions'));
     }//index

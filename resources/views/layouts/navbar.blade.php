@@ -11,13 +11,14 @@
         </div>
         <ul class="sidebar-nav">
 
-            <li class="sidebar-item">
-                <a href="/home" class="sidebar-link">
-                    <i class="bx bx-home fs-3"></i>
-                    <span>Home</span>
-                </a>
-            </li>
-
+            @can('view-dashboard')
+                <li class="sidebar-item">
+                    <a href="/home" class="sidebar-link">
+                        <i class="bx bx-home fs-3"></i>
+                        <span>Home</span>
+                    </a>
+                </li>
+            @endcan            
             <li class="sidebar-item">
                 <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
                     data-bs-target="#sheet" aria-expanded="false" aria-controls="auth">
@@ -25,25 +26,34 @@
                     <span>Codes</span>
                 </a>
                 <ul id="sheet" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                    @can('view-codeUpload')
                     <li class="sidebar-item">
                         <a href="{{ route('codeUpload.view') }}" class="sidebar-link">Code Upload</a>
                     </li>
+                    @endcan
+                    @can('view-codes')
                     <li class="sidebar-item">
                         <a href="/codes" class="sidebar-link">Codes</a>
                     </li>
+                    @endcan
+                    @can('view-codeReset')
                     <li class="sidebar-item">
-                        <a href="/reset" class="sidebar-link">Code Reset</a>
+                        <a href="/reset" class="sidebar-link" target="_blank">Code Reset</a>
                     </li>
+                    @endcan
                 </ul>
             </li>
-
+        
+            @can('view-camps')
             <li class="sidebar-item">
                 <a href="/camps" class="sidebar-link">
                     <i class="bx bx-building fs-3"></i>
                     <span>Camps</span>
                 </a>
             </li>
+            @endcan
 
+            @can('view-sheets')
             <li class="sidebar-item">
                 <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
                     data-bs-target="#sheet" aria-expanded="false" aria-controls="auth">
@@ -59,7 +69,9 @@
                     </li>
                 </ul>
             </li>
-
+            @endcan
+            
+            @can('view-control')
             <li class="sidebar-item">
                 <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
                     data-bs-target="#auth" aria-expanded="false" aria-controls="auth">
@@ -78,7 +90,9 @@
                     </li>
                 </ul>
             </li>
+            @endcan            
 
+            @can('view-reports')
             <li class="sidebar-item">
                 <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
                     data-bs-target="#report" aria-expanded="false" aria-controls="auth">
@@ -94,13 +108,16 @@
                     </li>
                 </ul>
             </li>
-
+            @endcan
+            
+            @can('view-profile')
             <li class="sidebar-item">
                 <a href="/userProfile" class="sidebar-link">
                     <i class="bx bx-user fs-3"></i>
                     <span>User Profile</span>
                 </a>
-            </li>
+            </li>    
+            @endcan            
         </ul>
 
         {{-- logout --}}

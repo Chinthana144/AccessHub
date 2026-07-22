@@ -6,7 +6,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
 
-      <form action="" method="post">
+      <form action="{{ route('users.updatePassword') }}" method="post">
         @csrf
         @method('PUT')
         <input type="hidden" name="pwd_change_id" id="pwd_change_id">
