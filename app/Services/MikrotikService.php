@@ -148,4 +148,19 @@ class MikrotikService{
             ->read();   
     }//get address
 
+    //get users
+    public function getUsers()
+    {
+        if (!$this->isConnected) {
+            return [];
+        }
+
+        $query = (new Query('/tool/user-manager/user/print'))
+            ->where('caller-id', 'bind');
+
+        return $this->client
+            ->query($query)
+            ->read();   
+    }//get users
+
 }//class

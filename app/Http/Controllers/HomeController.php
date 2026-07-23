@@ -39,4 +39,18 @@ class HomeController extends Controller
 
         return view('home', compact('camp', 'daily_sale', 'daily_code_count', 'month_sale', 'month_code_count'));
     }//index
+
+    public function getAreaChartData(Request $request)
+    {
+        $camp_id = Session::get('active_camp_id');
+
+        $data = Codes::selectRaw('issue_date, sum(amount) as total')
+            ->groupBy('issue_date')
+            ->where('camp_id', $camp_id)
+            ->orderBy('issue_date', 'DESC')
+            ->limit(30)
+            ->get();
+
+        return response()->json($data);
+    }//get area chart
 }//class

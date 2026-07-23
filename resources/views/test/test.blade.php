@@ -17,7 +17,15 @@
                 <button class="btn btn-primary">Click</button>
             </form>
             </div>
+
+            <div class="mt-3">
+                <h5>Codes</h5>
+
+                <button class="btn btn-success btn-sm" id="btn_fetch">Fetch</button>
+            </div>
             
         </div>
     </div>
+
+    <script src="{{ asset('js/test.js') }}"></script>
 @endsection

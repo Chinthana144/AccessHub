@@ -21,11 +21,11 @@
             @endcan            
             <li class="sidebar-item">
                 <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
-                    data-bs-target="#sheet" aria-expanded="false" aria-controls="auth">
+                    data-bs-target="#codes" aria-expanded="false" aria-controls="auth">
                     <i class="bx bx-key fs-3"></i>
                     <span>Codes</span>
                 </a>
-                <ul id="sheet" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                <ul id="codes" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                     @can('view-codeUpload')
                     <li class="sidebar-item">
                         <a href="{{ route('codeUpload.view') }}" class="sidebar-link">Code Upload</a>

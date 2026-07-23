@@ -31,6 +31,7 @@ Route::middleware('auth')->group(function () {
 
     //dashboard
     Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::get('/getAreaChartData', [HomeController::class, 'getAreaChartData']);
 
     //sheets
     Route::get('/sheets', [SheetController::class, 'index'])->name('sheets.index');
@@ -87,6 +88,7 @@ Route::middleware('auth')->group(function () {
     //testing
     Route::get('/testing', [TestController::class, 'index'])->name('test.index');
     Route::post('/getSheetNames', [TestController::class, 'getSheetNames'])->name('test.sheetNames');
+    Route::get('/getUsers', [TestController::class, 'getUsers']);
 });
 
 //reset codes
