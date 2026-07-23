@@ -4,6 +4,7 @@ use App\Http\Controllers\CampAccessController;
 use App\Http\Controllers\CampController;
 use App\Http\Controllers\CodeController;
 use App\Http\Controllers\CodeResetController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ResetController;
@@ -28,9 +29,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/camp_portal', [CampAccessController::class, 'campPortal'])->name('camp_portal');
     Route::get('/goto_camp/{camp_id}', [CampAccessController::class, 'gotoCamp'])->name('gotoCamp');
 
-    Route::get('/home', function(){
-        return view('home');
-    })->name('home');
+    //dashboard
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
 
     //sheets
     Route::get('/sheets', [SheetController::class, 'index'])->name('sheets.index');
