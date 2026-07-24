@@ -27,9 +27,11 @@
 
     <div id="div_content">
         <div id="div_chart">
-            pastha...
+            <div id="div_area_chart"></div>
         </div>
     </div>
 
     <script src="{{ asset('js/home.js') }}"></script>
+    <script src="{{ asset('js/apexcharts.min.js') }}"></script>
+
 @endsection
