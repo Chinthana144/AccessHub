@@ -22,6 +22,8 @@
                 <h5>Codes</h5>
 
                 <button class="btn btn-success btn-sm" id="btn_fetch">Fetch</button>
+
+                <button class="btn btn-success btn-sm" id="btn_fetch_users">Fetch all users</button>
             </div>
             
         </div>

@@ -163,4 +163,17 @@ class MikrotikService{
             ->read();   
     }//get users
 
+    public function getAllUsers()
+    {
+       if (!$this->isConnected) {
+            return [];
+        }
+
+        $query = new Query('/tool/user-manager/user/print');
+
+        return $this->client
+            ->query($query)
+            ->read();  
+    }//get all users
+
 }//class

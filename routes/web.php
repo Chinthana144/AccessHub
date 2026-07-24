@@ -89,6 +89,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/testing', [TestController::class, 'index'])->name('test.index');
     Route::post('/getSheetNames', [TestController::class, 'getSheetNames'])->name('test.sheetNames');
     Route::get('/getUsers', [TestController::class, 'getUsers']);
+    Route::get('/getAllUsers', [TestController::class, 'getAllUsers']);
 });
 
 //reset codes

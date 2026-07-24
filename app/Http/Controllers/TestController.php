@@ -45,4 +45,22 @@ class TestController extends Controller
 
         return response()->json($user_data);
     }//get users
+
+    public function getAllUsers()
+    {
+        $sp3_camp_id = 3;
+
+        $camp = Camps::find($sp3_camp_id);
+
+        $host = $camp->mikrotikHost;
+        $user = $camp->mikrotikUsername;
+        $pwd = $camp->mikrotikPassword;
+        $port = $camp->mikrotikPort;
+
+        $mikrotikService = new MikrotikService($host, $user, $pwd, $port);
+
+        $user_data = $mikrotikService->getAllUsers();
+
+        return response()->json($user_data);
+    }//get all users
 }//class
