@@ -15,11 +15,10 @@ $(document).ready(function () {
 
                 $.each(response, function (key, value) { 
                     htmlData += "<p>";
-                    htmlData += value['.id'] + " |";
-                    htmlData += value['username'] + " | ";
-                    htmlData += value['password'] + " | ";
-                    htmlData += value['actual-profile'] + " | ";
-                    htmlData += value['caller-id'] + " | ";
+                    htmlData += value['username'];
+                    htmlData += value['password'];
+                    htmlData += value['actual-profile'];
+                    // htmlData += value['caller-id'];
                     htmlData += "</p>";
                 });
 
@@ -39,9 +38,24 @@ $(document).ready(function () {
             // data: "data",
             // dataType: "dataType",
             success: function (response) {
-                console.log(response);
+                console.log(response);    
                 
-            }
+                let htmlData = "";
+
+                htmlData += "<p>";
+                $.each(response, function (key, value) { 
+                    
+                    htmlData += value['username'] + "<br>";
+                    // htmlData += value['password'] + " ";
+                    // htmlData += value['actual-profile'] + " ";
+                    // htmlData += value['caller-id'];
+                    
+                });
+                htmlData += "</p>";
+
+                $("#div_data").html(htmlData);
+                
+            }//success
         });
 
     });

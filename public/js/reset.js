@@ -44,6 +44,28 @@ $(document).ready(function () {
 
                     var status = response['data']['disabled'] == "false" ? "Active" : "Disabled";
                     var status_class = response['data']['disabled'] == "false" ? "bg-success" : "bg-danger";
+
+                    //code status
+                    let codeStatus = "";
+                    let statusClass = "";
+                    switch (response['data']['code_status']) {
+                        case 1:
+                            codeStatus = "Generated";
+                            statusClass = "bg-primary"; 
+                        break;
+                        case 2:
+                            codeStatus = "Running";
+                            statusClass = "bg-success"; 
+                        break;
+                        case 3:
+                            codeStatus = "Expired";
+                            statusClass = "bg-warning";  
+                        break;
+                        default:
+                            codeStatus = "Undefined";
+                            statusClass = "bg-danger"; 
+                        break;
+                    }//switch
                     
                     htmlData += "<p class='mt-2'>Status: <span class='"+ status_class +"'>"+ status +"</span></p>";
 
@@ -66,6 +88,11 @@ $(document).ready(function () {
                     htmlData += "<p>";
                     htmlData += "Login Date: <b>"+ response['data']['start_time'] +"</b></br>";
                     htmlData += "Expire Date: <b>"+ response['data']['end_time'] +"</b></br>";
+                    htmlData += "<span class='text-warning'>Expire date accuracy: ± 15 minutes</span>";
+                    htmlData += "</p>";
+
+                    htmlData += "<p class='"+ statusClass +"'>";
+                    htmlData += "Code Status: <b>"+ codeStatus +"</b></br>";
                     htmlData += "</p>";
                 }//response success
                 else

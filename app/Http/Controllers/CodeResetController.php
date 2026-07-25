@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Camps;
+use App\Models\CodeUsage;
 use App\Services\MikrotikService;
 use DateTime;
 use Illuminate\Http\Request;
@@ -79,24 +80,31 @@ class CodeResetController extends Controller
             $username = $user_data[0]['username'];
             $password = $user_data[0]['password'];
 
-            $start_time = "";
-            if(isset($user_data[0]['comment']))
-            {
-                if($user_data[0]['comment'] != "")
-                {
-                    $date_time = new DateTime($user_data[0]['comment']);
-                    // $date_time->format("Y-m-d H:i:s");
-                    $start_time = $date_time->format("Y-m-d H:i:s");
-                }
-                else
-                {
-                    $start_time = "N/A";   
-                }
-            }//has commet
-            else
-            {
-                $start_time = "N/A";
-            }
+            $code_data = CodeUsage::where('camp_id', $camp_id)
+                ->where('username', $username)
+                ->first();
+
+            $code_login_at = $code_data['first_login_at'] ?? '';
+            $code_expire_at = $code_data['expire_at'] ?? '';
+            $code_status = $code_data['status'] ?? 0;
+
+            // $start_time = "";
+            // if(isset($user_data[0]['comment']))
+            // {
+            //     if($user_data[0]['comment'] != "")
+            //     {
+            //         $date_time = new DateTime($user_data[0]['comment']);
+            //         $start_time = $date_time->format("Y-m-d H:i:s");
+            //     }
+            //     else
+            //     {
+            //         $start_time = "N/A";   
+            //     }
+            // }//has commet
+            // else
+            // {
+            //     $start_time = "N/A";
+            // }
             
             $lease_data = $mikrotikService->getAddress($mac);
 
@@ -106,26 +114,14 @@ class CodeResetController extends Controller
             //get mac type
             $mac_data = $this->getMacType($mac);
 
-            //get days
-            $days = $this->getProfileDays($profile);
-            try {
-                $date = new DateTime($start_time);
-                $date->modify('+'.$days." days");
-                $date = $date->format("Y-m-d H:i:s");
-                } 
-            catch (\Throwable $th) {
-                    $date = "";
-                }
-
             $data = [
                 'code_id' => $code_id,
-                'active' => $active,
+                'code_status' => $code_status,
                 'profile' => $profile,
                 'mac' => $mac,
                 'mac_type' => $mac_data['type'],
-                'start_time' => $start_time,
-                'days' => $days,
-                'end_time' => $date,
+                'start_time' => $code_login_at,
+                'end_time' => $code_expire_at,
                 'disabled' => $disabled,
                 'username' => $username,
                 'password' => $password,

@@ -90,6 +90,18 @@ body{
     padding: 4px 8px;
     border-radius: 5px;
 }
+.bg-primary{
+    background-color: rgb(27, 36, 217);
+    color: whitesmoke;
+    padding: 4px 8px;
+    border-radius: 5px;
+}
+.bg-warning{
+    background-color: rgb(207, 213, 23);
+    color: black;
+    padding: 4px 8px;
+    border-radius: 5px;
+}
 .bg-danger{
     background-color: firebrick;
     color: whitesmoke;
@@ -99,6 +111,12 @@ body{
 .text-success{
     background-color: rgb(14, 112, 14);
     color: whitesmoke;
+    padding: 5px;
+    border-radius: 5px;
+}
+.text-warning{
+    /* background-color: rgb(164, 159, 12); */
+    color: rgb(185, 173, 9);
     padding: 5px;
     border-radius: 5px;
 }
