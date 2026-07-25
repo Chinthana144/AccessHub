@@ -9,8 +9,22 @@ $(document).ready(function () {
             // data: ,
             // dataType: "dataType",
             success: function (response) {
-                console.log(response);                
-            }
+                console.log(response);    
+                
+                let htmlData = "";
+
+                $.each(response, function (key, value) { 
+                    htmlData += "<p>";
+                    htmlData += value['.id'] + " |";
+                    htmlData += value['username'] + " | ";
+                    htmlData += value['password'] + " | ";
+                    htmlData += value['actual-profile'] + " | ";
+                    htmlData += value['caller-id'] + " | ";
+                    htmlData += "</p>";
+                });
+
+                $("#div_data").html(htmlData);
+            }//success
         });
 
     });

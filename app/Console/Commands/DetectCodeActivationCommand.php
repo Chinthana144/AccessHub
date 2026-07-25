@@ -33,11 +33,11 @@ class DetectCodeActivationCommand extends Command
         $this->info('Start codes checking...');
 
         $camps = Camps::where('status', 1)->get();
+        $dubai_time = Carbon::now('Asia/Dubai');        
+        $binded_users = 0;
 
         foreach($camps as $camp)
         {
-            $dubai_time = Carbon::now('Asia/Dubai');
-
             $host = $camp->mikrotikHost;
             $user = $camp->mikrotikUsername;
             $pwd = $camp->mikrotikPassword;
@@ -47,42 +47,54 @@ class DetectCodeActivationCommand extends Command
 
             $user_data = $mikrotikService->getAllUsers();
 
+            $this->info("scanning camp: " . $camp->name);
+
             foreach($user_data as $user)
-            {
-                if($user['caller-id'] == "bind" || $user['caller-id'] == "")
+            { 
+                if(isset($user['caller-id']) && strlen($user['caller-id']) > 4)
                 {
-                    continue;
-                }//not connected
-                else
-                {
-                    //check user login status
+                    $today = new DateTime($dubai_time);
                     $new_user = CodeUsage::where('camp_id', $camp->id)
                         ->where('username', $user['username'])
                         ->first();
 
                     if($new_user['status'] > 1)
                     {
+                        $binded_users += 1;
+
+                        $code_expire_date = new DateTime($new_user['expire_at']);
+
+                        if($today > $code_expire_date)
+                        {
+                            $new_user->status = 3;
+                            $new_user->save();
+                        }//expired user
+
                         continue;
                     }
-                    else
-                    {
-                        $profile = $user['actual-profile'];
-                        $days = $this->getProfileDays($profile);
+                    $this->info('user: '. $user['username'] .' | mac: '. $user['caller-id']);
+                    $profile = $user['actual-profile'] ?? 'Unlimited 30 Days';
+                    $days = $this->getProfileDays($profile);
 
-                        $today = new DateTime($dubai_time);
-                        $expire_day = $dubai_time->modify('+'.$days.' days');
-                        $expire_time = $expire_day->modify('-15 minutes');
+                    $expire_day = $today->modify('+'.$days.' days');
+                    $expire_time = $expire_day->modify('-15 minutes');
 
-                        $new_user->first_login_at = $dubai_time->format('Y-m-d H:i:s');
-                        $new_user->expire_at = $expire_time;
-                        $new_user->status = 2;
+                    $new_user->first_login_at = $dubai_time->format('Y-m-d H:i:s');
+                    $new_user->expire_at = $expire_time;
+                    $new_user->status = 2;
 
-                        $new_user->save();
-                    }//generated user
+                    $new_user->save();
                 }//has mac address
+
             }//foreach user
         }//foreach camp
-    }
+        
+        $this->info('binded users: ' . $binded_users);
+        $this->info('Codes updated successfully...');
+
+        return self::SUCCESS;
+
+    }//handle
 
     protected function getProfileDays(string $profile)
     {
@@ -91,6 +103,6 @@ class DetectCodeActivationCommand extends Command
         $remove_space = str_replace(" ", '', $remove_days);
 
         return intval($remove_space);
-    }
+    }//get profile days
 
 }//class

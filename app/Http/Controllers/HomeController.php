@@ -51,6 +51,8 @@ class HomeController extends Controller
             ->limit(30)
             ->get();
 
+        $data = $data->reverse()->values();
+
         return response()->json($data);
     }//get area chart
 }//class

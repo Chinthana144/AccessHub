@@ -25,6 +25,10 @@
 
                 <button class="btn btn-success btn-sm" id="btn_fetch_users">Fetch all users</button>
             </div>
+
+            <div class="mt-3">
+                <div id="div_data"></div>
+            </div>
             
         </div>
     </div>
