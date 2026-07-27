@@ -101,7 +101,7 @@
                 </a>
                 <ul id="report" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                     <li class="sidebar-item">
-                        <a href="#" class="sidebar-link">Sales Reports</a>
+                        <a href="/sales-reports" class="sidebar-link">Sales Reports</a>
                     </li>
                     <li class="sidebar-item">
                         <a href="#" class="sidebar-link">Summary</a>

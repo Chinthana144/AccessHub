@@ -7,6 +7,7 @@ use App\Http\Controllers\CodeResetController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\ResetController;
 use App\Http\Controllers\SheetController;
 use App\Http\Controllers\TestController;
@@ -75,7 +76,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/permissions', [PermissionController::class, 'index'])->name('permission.index');
     Route::post('/store-permission', [PermissionController::class, 'store'])->name('permission.store');
     Route::put('/update-permission', [PermissionController::class, 'update'])->name('permission.update');
-    Route::get('delete-permission', [PermissionController::class, 'destroy']);
+    Route::get('/delete-permission', [PermissionController::class, 'destroy']);
     Route::get('/getOnePermission', [PermissionController::class, 'getOnePermission']);
 
     //users
@@ -84,6 +85,10 @@ Route::middleware('auth')->group(function () {
     Route::put('/update-user', [UserController::class, 'update'])->name('users.update');
     Route::put('/updatePassword', [UserController::class, 'updatePassword'])->name('users.updatePassword');
     Route::get('/getUser', [UserController::class, 'getUser']);
+
+    //reports
+    Route::get('/sales-reports', [ReportsController::class, 'index'])->name('sales.reports');
+    Route::get('/salesDetailReport', [ReportsController::class, 'salesDetailReport']);
 
     //testing
     Route::get('/testing', [TestController::class, 'index'])->name('test.index');
