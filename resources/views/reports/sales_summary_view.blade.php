@@ -3,10 +3,10 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            <h5>Sales Detail Report</h5>
+            <h5>Sale Summary Report</h5>
         </div>
         <div class="card-body">
-            <form action="{{ route('report.salesDetails') }}" method="get">
+            <form action="" method="get">
                 @csrf
                 <div class="row">
                     <div class="col-md-3">
@@ -44,28 +44,6 @@
             </form>
 
             @if (isset($data))
-                <table class="table">
-                    <tr>
-                        <th>#</th>
-                        <th>Date</th>
-                        <th>Username</th>
-                        <th>Password</th>
-                        <th>Name</th>
-                        <th>Room No</th>
-                        <th>Amount</th>
-                    </tr>
-                    @foreach ($data as $dt)
-                        <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ $dt['issue_date'] }}</td>
-                            <td>{{ $dt['username'] }}</td>
-                            <td>{{ $dt['password'] }}</td>
-                            <td>{{ $dt['customer_name'] }}</td>
-                            <td>{{ $dt['room_no'] }}</td>
-                            <td>{{ $dt['amount'] }}</td>
-                        </tr>
-                    @endforeach
-                </table>
                 
             @endif
         </div>

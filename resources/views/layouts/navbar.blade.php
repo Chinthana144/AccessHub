@@ -351,7 +351,7 @@
     </div>
     <div id="footer">
         <p>
-            © 2025 Trizent. All rights reserved.
+            © 2026 Trizent. All rights reserved.
             <br>
             Powered by Trizent Software.
         </p>

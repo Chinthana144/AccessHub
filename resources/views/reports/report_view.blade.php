@@ -10,6 +10,9 @@
                 <div class="col-md-3">
                     <a href="/salesDetailReport" class="btn btn-primary">Daily Sales Report</a>
                 </div>  
+                <div class="col-md-3">
+                    <a href="/saleSummartReport" class="btn btn-primary">Sale Summary Report</a>
+                </div>  
             </div>
         </div>
     </div>

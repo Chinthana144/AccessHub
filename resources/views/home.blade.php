@@ -27,6 +27,7 @@
 
     <div id="div_content">
         <div id="div_chart">
+            <h5>Monthly Sales Chart</h5>
             <div id="div_area_chart"></div>
         </div>
     </div>

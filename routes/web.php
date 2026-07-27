@@ -89,6 +89,8 @@ Route::middleware('auth')->group(function () {
     //reports
     Route::get('/sales-reports', [ReportsController::class, 'index'])->name('sales.reports');
     Route::get('/salesDetailReport', [ReportsController::class, 'salesDetailReport']);
+    Route::get('/rptSalesDetail', [ReportsController::class, 'rptSalesDetail'])->name('report.salesDetails');
+    Route::get('/saleSummartReport', [ReportsController::class, 'saleSummartReport']);
 
     //testing
     Route::get('/testing', [TestController::class, 'index'])->name('test.index');

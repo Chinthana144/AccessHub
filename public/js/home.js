@@ -24,7 +24,7 @@ $(document).ready(function () {
 
                 var chart = {
                     chart: {
-                        height: 280,
+                        height: 380,
                         type: "area"
                     },
                     dataLabels: {
