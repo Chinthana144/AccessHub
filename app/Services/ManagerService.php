@@ -27,7 +27,18 @@ class ManagerService{
             // echo "Connection failed: " . $e->getMessage();
             $this->isConnected = false; // failed
         }
-    } //constructor
+    }//constructor
+
+    public function generalCLI(string $txtCli)
+    {
+        if (!$this->isConnected) {
+            return [];
+        }
+
+        return $this->client
+            ->query($txtCli)
+            ->read();
+    }//general CLI
 
     public function getOneUser(string $username)
     {
@@ -54,5 +65,19 @@ class ManagerService{
             ->query($query)
             ->read();  
     }//get all users
+
+    public function testing(string $parameter)
+    {
+        if (!$this->isConnected) {
+            return [];
+        }
+
+        $query = (new Query('/tool/user-manager/user/print'))
+            ->where('username', '34395');
+
+        return $this->client
+            ->query($query)
+            ->read();
+    }//get one user
 
 }//class

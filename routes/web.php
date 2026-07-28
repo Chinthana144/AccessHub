@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CampAccessController;
 use App\Http\Controllers\CampController;
 use App\Http\Controllers\CodeController;
@@ -98,6 +99,14 @@ Route::middleware('auth')->group(function () {
     Route::post('/getSheetNames', [TestController::class, 'getSheetNames'])->name('test.sheetNames');
     Route::get('/getUsers', [TestController::class, 'getUsers']);
     Route::get('/getAllUsers', [TestController::class, 'getAllUsers']);
+
+    //admin middleware
+    Route::middleware('admin')->group(function(){
+        Route::get('/admin', [AdminController::class, 'index']);
+        Route::get('/general-cli', [AdminController::class, 'generalCli']);
+        Route::get('/testing-cli', [AdminController::class, 'testing']);
+    });//admin middleware
+
 });
 
 //reset codes
