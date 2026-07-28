@@ -91,6 +91,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/salesDetailReport', [ReportsController::class, 'salesDetailReport']);
     Route::get('/rptSalesDetail', [ReportsController::class, 'rptSalesDetail'])->name('report.salesDetails');
     Route::get('/saleSummartReport', [ReportsController::class, 'saleSummartReport']);
+    Route::get('/rptSaleSummary', [ReportsController::class, 'rptSaleSummary'])->name('report.saleSummary');
 
     //testing
     Route::get('/testing', [TestController::class, 'index'])->name('test.index');

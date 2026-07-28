@@ -6,7 +6,7 @@
             <h5>Sale Summary Report</h5>
         </div>
         <div class="card-body">
-            <form action="" method="get">
+            <form action="{{ route('report.saleSummary') }}" method="get">
                 @csrf
                 <div class="row">
                     <div class="col-md-3">
@@ -44,7 +44,47 @@
             </form>
 
             @if (isset($data))
-                
+                <table class="table">
+                    <tr>
+                        <th>#</th>
+                        <th>Date</th>
+                        <th>30 AED</th>
+                        <th>15 AED</th>
+                        <th>Free</th>
+                        <th>Total</th>
+                    </tr>
+                    @php
+                        $total_30 = 0;
+                        $total_15 = 0;
+                        $free = 0;
+                        $total_count = 0;
+                    @endphp
+                    @foreach ($data as $dt)
+                        @php
+                            $total_30 += $dt[1];
+                            $total_15 += $dt[2];
+                            $free += $dt[3];
+                            $total_count += $dt[4];
+                        @endphp
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $dt[0] }}</td>
+                            <td>{{ $dt[1] }}</td>
+                            <td>{{ $dt[2] }}</td>
+                            <td>{{ $dt[3] }}</td>
+                            <td>{{ $dt[4] }}</td>
+                        </tr>
+                    @endforeach
+                    <tfoot>
+                        <tr>
+                            <td colspan="2">Totals</td>
+                            <td>{{ $total_30 }}</td>
+                            <td>{{ $total_15 }}</td>
+                            <td>{{ $free }}</td>
+                            <td>{{ $total_count }}</td>
+                        </tr>
+                    </tfoot>
+                </table>
             @endif
         </div>
     </div>

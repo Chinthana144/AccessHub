@@ -84,7 +84,60 @@ class ReportsController extends Controller
         $start_date = $request->input('start_date');
         $end_date = $request->input('end_date');
 
-        $data = Codes::select('issue_date')
-            ->where('camp_id', $camp_id);
-    }
+        $days = Codes::select('issue_date')
+            ->where('camp_id', $camp_id)
+            ->whereBetween('issue_date', [$start_date, $end_date])
+            ->groupBy('issue_date')
+            ->get();
+
+        $data = [];    
+
+        foreach ($days as $day) 
+        {
+            $price_30_count = Codes::where('camp_id', $camp_id)
+                ->where('issue_date', $day['issue_date'])
+                ->where('amount', 30)
+                ->count('amount');
+
+            $price_15_count = Codes::where('camp_id', $camp_id)
+                ->where('issue_date', $day['issue_date'])
+                ->where('amount', 15)
+                ->count('amount');
+
+            $free_count = Codes::where('camp_id', $camp_id)
+                ->where('issue_date', $day['issue_date'])
+                ->where('amount', 0)
+                ->count('amount');
+
+            $total_count = Codes::where('camp_id', $camp_id)
+                ->where('issue_date', $day['issue_date'])               
+                ->count('amount');
+
+            $data[] = [
+                $day['issue_date'],
+                $price_30_count,
+                $price_15_count,
+                $free_count,
+                $total_count
+            ];
+        }//foreach
+        
+        //action
+        switch ($request->action) {
+            case 'search':
+                return view('reports.sales_summary_view', compact('user_camps', 'camp_id', 'start_date', 'end_date', 'data'));
+            break;
+            
+            case 'pdf' : 
+                $pdf = Pdf::loadView('pdf.rptSaleSummary', compact('data', 'camp', 'camp_id', 'start_date', 'end_date'));
+
+                return $pdf->stream('sale_summary_from_'. $start_date." to ". $end_date .'.pdf');
+            break;
+            default:
+                # code...
+            break;
+        }
+
+        
+    }//rpt sale summary
 }//class
