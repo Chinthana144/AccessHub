@@ -112,7 +112,7 @@
             
             @can('view-profile')
             <li class="sidebar-item">
-                <a href="/userProfile" class="sidebar-link">
+                <a href="#" class="sidebar-link">
                     <i class="bx bx-user fs-3"></i>
                     <span>User Profile</span>
                 </a>
