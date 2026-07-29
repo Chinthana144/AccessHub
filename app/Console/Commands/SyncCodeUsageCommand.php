@@ -5,7 +5,9 @@ namespace App\Console\Commands;
 use App\Models\Camps;
 use App\Models\CodeUsage;
 use App\Services\MikrotikService;
+use DateTime;
 use Illuminate\Console\Command;
+use Illuminate\Support\Carbon;
 
 class SyncCodeUsageCommand extends Command
 {
@@ -52,6 +54,22 @@ class SyncCodeUsageCommand extends Command
                     ->exists();
                 if($user_exists)
                 {
+                    $old_code = CodeUsage::where('camp_id', $camp->id)
+                        ->where('username', $user['username'])
+                        ->first();
+                    $code_expire = new DateTime($old_code->expire_at);
+
+                    $dubai_time = new DateTime(Carbon::now('Asia/Dubai'));
+
+                    $interval = $dubai_time->diff($code_expire);
+
+                    if( intval($interval->days) > 30)
+                    {
+                        $this->info($user['username'] . " expired 30 days ago.");
+                        $old_code->delete();
+                    }//expired months ago
+                    // $this->info($dubai_time->format('Y-m-d H:i:s') . " - " . $code_expire->format("Y-m-d H:i:s") . " = " . $interval->days);
+
                     continue;
                 }//user exist
                 else

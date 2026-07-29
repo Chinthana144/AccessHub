@@ -16,28 +16,41 @@ class HomeController extends Controller
         $camp = Camps::find($active_camp_id);
 
         $last_code = Codes::orderBy('id', 'DESC')->first();
-        $issue_date = $last_code['issue_date'];
 
-        $daily_sale = Codes::where('issue_date', $issue_date)
-            ->where('camp_id', $active_camp_id)
-            ->sum('amount');
+        if($last_code)
+        {
+            $issue_date = $last_code['issue_date'];
 
-        $daily_code_count = Codes::where('issue_date', $issue_date)
-            ->where('camp_id', $active_camp_id)
-            ->count('id');
+            $daily_sale = Codes::where('issue_date', $issue_date)
+                ->where('camp_id', $active_camp_id)
+                ->sum('amount');
 
-        $month_start = date('Y-m-01', strtotime($issue_date));
-        $month_end = date('Y-m-t', strtotime($issue_date));
+            $daily_code_count = Codes::where('issue_date', $issue_date)
+                ->where('camp_id', $active_camp_id)
+                ->count('id');
 
-        $month_sale = Codes::whereBetween('issue_date', [$month_start, $month_end])
-            ->where('camp_id', $active_camp_id)
-            ->sum('amount');
+            $month_start = date('Y-m-01', strtotime($issue_date));
+            $month_end = date('Y-m-t', strtotime($issue_date));
 
-        $month_code_count = Codes::whereBetween('issue_date', [$month_start, $month_end])
-            ->where('camp_id', $active_camp_id)
-            ->count('id');
+            $month_sale = Codes::whereBetween('issue_date', [$month_start, $month_end])
+                ->where('camp_id', $active_camp_id)
+                ->sum('amount');
 
-        return view('home', compact('camp', 'daily_sale', 'daily_code_count', 'month_sale', 'month_code_count'));
+            $month_code_count = Codes::whereBetween('issue_date', [$month_start, $month_end])
+                ->where('camp_id', $active_camp_id)
+                ->count('id');
+
+            return view('home', compact('camp', 'daily_sale', 'daily_code_count', 'month_sale', 'month_code_count'));
+        }//has data
+        else
+        {
+            $daily_sale = 0;
+            $daily_code_count = 0;
+            $month_sale = 0;
+            $month_code_count = 0;
+            return view('home', compact('camp', 'daily_sale', 'daily_code_count', 'month_sale', 'month_code_count'));
+        }//no data
+        
     }//index
 
     public function getAreaChartData(Request $request)

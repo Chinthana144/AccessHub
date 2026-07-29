@@ -87,6 +87,10 @@ Route::middleware('auth')->group(function () {
     Route::put('/updatePassword', [UserController::class, 'updatePassword'])->name('users.updatePassword');
     Route::get('/getUser', [UserController::class, 'getUser']);
 
+    //profile
+    Route::get('/profile', [UserController::class, 'profile'])->name('profile.view');
+    Route::put('/changePassword', [UserController::class, 'changePassword'])->name('profile.change-password');
+
     //reports
     Route::get('/sales-reports', [ReportsController::class, 'index'])->name('sales.reports');
     Route::get('/salesDetailReport', [ReportsController::class, 'salesDetailReport']);

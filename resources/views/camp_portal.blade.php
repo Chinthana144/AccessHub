@@ -9,7 +9,15 @@
 </head>
 <body>
     <div id="div_top_bar">
-        <h4>Camp Portal</h4>
+        <h4>
+            Camp Portal
+            <form action="{{ route('logout') }}" method="post">
+                @csrf
+                <button id="btn_logout">
+                    Logout
+                </button>
+            </form>
+        </h4>
     </div>
     <div id="div_content">
         @foreach ($user_camps as $user_camp)

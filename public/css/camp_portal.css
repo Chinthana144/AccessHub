@@ -17,6 +17,22 @@ body{
 
 }
 
+#btn_logout{
+    position: fixed;
+    right: 10px;
+    top: 5px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: rgb(7, 92, 218);
+    color: rgb(252, 247, 247);
+    transition: 0.3s ease;
+}
+#btn_logout:hover{
+    background-color: rgb(22, 85, 179);
+    color: white;
+}
+
 #div_content{
     padding: 10px;
     border: 1px solid blue;
