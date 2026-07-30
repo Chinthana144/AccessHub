@@ -1,13 +1,18 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CampAccessController;
 use App\Http\Controllers\CampController;
 use App\Http\Controllers\CodeController;
 use App\Http\Controllers\CodeResetController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\ResetController;
 use App\Http\Controllers\SheetController;
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -26,9 +31,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/camp_portal', [CampAccessController::class, 'campPortal'])->name('camp_portal');
     Route::get('/goto_camp/{camp_id}', [CampAccessController::class, 'gotoCamp'])->name('gotoCamp');
 
-    Route::get('/home', function(){
-        return view('home');
-    })->name('home');
+    //dashboard
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::get('/getAreaChartData', [HomeController::class, 'getAreaChartData']);
 
     //sheets
     Route::get('/sheets', [SheetController::class, 'index'])->name('sheets.index');
@@ -41,8 +46,14 @@ Route::middleware('auth')->group(function () {
 
     //codes
     Route::get('/codes', [CodeController::class, 'index'])->name('codes.index');
+    Route::get('/code_upload_view', [CodeController::class, 'codeUploadView'])->name('codeUpload.view');
     Route::get('/getCodes', [CodeController::class, 'getCodes']);
     Route::get('/getCodesByDate', [CodeController::class, 'getCodesByDate']);
+    Route::get('/codeUpload', [CodeController::class, 'codeUpload']);
+    Route::get('/codeSearch', [CodeController::class, 'codeSearch']);
+    Route::get('/getOneCode', [CodeController::class, 'getOneCode']);
+    Route::put('/update_code',[CodeController::class, 'update'])->name('codes.update');
+    Route::get('/delete_code', [CodeController::class, 'destroy'])->name('codes.destroy');
 
     //code reset
     Route::get('/code_reset', [CodeResetController::class, 'index'])->name('codeReset.index');
@@ -62,9 +73,44 @@ Route::middleware('auth')->group(function () {
     Route::post('/store-camp_access', [CampAccessController::class, 'store'])->name('campAccess.store');
     Route::delete('/remove-camp_access', [CampAccessController::class, 'remove'])->name('campAccess.remove');
 
+    //permissions
+    Route::get('/permissions', [PermissionController::class, 'index'])->name('permission.index');
+    Route::post('/store-permission', [PermissionController::class, 'store'])->name('permission.store');
+    Route::put('/update-permission', [PermissionController::class, 'update'])->name('permission.update');
+    Route::get('/delete-permission', [PermissionController::class, 'destroy']);
+    Route::get('/getOnePermission', [PermissionController::class, 'getOnePermission']);
+
+    //users
+    Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    Route::post('/store-user', [UserController::class, 'store'])->name('users.store');
+    Route::put('/update-user', [UserController::class, 'update'])->name('users.update');
+    Route::put('/updatePassword', [UserController::class, 'updatePassword'])->name('users.updatePassword');
+    Route::get('/getUser', [UserController::class, 'getUser']);
+
+    //profile
+    Route::get('/profile', [UserController::class, 'profile'])->name('profile.view');
+    Route::put('/changePassword', [UserController::class, 'changePassword'])->name('profile.change-password');
+
+    //reports
+    Route::get('/sales-reports', [ReportsController::class, 'index'])->name('sales.reports');
+    Route::get('/salesDetailReport', [ReportsController::class, 'salesDetailReport']);
+    Route::get('/rptSalesDetail', [ReportsController::class, 'rptSalesDetail'])->name('report.salesDetails');
+    Route::get('/saleSummartReport', [ReportsController::class, 'saleSummartReport']);
+    Route::get('/rptSaleSummary', [ReportsController::class, 'rptSaleSummary'])->name('report.saleSummary');
+
     //testing
     Route::get('/testing', [TestController::class, 'index'])->name('test.index');
     Route::post('/getSheetNames', [TestController::class, 'getSheetNames'])->name('test.sheetNames');
+    Route::get('/getUsers', [TestController::class, 'getUsers']);
+    Route::get('/getAllUsers', [TestController::class, 'getAllUsers']);
+
+    //admin middleware
+    Route::middleware('admin')->group(function(){
+        Route::get('/admin', [AdminController::class, 'index']);
+        Route::get('/general-cli', [AdminController::class, 'generalCli']);
+        Route::get('/testing-cli', [AdminController::class, 'testing']);
+    });//admin middleware
+
 });
 
 //reset codes

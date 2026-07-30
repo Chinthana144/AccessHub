@@ -110,6 +110,7 @@ class MikrotikService{
 
         $query = (new Query('/tool/user-manager/user/set'))
             ->equal('.id', $id)
+            ->equal('caller-id', 'bind')
             ->equal('disabled', 'false');
 
         return $this->client
@@ -146,5 +147,33 @@ class MikrotikService{
             ->query($query)
             ->read();   
     }//get address
+
+    //get users
+    public function getUsers()
+    {
+        if (!$this->isConnected) {
+            return [];
+        }
+
+        $query = (new Query('/tool/user-manager/user/print'))
+            ->where('caller-id', 'bind');
+
+        return $this->client
+            ->query($query)
+            ->read();   
+    }//get users
+
+    public function getAllUsers()
+    {
+       if (!$this->isConnected) {
+            return [];
+        }
+
+        $query = new Query('/tool/user-manager/user/print');
+
+        return $this->client
+            ->query($query)
+            ->read();  
+    }//get all users
 
 }//class

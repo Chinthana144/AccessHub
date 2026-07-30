@@ -19,7 +19,7 @@ $(document).ready(function () {
                     $("#cmb_sheet").empty();
                     $("#cmb_sheet").append("<option value='0'>--- Select Sheet ---</option>");
                     $.each(response, function (key, value) { 
-                        $("#cmb_sheet").append("<option value='"+value['name']+"'>"+ value['name'] +"</option>");
+                        $("#cmb_sheet").append("<option value='"+value['id']+"'>"+ value['name'] +"</option>");
                     });
                 }
             });
@@ -29,32 +29,11 @@ $(document).ready(function () {
         }
     });
 
-    //remove this later
-    // $("#btn_fetch_codes").click(function (e) { 
-    //     e.preventDefault();
-
-    //     var campID = $("#cmb_camp").val();
-    //     var sheetName = $("#cmb_sheet").val();
-        
-    //     $.ajax({
-    //         type: "get",
-    //         url: "/getCodes",
-    //         data: {
-    //             camp_id: campID,
-    //             sheet_name: sheetName
-    //         },
-    //         // dataType: "dataType",
-    //         success: function (response) {
-    //             console.log(response);
-    //         }
-    //     });
-    // });
-
     $("#btn_fetch_by_date").click(function (e) { 
         e.preventDefault();
         
         var campID = $("#cmb_camp").val();
-        var sheetName = $("#cmb_sheet").val();
+        var sheetID = $("#cmb_sheet").val();
         var sheet_date = $("#sheet_date").val();
 
         $.ajax({
@@ -62,12 +41,12 @@ $(document).ready(function () {
             url: "/getCodesByDate",
             data: {
                 camp_id: campID,
-                sheet_name: sheetName,
+                sheet_id: sheetID,
                 sheet_date: sheet_date
             },
             // dataType: "dataType",
             beforeSend: function(){
-                $("#tbl_codes").html("");
+                $("#div_table").html("");
                 $("#div_totals").html("");
                 $("#loader").removeClass("loader-hidden").addClass('loader');
             },
@@ -83,6 +62,7 @@ $(document).ready(function () {
                 let free_count = 0;
 
                 var htmlData = "";
+                htmlData += "<table class='table table-bordered mt-2'>";
                 htmlData += "<tr>";
                 htmlData += "<th>#</th>";
                 htmlData += "<th>Date</th>";
@@ -91,6 +71,7 @@ $(document).ready(function () {
                 htmlData += "<th>Name</th>";
                 htmlData += "<th>Room No</th>";
                 htmlData += "<th>Amount</th>";
+                htmlData += "<th>Note</th>";
                 htmlData += "</tr>";
 
                 
@@ -112,6 +93,7 @@ $(document).ready(function () {
                     htmlData += "<td>"+ value['name'] +"</td>";
                     htmlData += "<td>"+ value['room_no'] +"</td>";
                     htmlData += "<td>"+ amount.toFixed(2) +"</td>";
+                    htmlData += "<td>"+ value['note'] +"</td>";
                     htmlData += "</tr>";
                     i++;
                 });//each
@@ -120,8 +102,9 @@ $(document).ready(function () {
                 htmlData += "<th colspan='6' class='text-e'>Total</th>";
                 htmlData += "<th>"+ total.toFixed(2) +"</th>";
                 htmlData += "</tr>";
+                htmlData += "<table>";
 
-                $("#tbl_codes").html(htmlData);
+                $("#div_table").html(htmlData);
 
                 //show totals
                 let htmlTotals = "";
@@ -135,6 +118,51 @@ $(document).ready(function () {
             }
         });
 
+    });
+
+    $("#btn_submit").click(function (e) { 
+        e.preventDefault();
+        var campID = $("#cmb_camp").val();
+        var sheetID= $("#cmb_sheet").val();
+        var sheet_date = $("#sheet_date").val();
+
+        $.ajax({
+            type: "get",
+            url: "/codeUpload",
+            data: {
+                camp_id: campID,
+                sheet_id: sheetID,
+                sheet_date : sheet_date,
+            },
+            // dataType: "dataType",
+            beforeSend: function(){
+                $("#div_table").html("");
+                $("#div_totals").html("");
+                $("#loader").removeClass("loader-hidden").addClass('loader');
+            },
+            complete: function(){
+                $("#loader").removeClass("loader").addClass('loader-hidden');
+            },
+            success: function (response) {
+                console.log(response); 
+                
+                let htmlData = "";
+
+                if(response['success'])
+                {
+                    htmlData = "<div class='alert alert-success mt-2' role='alert'>";
+                    htmlData += "Codes uploaded successfully!";
+                    htmlData += "</div>";                    
+                }//success
+                else{
+                    htmlData = "<div class='alert alert-warning mt-2' role='alert'>";
+                    htmlData += response['message'];
+                    htmlData += "</div>";
+                }//else
+
+                $("#div_table").html(htmlData);
+            }//success
+        });
     });
 
 });//jquery

@@ -1,0 +1,46 @@
+#div_top{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+.div_box{
+    width: 20%;
+    padding: 10px 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0px 2px 3px 1px gray;
+    color: white;
+}
+
+#div_sale_box{
+    background-color: #4e73df;
+}
+#div_code_count{
+    background-color: #1cc88a;
+}
+#div_month_sale_box{
+    background-color: #f6c23e;
+}
+#div_month_code_count{
+    background-color: #e74a3b;
+}
+
+/* content */
+#div_content{
+    padding: 5px;
+}
+#div_chart{
+    margin-top: 10px;
+    border-radius: 10px;
+    padding: 10px 5px;
+    box-shadow: 2px 2px 5px 1px gray;
+}
+#div_chart h5{
+    margin-left: 20px;
+}
+
+@media screen and (max-width: 768px) {
+    #div_top{
+        display: none;
+    }
+}

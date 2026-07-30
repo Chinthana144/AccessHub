@@ -14,9 +14,10 @@ class CampAccessController extends Controller
     public function index()
     {
         $camps = Camps::where('status', 1)->get();
-        $users = User::all();
+        $users = User::where('id', '>', 1)->get();
 
-        $camp_accesses = CampAccess::paginate(10);
+        $camp_accesses = CampAccess::where('user_id', '>', 1)
+            ->paginate(10);
 
         return view('campAccess.camp_access_view', compact('camps', 'users', 'camp_accesses'));
     }//index
@@ -63,6 +64,28 @@ class CampAccessController extends Controller
     public function campPortal()
     {
         $user_id = Auth::id();
+        $user = User::find($user_id);
+
+        //grant admin for all access
+        if($user->role->id == 1)
+        {
+            $camps = Camps::all();
+            foreach ($camps as $camp) 
+            {
+                $has_access = CampAccess::where('user_id', $user_id)
+                    ->where('camp_id', $camp->id)
+                    ->exists();
+
+                if(!$has_access)
+                {
+                    CampAccess::create([
+                        'user_id' => $user_id,
+                        'camp_id' => $camp->id,
+                    ]);
+                }//grant access
+            }//foreach
+        }//admin
+
         $user_camps = CampAccess::where('user_id', $user_id)->get();
 
         return view('camp_portal', compact('user_camps'));

@@ -1,0 +1,32 @@
+// AccessHub Structure //
+
+1. Code Reset
+2. Code Upload
+3. Users
+4. User camp access
+5. Role based access (RBAC)
+6. Dashboard
+7. Reports
+
+* page access using gates == done
+* create, update & delete policies == pending
+
+//pages
+Dashboard
+Codes
+Camps
+sheets
+control
+Reports
+profile
+
+//voucher usage
+job 1 - hourly
+fetch data from Mikrotik 
+synchronize table
+
+job 2 - 15min or 5 min
+iterate through available codes
+check caller-id and update 
+
+//Main Page

@@ -20,9 +20,9 @@ return new class extends Migration
             $table->string('username');
             $table->string('password');
             $table->string('customer_name');
-            $table->string('room_no');
+            $table->string('room_no')->nullable();
             $table->decimal('amount', 10, 2);
-            $table->string('note');
+            $table->string('note')->nullable();
             $table->tinyInteger('status');
             $table->foreignId('user_id');
             $table->timestamps();
