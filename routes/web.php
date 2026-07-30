@@ -24,9 +24,9 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/camp_portal', [CampAccessController::class, 'campPortal'])->name('camp_portal');
     Route::get('/goto_camp/{camp_id}', [CampAccessController::class, 'gotoCamp'])->name('gotoCamp');
@@ -106,9 +106,10 @@ Route::middleware('auth')->group(function () {
 
     //admin middleware
     Route::middleware('admin')->group(function(){
-        Route::get('/admin', [AdminController::class, 'index']);
+        Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
         Route::get('/general-cli', [AdminController::class, 'generalCli']);
         Route::get('/testing-cli', [AdminController::class, 'testing']);
+        Route::post('/createTokentable', [AdminController::class, 'createTokenTable'])->name('create.tokenTable');
     });//admin middleware
 
 });

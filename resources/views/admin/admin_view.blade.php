@@ -6,6 +6,19 @@
             <h5>Mikrotik Admin Control Panel</h5>
         </div>
         <div class="card-body">
+
+            @if (session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            @if (session('error'))
+                <div class="alert alert-warning">
+                    {{ session('error') }}
+                </div>
+            @endif
+
             <h5>CLI Execute</h5>
             <div class="row">
                 <div class="col-md-4">
@@ -29,6 +42,12 @@
             <h5>Testing</h5>
             <button class="btn btn-primary btn-sm" id="btn_testing">Click</button>
 
+
+            <p>create token table</p>
+            <form action="{{ route('create.tokenTable') }}" method="post">
+                @csrf
+                <button type="submit" class="btn btn-primary">Create Table</button>
+            </form>
 
         </div>
     </div>
