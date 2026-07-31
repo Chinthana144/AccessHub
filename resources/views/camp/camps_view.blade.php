@@ -5,10 +5,23 @@
         <div class="card-header">
             <h5>
                 Camps
-                <button class="btn btn-primary btn-sm float-end" id="btn_add_camp">Add Camp</button>
+                @can('create', App\Models\Camps::class)
+                    <button class="btn btn-primary btn-sm float-end" id="btn_add_camp">Add Camp</button>
+                @endcan
             </h5>
         </div>
         <div class="card-body">
+            @if (session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            @if (session('error'))
+                <div class="alert alert-warning">
+                    {{ session('error') }}
+                </div>
+            @endif
             <table class="table" id="tbl_camps">
                 <tr>
                     <th>Camp</th>

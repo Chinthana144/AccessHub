@@ -2,8 +2,12 @@
 
 namespace App\Providers;
 
+use App\Models\Camps;
+use App\Models\Codes;
 use App\Models\Permissions;
 use App\Models\Sheets;
+use App\Policies\CampPolicy;
+use App\Policies\CodePolicy;
 use App\Policies\SheetPolicy;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
@@ -28,6 +32,8 @@ class AppServiceProvider extends ServiceProvider
     {
         //policies
         Gate::policy(Sheets::class, SheetPolicy::class);
+        Gate::policy(Codes::class, CodePolicy::class);
+        Gate::policy(Camps::class, CampPolicy::class);
 
         //gates
         Gate::define('view-dashboard', function(){

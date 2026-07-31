@@ -34,27 +34,32 @@ class CampController extends Controller
         return redirect()->route('camps.index');
     }//store
 
-    public function update(Request $request)
+    public function update(Request $request, Camps $camp)
     {
-        $camp_id = $request->input("hide_camp_id");
-        $camp = Camps::find($camp_id);
+        try {
+            $this->authorize('update', $camp);
+            $camp_id = $request->input("hide_camp_id");
+            $camp = Camps::find($camp_id);
 
-        $camp->name = $request->input('name');
-        $camp->address = $request->input('address');
-        $camp->contactPerson = $request->input('contactPerson');
-        $camp->contactNo = $request->input('contactNo');
-        $camp->mikrotikHost = $request->input('mikrotikHost');
-        $camp->mikrotikPort = $request->input('mikrotikPort');
-        $camp->mikrotikUsername = $request->input('mikrotikUsername');
-        $camp->mikrotikPassword = $request->input('mikrotikPassword');
-        $camp->sheetID = $request->input('sheetID');
-        $camp->is_upload = $request->has('chk_edit_upload_sheet') ? 1 : 0;
-        $camp->status = $request->has('chk_edit_active') ? 1 : 0;
+            $camp->name = $request->input('name');
+            $camp->address = $request->input('address');
+            $camp->contactPerson = $request->input('contactPerson');
+            $camp->contactNo = $request->input('contactNo');
+            $camp->mikrotikHost = $request->input('mikrotikHost');
+            $camp->mikrotikPort = $request->input('mikrotikPort');
+            $camp->mikrotikUsername = $request->input('mikrotikUsername');
+            $camp->mikrotikPassword = $request->input('mikrotikPassword');
+            $camp->sheetID = $request->input('sheetID');
+            $camp->is_upload = $request->has('chk_edit_upload_sheet') ? 1 : 0;
+            $camp->status = $request->has('chk_edit_active') ? 1 : 0;
 
-        $camp->save();
+            $camp->save();
 
-        return redirect()->route('camps.index');
-
+            return redirect()->route('camps.index')->with('success', 'Camp updated successfully!');
+        } catch (\Throwable $th) {
+            //throw $th;
+            return redirect()->route('camps.index')->with('error', 'You are not authorized to update camp!');
+        }
     }//update
 
     //============================ AJAX ==========================//

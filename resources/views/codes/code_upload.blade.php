@@ -39,9 +39,11 @@
             <div id="div_content">
 
                 <div class="row mt-3">
-                    <div class="col-md-6">
-                        <button type="button" id="btn_submit" class="btn btn-primary">Submit</button>
-                    </div>
+                    @can('create', App\Models\Codes::class)
+                        <div class="col-md-6">
+                            <button type="button" id="btn_submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    @endcan
                     <div class="col-md-6">
                         <div id="div_totals"></div>
                     </div>

@@ -38,72 +38,89 @@ class CodeController extends Controller
         return view('codes.code_upload', compact('camps'));
     }//code upload view
 
-    public function update(Request $request)
+    public function update(Request $request, Codes $code)
     {
-        $code_id = $request->input('code_edit_id');
+        try {
+            $this->authorize('update', $code);
+            $code_id = $request->input('code_edit_id');
 
-        $code = Codes::find($code_id);
+            $code = Codes::find($code_id);
 
-        $issue_date = $request->input('issue_date');
-        $customer_name = $request->input('customer_name');
+            $issue_date = $request->input('issue_date');
+            $customer_name = $request->input('customer_name');
 
-        if(is_null($issue_date))
-        {
-            return redirect()->route('codes.index')->with('error', 'Please provide valid Issue Date!');   
+            if(is_null($issue_date))
+            {
+                return redirect()->route('codes.index')->with('error', 'Please provide valid Issue Date!');   
+            }
+            if(is_null($customer_name))
+            {
+                return redirect()->route('codes.index')->with('error', 'Please provide valid Customer Name!');  
+            }
+
+            $amount = is_numeric($request->input('amount')) ? $request->input('amount') : 0;
+            
+            $code->issue_date = $request->input('issue_date');
+            $code->customer_name = $request->input('customer_name');
+            $code->room_no = $request->input('room_no');
+            $code->amount = $amount;
+            $code->note = $request->input('note') ?? "";
+
+            $code->save();
+
+            return redirect()->route('codes.index')->with('success', 'Code updated successfully!');
+        } catch (\Throwable $th) {
+            //throw $th;
+            return redirect()->route('codes.index')->with('error', 'You are not authorized to update codes!');
         }
-        if(is_null($customer_name))
-        {
-            return redirect()->route('codes.index')->with('error', 'Please provide valid Customer Name!');  
-        }
-
-        $amount = is_numeric($request->input('amount')) ? $request->input('amount') : 0;
         
-        $code->issue_date = $request->input('issue_date');
-        $code->customer_name = $request->input('customer_name');
-        $code->room_no = $request->input('room_no');
-        $code->amount = $amount;
-        $code->note = $request->input('note') ?? "";
-
-        $code->save();
-
-        return redirect()->route('codes.index')->with('success', 'Code updated successfully!');
     }//update
 
-    public function destroy(Request $request)
+    public function destroy(Request $request, Codes $code)
     {
-        $camp_id = $request->input('camp_id');
-        $code_id = $request->input('code_id');
-        $search_term = $request->input('txt_search');
+        try {
+            $this->authorize('delete', $code);
+            $camp_id = $request->input('camp_id');
+            $code_id = $request->input('code_id');
+            $search_term = $request->input('txt_search');
 
-        $code = Codes::find($code_id);
+            $code = Codes::find($code_id);
 
-        $code->delete();
+            $code->delete();
 
-        if($camp_id == 0 && is_null($search_term))
-        {
+            if($camp_id == 0 && is_null($search_term))
+            {
+                return response()->json([
+                    'success' => true,
+                    'action' => 'reload'
+                ]);
+            }
+            else{
+                $codes = Codes::where('status', 1)
+                ->where('camp_id', $camp_id)
+                ->where(function($query) use ($search_term){
+                    $query->where('issue_date', 'LIKE', "%{$search_term}%")
+                        ->orWhere('username', 'LIKE', "%{$search_term}%")
+                        ->orWhere('password', 'LIKE', "%{$search_term}%")
+                        ->orWhere('customer_name', 'LIKE', "%{$search_term}%")
+                        ->orWhere('room_no', 'LIKE', "%{$search_term}%");   
+                }) ->orderBy('id', 'DESC')
+                ->get();
+            
+                return response()->json([
+                    'success' => true,
+                    'action' => 'load',
+                    'data' => $codes
+                ]);
+            }//load result
+        } catch (\Throwable $th) {
+            //throw $th;
             return response()->json([
-                'success' => true,
-                'action' => 'reload'
+                'success' => false,
+                'message' => 'You are not authorized to delete code!',
             ]);
         }
-        else{
-            $codes = Codes::where('status', 1)
-            ->where('camp_id', $camp_id)
-            ->where(function($query) use ($search_term){
-                $query->where('issue_date', 'LIKE', "%{$search_term}%")
-                    ->orWhere('username', 'LIKE', "%{$search_term}%")
-                    ->orWhere('password', 'LIKE', "%{$search_term}%")
-                    ->orWhere('customer_name', 'LIKE', "%{$search_term}%")
-                    ->orWhere('room_no', 'LIKE', "%{$search_term}%");   
-            }) ->orderBy('id', 'DESC')
-            ->get();
         
-            return response()->json([
-                'success' => true,
-                'action' => 'load',
-                'data' => $codes
-            ]);
-        }//load result
         
     }//destroy code
 
