@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Camps;
 use App\Models\Sheets;
 use App\Services\GoogleSheetService;
-use DateTime;
-use Google\Service\Sheets\Sheet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -14,7 +12,9 @@ class SheetController extends Controller
 {
     public function index()
     {
-        $camps = Camps::where('status', 1)->get();
+        $camps = Camps::where('status', 1)
+            ->where('is_upload', 1)
+            ->get();
         $active_camp_id = Session::get('active_camp_id');
         $camp = Camps::find($active_camp_id);
 
@@ -27,11 +27,11 @@ class SheetController extends Controller
 
     public function saveSheetNames(Request $request)
     {
-        $camp_id = Session::get('active_camp_id');
         $sheets = $request->sheets;
 
         foreach($sheets as $sheet)
         {
+            $camp_id = $sheet['camp_id'];
             $sheet_name = $sheet['sheet_name'];
             $start_date = $sheet['start_date'];
             $end_date = $sheet['end_date'];

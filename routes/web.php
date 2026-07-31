@@ -24,9 +24,9 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/camp_portal', [CampAccessController::class, 'campPortal'])->name('camp_portal');
     Route::get('/goto_camp/{camp_id}', [CampAccessController::class, 'gotoCamp'])->name('gotoCamp');
@@ -88,7 +88,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/getUser', [UserController::class, 'getUser']);
 
     //profile
-    Route::get('/profile', [UserController::class, 'profile'])->name('profile.view');
+    Route::get('/user-profile', [UserController::class, 'profile'])->name('profile.view');
     Route::put('/changePassword', [UserController::class, 'changePassword'])->name('profile.change-password');
 
     //reports

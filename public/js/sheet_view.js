@@ -90,8 +90,10 @@ $(document).ready(function () {
 
         var row = $(this).closest("tr");
         var sheetName = row.data("sheet");
+        var campID = $("#cmb_camp").val();
 
         sheetData.push({
+                camp_id : campID,
                 sheet_name: row.data("sheet"),
                 month: row.find(".select_month").val(),
                 start_date: row.find(".start_date").val(),
@@ -109,11 +111,16 @@ $(document).ready(function () {
                 _token: $('meta[name="csrf-token"]').attr('content'),
                 sheets: sheetData,
             },
-            dataType: "dataType",
+            // dataType: "dataType",
             success: function (response) {
                 console.log(response);
                 $("#sheetSyncedModal").modal('hide');
-            }
+
+                if(response['success'])
+                {
+                    location.reload();
+                }//saved
+            }//success
         });
 
     });

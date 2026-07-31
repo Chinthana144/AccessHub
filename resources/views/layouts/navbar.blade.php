@@ -18,7 +18,26 @@
                         <span>Home</span>
                     </a>
                 </li>
-            @endcan            
+            @endcan     
+            
+            @can('view-sheets')
+            <li class="sidebar-item">
+                <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                    data-bs-target="#sheet" aria-expanded="false" aria-controls="auth">
+                    <i class="bx bx-file fs-3"></i>
+                    <span>Sheets</span>
+                </a>
+                <ul id="sheet" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                    <li class="sidebar-item">
+                        <a href="/sheets" class="sidebar-link">Sheets</a>
+                    </li>
+                    {{-- <li class="sidebar-item">
+                        <a href="#" class="sidebar-link">Sheets</a>
+                    </li> --}}
+                </ul>
+            </li>
+            @endcan
+            
             <li class="sidebar-item">
                 <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
                     data-bs-target="#codes" aria-expanded="false" aria-controls="auth">
@@ -44,33 +63,6 @@
                 </ul>
             </li>
         
-            @can('view-camps')
-            <li class="sidebar-item">
-                <a href="/camps" class="sidebar-link">
-                    <i class="bx bx-building fs-3"></i>
-                    <span>Camps</span>
-                </a>
-            </li>
-            @endcan
-
-            @can('view-sheets')
-            <li class="sidebar-item">
-                <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
-                    data-bs-target="#sheet" aria-expanded="false" aria-controls="auth">
-                    <i class="bx bx-file fs-3"></i>
-                    <span>Sheets</span>
-                </a>
-                <ul id="sheet" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                    <li class="sidebar-item">
-                        <a href="/sheets" class="sidebar-link">Sheets</a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a href="#" class="sidebar-link">Sheets</a>
-                    </li>
-                </ul>
-            </li>
-            @endcan
-            
             @can('view-control')
             <li class="sidebar-item">
                 <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
@@ -109,10 +101,19 @@
                 </ul>
             </li>
             @endcan
+
+            @can('view-camps')
+            <li class="sidebar-item">
+                <a href="/camps" class="sidebar-link">
+                    <i class="bx bx-building fs-3"></i>
+                    <span>Camps</span>
+                </a>
+            </li>
+            @endcan
             
             @can('view-profile')
             <li class="sidebar-item">
-                <a href="/profile" class="sidebar-link">
+                <a href="{{ route('profile.view') }}" class="sidebar-link">
                     <i class="bx bx-user fs-3"></i>
                     <span>User Profile</span>
                 </a>
