@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use App\Models\Permissions;
+use App\Models\Sheets;
+use App\Policies\SheetPolicy;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -24,6 +26,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        //policies
+        Gate::policy(Sheets::class, SheetPolicy::class);
+
         //gates
         Gate::define('view-dashboard', function(){
             $user = Auth::user();

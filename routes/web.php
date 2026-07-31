@@ -41,6 +41,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/saveSheetNames', [SheetController::class, 'saveSheetNames']);
     Route::get('/getSheetByID', [SheetController::class, 'getSheetByID']);
     Route::put('/updateSheet', [SheetController::class, 'update'])->name("update.sheet");
+    Route::get('/deleteSheet', [SheetController::class, 'destroy']);
     Route::get('/getSheetByCampID', [SheetController::class, 'getSheetByCampID']);
     Route::get('/getActiveSheetByCampID', [SheetController::class, 'getActiveSheetByCampID']);
 
