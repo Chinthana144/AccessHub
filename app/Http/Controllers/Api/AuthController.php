@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\CampAccess;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,8 +31,19 @@ class AuthController extends Controller
 
         $token = $user->createToken('AccessHub Mobile')->plainTextToken;
 
+        //user camps
+        $user_camps = CampAccess::where('user_id', $user->id)->get();
+        $camps = [];
+        foreach ($user_camps as $camp) {
+            $camps[] = [
+                'camp_id' => $camp->camp->id,
+                'camp_name' => $camp->camp->name,
+            ];
+        }//foreach
+
         return response()->json([
             'user' => $user,
+            'camps' => $camps,
             'token' => $token,
             'message' => 'Login Successful!'
         ]);

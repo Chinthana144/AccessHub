@@ -63,4 +63,24 @@ class TestController extends Controller
 
         return response()->json($user_data);
     }//get all users
+
+    public function getSession(Request $request)
+    {
+        $username = $request->input('username');
+
+        $sp3_camp_id = 3;
+
+        $camp = Camps::find($sp3_camp_id);
+
+        $host = $camp->mikrotikHost;
+        $user = $camp->mikrotikUsername;
+        $pwd = $camp->mikrotikPassword;
+        $port = $camp->mikrotikPort;
+
+        $mikrotikService = new MikrotikService($host, $user, $pwd, $port);
+
+        $session_data = $mikrotikService->getSession($username);
+
+        return response()->json($session_data);
+    }//get session
 }//class

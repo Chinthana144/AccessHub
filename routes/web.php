@@ -104,6 +104,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/getSheetNames', [TestController::class, 'getSheetNames'])->name('test.sheetNames');
     Route::get('/getUsers', [TestController::class, 'getUsers']);
     Route::get('/getAllUsers', [TestController::class, 'getAllUsers']);
+    Route::get('/getSession', [TestController::class, 'getSession']);
 
     //admin middleware
     Route::middleware('admin')->group(function(){

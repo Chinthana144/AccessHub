@@ -29,6 +29,20 @@
             <div class="mt-3">
                 <div id="div_data"></div>
             </div>
+
+            <hr>
+
+            <div class="mt-3">
+                <p>hotspot session</p>
+
+                <div class="col-md-6">
+
+                </div>
+                <label for="">Code</label>
+                <input type="text" id="txt_code" class="form-control">
+
+                <button id="btn_get_session" class="btn btn-primary">get session</button>
+            </div>
             
         </div>
     </div>

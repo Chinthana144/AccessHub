@@ -79,7 +79,9 @@ class MikrotikService{
 
         $query = (new Query('/tool/user-manager/user/set'))
             ->equal('.id', $id)
-            ->equal('caller-id', 'bind');
+            ->equal('caller-id', 'bind')
+            ->equal('caller-id-bind-on-first-use', 'yes')
+            ->equal('disabled', 'false');
 
         return $this->client
             ->query($query)
@@ -176,4 +178,32 @@ class MikrotikService{
             ->read();  
     }//get all users
 
+    //get sesiion
+    public function getSession(string $username)
+    {
+        if (!$this->isConnected) {
+            return [];
+        }
+
+        $query = (new Query('/ip/hotspot/active/print'))
+            ->where('user', $username);
+
+        return $this->client
+            ->query($query)
+            ->read(); 
+    }//get session
+
+    public function removeSession(string $session_id)
+    {
+        if (!$this->isConnected) {
+            return [];
+        }
+
+        $query = (new Query('/ip/hotspot/active/remove'))
+            ->where('.id', $session_id);
+
+        return $this->client
+            ->query($query)
+            ->read(); 
+    }//remove session
 }//class
