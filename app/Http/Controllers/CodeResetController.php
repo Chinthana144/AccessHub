@@ -162,7 +162,7 @@ class CodeResetController extends Controller
 
             //remove session
             $session_data = $mikrotikService->getSession($username);
-            if(!empty($session_data) > 0){
+            if(!empty($session_data)){
                 $session_id = $session_data[0]['.id'];
 
                 $mikrotikService->removeSession($session_id);
@@ -205,13 +205,13 @@ class CodeResetController extends Controller
 
         $user_data = $mikrotikService->getOneUser($username);
         
-        if(!empty($user_data) > 0)
+        if(!empty($user_data))
         {
             $code_id = $user_data[0]['.id'];
 
             //remove session
             $session_data = $mikrotikService->getSession($username);
-            if(!empty($session_data) > 0)
+            if(!empty($session_data))
             {
                 $session_id = $session_data[0]['.id'];
 
@@ -254,7 +254,7 @@ class CodeResetController extends Controller
 
         $user_data = $mikrotikService->getOneUser($username);
 
-        if(!empty($user_data) > 0)
+        if(!empty($user_data))
         {
             $code_id = $user_data[0]['.id'];
 

@@ -31,73 +31,86 @@ Route::middleware('auth')->group(function () {
     Route::get('/camp_portal', [CampAccessController::class, 'campPortal'])->name('camp_portal');
     Route::get('/goto_camp/{camp_id}', [CampAccessController::class, 'gotoCamp'])->name('gotoCamp');
 
-    //dashboard
-    Route::get('/home', [HomeController::class, 'index'])->name('home');
-    Route::get('/getAreaChartData', [HomeController::class, 'getAreaChartData']);
+    Route::middleware('camp')->group(function(){
+        //dashboard
+        Route::get('/home', [HomeController::class, 'index'])->name('home');
+        Route::get('/getAreaChartData', [HomeController::class, 'getAreaChartData']);
 
-    //sheets
-    Route::get('/sheets', [SheetController::class, 'index'])->name('sheets.index');
-    Route::get('/fetchGoogleSheets', [SheetController::class, 'fetchGoogleSheets']);
-    Route::post('/saveSheetNames', [SheetController::class, 'saveSheetNames']);
-    Route::get('/getSheetByID', [SheetController::class, 'getSheetByID']);
-    Route::put('/updateSheet', [SheetController::class, 'update'])->name("update.sheet");
-    Route::get('/deleteSheet', [SheetController::class, 'destroy']);
-    Route::get('/getSheetByCampID', [SheetController::class, 'getSheetByCampID']);
-    Route::get('/getActiveSheetByCampID', [SheetController::class, 'getActiveSheetByCampID']);
+        //sheets
+        Route::get('/sheets', [SheetController::class, 'index'])->name('sheets.index');
+        Route::get('/fetchGoogleSheets', [SheetController::class, 'fetchGoogleSheets']);
+        Route::post('/saveSheetNames', [SheetController::class, 'saveSheetNames']);
+        Route::get('/getSheetByID', [SheetController::class, 'getSheetByID']);
+        Route::put('/updateSheet', [SheetController::class, 'update'])->name("update.sheet");
+        Route::get('/deleteSheet', [SheetController::class, 'destroy']);
+        Route::get('/getSheetByCampID', [SheetController::class, 'getSheetByCampID']);
+        Route::get('/getActiveSheetByCampID', [SheetController::class, 'getActiveSheetByCampID']);
 
-    //codes
-    Route::get('/codes', [CodeController::class, 'index'])->name('codes.index');
-    Route::get('/code_upload_view', [CodeController::class, 'codeUploadView'])->name('codeUpload.view');
-    Route::get('/getCodes', [CodeController::class, 'getCodes']);
-    Route::get('/getCodesByDate', [CodeController::class, 'getCodesByDate']);
-    Route::get('/codeUpload', [CodeController::class, 'codeUpload']);
-    Route::get('/codeSearch', [CodeController::class, 'codeSearch']);
-    Route::get('/getOneCode', [CodeController::class, 'getOneCode']);
-    Route::put('/update_code',[CodeController::class, 'update'])->name('codes.update');
-    Route::get('/delete_code', [CodeController::class, 'destroy'])->name('codes.destroy');
+         //codes
+        Route::get('/codes', [CodeController::class, 'index'])->name('codes.index');
+        Route::get('/code_upload_view', [CodeController::class, 'codeUploadView'])->name('codeUpload.view');
+        Route::get('/getCodes', [CodeController::class, 'getCodes']);
+        Route::get('/getCodesByDate', [CodeController::class, 'getCodesByDate']);
+        Route::get('/codeUpload', [CodeController::class, 'codeUpload']);
+        Route::get('/codeSearch', [CodeController::class, 'codeSearch']);
+        Route::get('/getOneCode', [CodeController::class, 'getOneCode']);
+        Route::put('/update_code',[CodeController::class, 'update'])->name('codes.update');
+        Route::get('/delete_code', [CodeController::class, 'destroy'])->name('codes.destroy');
 
-    //code reset
-    Route::get('/code_reset', [CodeResetController::class, 'index'])->name('codeReset.index');
-    Route::get('/getIdentity', [CodeResetController::class, 'getIdentity']);
-    Route::get('/getUserManagerUsers', [CodeResetController::class, 'getUserManagerUsers']);
-    Route::get('/getOneUser', [CodeResetController::class, 'getOneUser']);
-    Route::get('/getSessionByUsername', [CodeResetController::class, "getSessionByUsername"]);
+        //codes
+        Route::get('/codes', [CodeController::class, 'index'])->name('codes.index');
+        Route::get('/code_upload_view', [CodeController::class, 'codeUploadView'])->name('codeUpload.view');
+        Route::get('/getCodes', [CodeController::class, 'getCodes']);
+        Route::get('/getCodesByDate', [CodeController::class, 'getCodesByDate']);
+        Route::get('/codeUpload', [CodeController::class, 'codeUpload']);
+        Route::get('/codeSearch', [CodeController::class, 'codeSearch']);
+        Route::get('/getOneCode', [CodeController::class, 'getOneCode']);
+        Route::put('/update_code',[CodeController::class, 'update'])->name('codes.update');
+        Route::get('/delete_code', [CodeController::class, 'destroy'])->name('codes.destroy');
 
-    //camps
-    Route::get('/camps', [CampController::class, 'index'])->name('camps.index');
-    Route::post('/store-camp', [CampController::class, 'store'])->name('camps.store');
-    Route::put('/update-camp', [CampController::class, 'update'])->name('camps.update');
-    Route::get('/getOneCamp', [CampController::class, 'getOneCamp']);
+        //code reset
+        Route::get('/code_reset', [CodeResetController::class, 'index'])->name('codeReset.index');
+        Route::get('/getIdentity', [CodeResetController::class, 'getIdentity']);
+        Route::get('/getUserManagerUsers', [CodeResetController::class, 'getUserManagerUsers']);
+        Route::get('/getOneUser', [CodeResetController::class, 'getOneUser']);
+        Route::get('/getSessionByUsername', [CodeResetController::class, "getSessionByUsername"]);
 
-    //camp access
-    Route::get('/camp_access', [CampAccessController::class, 'index'])->name('campAccess.index');
-    Route::post('/store-camp_access', [CampAccessController::class, 'store'])->name('campAccess.store');
-    Route::delete('/remove-camp_access', [CampAccessController::class, 'remove'])->name('campAccess.remove');
+        //camps
+        Route::get('/camps', [CampController::class, 'index'])->name('camps.index');
+        Route::post('/store-camp', [CampController::class, 'store'])->name('camps.store');
+        Route::put('/update-camp', [CampController::class, 'update'])->name('camps.update');
+        Route::get('/getOneCamp', [CampController::class, 'getOneCamp']);
 
-    //permissions
-    Route::get('/permissions', [PermissionController::class, 'index'])->name('permission.index');
-    Route::post('/store-permission', [PermissionController::class, 'store'])->name('permission.store');
-    Route::put('/update-permission', [PermissionController::class, 'update'])->name('permission.update');
-    Route::get('/delete-permission', [PermissionController::class, 'destroy']);
-    Route::get('/getOnePermission', [PermissionController::class, 'getOnePermission']);
+        //camp access
+        Route::get('/camp_access', [CampAccessController::class, 'index'])->name('campAccess.index');
+        Route::post('/store-camp_access', [CampAccessController::class, 'store'])->name('campAccess.store');
+        Route::delete('/remove-camp_access', [CampAccessController::class, 'remove'])->name('campAccess.remove');
 
-    //users
-    Route::get('/users', [UserController::class, 'index'])->name('users.index');
-    Route::post('/store-user', [UserController::class, 'store'])->name('users.store');
-    Route::put('/update-user', [UserController::class, 'update'])->name('users.update');
-    Route::put('/updatePassword', [UserController::class, 'updatePassword'])->name('users.updatePassword');
-    Route::get('/getUser', [UserController::class, 'getUser']);
+        //permissions
+        Route::get('/permissions', [PermissionController::class, 'index'])->name('permission.index');
+        Route::post('/store-permission', [PermissionController::class, 'store'])->name('permission.store');
+        Route::put('/update-permission', [PermissionController::class, 'update'])->name('permission.update');
+        Route::get('/delete-permission', [PermissionController::class, 'destroy']);
+        Route::get('/getOnePermission', [PermissionController::class, 'getOnePermission']);
 
-    //profile
-    Route::get('/user-profile', [UserController::class, 'profile'])->name('profile.view');
-    Route::put('/changePassword', [UserController::class, 'changePassword'])->name('profile.change-password');
+        //users
+        Route::get('/users', [UserController::class, 'index'])->name('users.index');
+        Route::post('/store-user', [UserController::class, 'store'])->name('users.store');
+        Route::put('/update-user', [UserController::class, 'update'])->name('users.update');
+        Route::put('/updatePassword', [UserController::class, 'updatePassword'])->name('users.updatePassword');
+        Route::get('/getUser', [UserController::class, 'getUser']);
 
-    //reports
-    Route::get('/sales-reports', [ReportsController::class, 'index'])->name('sales.reports');
-    Route::get('/salesDetailReport', [ReportsController::class, 'salesDetailReport']);
-    Route::get('/rptSalesDetail', [ReportsController::class, 'rptSalesDetail'])->name('report.salesDetails');
-    Route::get('/saleSummartReport', [ReportsController::class, 'saleSummartReport']);
-    Route::get('/rptSaleSummary', [ReportsController::class, 'rptSaleSummary'])->name('report.saleSummary');
+        //profile
+        Route::get('/user-profile', [UserController::class, 'profile'])->name('profile.view');
+        Route::put('/changePassword', [UserController::class, 'changePassword'])->name('profile.change-password');
+
+        //reports
+        Route::get('/sales-reports', [ReportsController::class, 'index'])->name('sales.reports');
+        Route::get('/salesDetailReport', [ReportsController::class, 'salesDetailReport']);
+        Route::get('/rptSalesDetail', [ReportsController::class, 'rptSalesDetail'])->name('report.salesDetails');
+        Route::get('/saleSummartReport', [ReportsController::class, 'saleSummartReport']);
+        Route::get('/rptSaleSummary', [ReportsController::class, 'rptSaleSummary'])->name('report.saleSummary');
+    });//camp middleware
 
     //testing
     Route::get('/testing', [TestController::class, 'index'])->name('test.index');
