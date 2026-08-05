@@ -49,6 +49,13 @@ class AuthController extends Controller
         ]);
     }//login
 
+    public function testAPI(){
+        return response()->json([
+            'success' => true,
+            'message' => "API is working"
+        ]);
+    }
+
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();
