@@ -155,18 +155,23 @@ class CodeResetController extends Controller
         $mikrotikService = new MikrotikService($host, $user, $pwd, $port);
 
         $user_data = $mikrotikService->getOneUser($username);
-
+        // dd($user_data);
         if(!empty($user_data))
         {
             $code_id = $user_data[0]['.id'];
 
             //remove session
             $session_data = $mikrotikService->getSession($username);
+            // dd($session_data);
             if(!empty($session_data)){
-                $session_id = $session_data[0]['.id'];
-
-                $mikrotikService->removeSession($session_id);
-            }
+                //remove all sessions for the user
+                foreach($session_data as $session)
+                {
+                    // dd($session['.id']);
+                    $session_id = $session['.id'];
+                    $mikrotikService->removeSession($session_id);
+                }//session
+            }//has session
             
             $mikrotikService->resetMac($code_id);
 
@@ -174,6 +179,7 @@ class CodeResetController extends Controller
                 'code_id' => $user_data[0]['.id'],
                 'username'=> $user_data[0]['username'],
                 'password' => $user_data[0]['password'],
+                'sessions' => count($session_data),
             ];
 
             return response()->json([

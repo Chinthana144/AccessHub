@@ -124,10 +124,12 @@ Route::middleware('auth')->group(function () {
         Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
         Route::get('/general-cli', [AdminController::class, 'generalCli']);
         Route::get('/testing-cli', [AdminController::class, 'testing']);
-        Route::post('/createTokentable', [AdminController::class, 'createTokenTable'])->name('create.tokenTable');
+
+        Route::get('/session', [AdminController::class, 'viewSession'])->name('admin.session');
+        Route::get('/fetchSession', [AdminController::class, 'fetchSession']);
     });//admin middleware
 
-});
+});//auth middleware
 
 //reset codes
 Route::get('/reset', [ResetController::class, 'index'])->name('reset.index');

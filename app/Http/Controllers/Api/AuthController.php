@@ -27,7 +27,7 @@ class AuthController extends Controller
         }//failed
 
         //delete previous token
-        $user->tokens()->delete();
+        // $user->tokens()->delete();
 
         $token = $user->createToken('AccessHub Mobile')->plainTextToken;
 

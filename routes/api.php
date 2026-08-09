@@ -30,4 +30,6 @@ Route::middleware('auth:sanctum')->group(function(){
 
     Route::get('/getSessionByUsername', [CodeResetController::class, "getSessionByUsername"]);
 
+    Route::post('/logout', [AuthController::class, 'logout']);
+
 });//middleware auth
