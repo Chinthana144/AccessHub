@@ -124,9 +124,12 @@ Route::middleware('auth')->group(function () {
         Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
         Route::get('/general-cli', [AdminController::class, 'generalCli']);
         Route::get('/testing-cli', [AdminController::class, 'testing']);
+        Route::get('/getOneUserAdmin', [CodeResetController::class, 'getOneUser']);
 
         Route::get('/session', [AdminController::class, 'viewSession'])->name('admin.session');
         Route::get('/fetchSession', [AdminController::class, 'fetchSession']);
+
+        Route::get('/codeCheck', [AdminController::class, 'codeCheck']);
     });//admin middleware
 
 });//auth middleware

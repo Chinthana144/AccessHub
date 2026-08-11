@@ -30,7 +30,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: "get",
-            url: "/getOneUser",
+            url: "/getOneUserAdmin",
             data:{
                 camp_id: campID,
                 username: username,
@@ -43,5 +43,29 @@ $(document).ready(function () {
         });
 
     });//fetch user
+
+    //code check
+    $("#btn_check").click(function (e) { 
+        e.preventDefault();
+        let campID = $("#cmb_check_camp").val();
+        var codeInput = $("#txt_codes").val();
+
+        $.ajax({
+            type: "get",
+            url: "/codeCheck",
+            data: {
+                camp_id: campID,
+                txt_codes: codeInput,
+            },
+            // dataType: "dataType",
+            success: function (response) {
+                console.log(response);
+                
+                console.log(response[0]);
+                
+            }
+        });
+        
+    });
 
 });//jquery

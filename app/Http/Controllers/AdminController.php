@@ -80,4 +80,40 @@ class AdminController extends Controller
 
         return response()->json($data);
     }//fetch session
+
+    //==================================== Code Check =====================================//
+    public function codeCheck(Request $request)
+    {
+        $camp_id = $request->input('camp_id');
+        $txt_codes = $request->input('txt_codes');
+
+        $camp = Camps::find($camp_id);
+
+        $host = $camp->mikrotikHost;
+        $user = $camp->mikrotikUsername;
+        $pwd = $camp->mikrotikPassword;
+        $port = $camp->mikrotikPort;
+
+        $mikrotikService = new MikrotikService($host, $user, $pwd, $port);
+
+        $code_array = explode(',', $txt_codes);
+
+        $all_users = $mikrotikService->getAllUsers();
+
+        $users_array = []; 
+
+        foreach($all_users as $user)
+        {
+            $username = $user['username'];
+
+            if(!in_array($username, $code_array))
+            {
+                $users_array[] = $user['username'];
+            }//in array
+
+            
+        }//foreach
+
+        return response()->json($users_array);
+    }
 }//class
