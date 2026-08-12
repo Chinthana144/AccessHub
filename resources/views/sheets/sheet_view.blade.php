@@ -5,11 +5,23 @@
         <div class="card-header">
             <h5>
                 {{ $camp->name }} Sheets
-                <button class="btn btn-primary btn-sm float-end" id="btn_sync_sheets">Synchronize</button>
+                @can('create', App\Models\Sheets::class)
+                    <button class="btn btn-primary btn-sm float-end" id="btn_sync_sheets">Synchronize</button>
+                @endcan
             </h5>
         </div>
         <div class="card-body">
-            <p>content {{ $camp->name }}</p>
+            @if (session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            @if (session('error'))
+                <div class="alert alert-warning">
+                    {{ session('error') }}
+                </div>
+            @endif
             <div class="col-md-6">
                 <input type="hidden" id="hide_camp_id" value="{{ $active_camp_id }}">
                 <select name="cmb_camp" id="cmb_camp" class="form-select">

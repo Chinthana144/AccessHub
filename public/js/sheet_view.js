@@ -90,8 +90,10 @@ $(document).ready(function () {
 
         var row = $(this).closest("tr");
         var sheetName = row.data("sheet");
+        var campID = $("#cmb_camp").val();
 
         sheetData.push({
+                camp_id : campID,
                 sheet_name: row.data("sheet"),
                 month: row.find(".select_month").val(),
                 start_date: row.find(".start_date").val(),
@@ -109,11 +111,16 @@ $(document).ready(function () {
                 _token: $('meta[name="csrf-token"]').attr('content'),
                 sheets: sheetData,
             },
-            dataType: "dataType",
+            // dataType: "dataType",
             success: function (response) {
                 console.log(response);
                 $("#sheetSyncedModal").modal('hide');
-            }
+
+                if(response['success'])
+                {
+                    location.reload();
+                }//saved
+            }//success
         });
 
     });
@@ -156,6 +163,34 @@ $(document).ready(function () {
         });
     });
 
+    //delete sheet
+    $("#tbl_sheets").on('click', '.btn_delete_sheet', function(){
+        var row = $(this).closest("tr");
+        var sheetID = row.data('id');
+
+        var result = confirm("Are sure you want to remove this sheet?");
+        if(result){
+            $.ajax({
+                type: "get",
+                url: "/deleteSheet",
+                data: {
+                    sheet_id : sheetID,
+                },
+                // dataType: "dataType",
+                success: function (response) {
+                    console.log(response);
+                    if(response['success']){
+                        location.reload();
+                    }
+                    else{
+                        alert(response['message']);
+                    }
+                }
+            });
+        }//yes
+
+    });//remove sheet 
+
     //camp changed
     $("#cmb_camp").on("change", function(){
         var campID = $(this).val();
@@ -197,7 +232,10 @@ $(document).ready(function () {
                     htmlData +="<td>"+ value['last_synced_at'] +"</td>";
                     htmlData +="<td>"+ hasCode +"</td>";
                     htmlData +="<td>"+ status +"</td>";
-                    htmlData +="<td><button class='btn btn-outline-warning btn-sm btn_edit_sheet'>Edit</button></td>";
+                    htmlData += "<td>";
+                    htmlData += "<button class='btn btn-outline-warning btn-sm btn_edit_sheet'>Edit</button>";
+                    htmlData += "<button class='btn btn-outline-danger btn-sm ms-1 btn_delete_sheet'>Remove</button>";
+                    htmlData += "</td>";
                     htmlData +="</tr>";
                 });
 

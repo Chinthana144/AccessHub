@@ -87,6 +87,9 @@ $(document).ready(function () {
                     {
                         location.reload();
                     }
+                    else if(!response['success']){
+                        alert(response['message']);
+                    }
                     else{
                         loadTable(response['data']);
                     }

@@ -5,16 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\Camps;
 use App\Models\Sheets;
 use App\Services\GoogleSheetService;
-use DateTime;
-use Google\Service\Sheets\Sheet;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\Controller;
 
 class SheetController extends Controller
 {
     public function index()
     {
-        $camps = Camps::where('status', 1)->get();
+        $camps = Camps::where('status', 1)
+            ->where('is_upload', 1)
+            ->get();
         $active_camp_id = Session::get('active_camp_id');
         $camp = Camps::find($active_camp_id);
 
@@ -27,11 +29,11 @@ class SheetController extends Controller
 
     public function saveSheetNames(Request $request)
     {
-        $camp_id = Session::get('active_camp_id');
         $sheets = $request->sheets;
 
         foreach($sheets as $sheet)
         {
+            $camp_id = $sheet['camp_id'];
             $sheet_name = $sheet['sheet_name'];
             $start_date = $sheet['start_date'];
             $end_date = $sheet['end_date'];
@@ -78,25 +80,55 @@ class SheetController extends Controller
         ]);
     }//save sheet names
 
-    public function update(Request $request)
+    public function update(Request $request, Sheets $sheet)
     {
-        $sheet_id = $request->input('hide_sheet_id');
+        try {
+            $this->authorize('update', $sheet);
 
-        $sheet = Sheets::find($sheet_id);
+            $sheet_id = $request->input('hide_sheet_id');
 
-        $sheet->start_date = $request->input('start_date');
-        $sheet->end_date = $request->input('end_date');
+            $sheet = Sheets::find($sheet_id);
 
-        $has_code = $request->has('chk_has_code');
-        $status = $request->has('chk_active_sheet');
+            $sheet->start_date = $request->input('start_date');
+            $sheet->end_date = $request->input('end_date');
 
-        $sheet->has_data = $has_code ? 1 : 0;
-        $sheet->status = $status ? 1 : 0;
+            $has_code = $request->has('chk_has_code');
+            $status = $request->has('chk_active_sheet');
 
-        $sheet->save();
+            $sheet->has_data = $has_code ? 1 : 0;
+            $sheet->status = $status ? 1 : 0;
 
-        return redirect()->route('sheets.index');
+            $sheet->save();
+
+            return redirect()->route('sheets.index')->with('success', 'Sheet updated successfully!');
+        } catch (\Throwable $th) {
+            return redirect()->route('sheets.index')->with('error', 'You are not authorized to update this sheet!');
+        }
+        
     }//update sheet
+
+    public function destroy(Request $request, Sheets $sheet)
+    {
+        try {
+            $this->authorize('delete', $sheet);
+
+            $sheet_id = $request->input('sheet_id');
+            $sheet = Sheets::find($sheet_id);
+
+            $sheet->delete();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Sheet removed successfully!',
+            ]);
+        } catch (\Throwable $th) {
+            //throw $th;
+            return response()->json([
+                'success' => false,
+                'message' => 'You are not authorized to update this sheet!',
+            ]);
+        }
+    }//destroy
 
     public function getSheetByID(Request $request)
     {
@@ -109,6 +141,8 @@ class SheetController extends Controller
 
     public function getSheetByCampID(Request $request)
     {
+        // $user = Auth::user();
+        // $role_id = $user->role->id;
         $camp_id = $request->input('camp_id');
 
         $sheets = Sheets::where('camp_id', $camp_id)

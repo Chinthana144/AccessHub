@@ -60,4 +60,25 @@ $(document).ready(function () {
 
     });
 
+
+    //sessions
+
+    $("#btn_get_session").click(function (e) { 
+        e.preventDefault();
+        
+        var username = $("#txt_code").val();
+        
+        $.ajax({
+            type: "get",
+            url: "/getSession",
+            data: {
+                username: username,
+            },
+            // dataType: "dataType",
+            success: function (response) {
+                console.log(response);
+                
+            }
+        });
+    });
 });//jquery
