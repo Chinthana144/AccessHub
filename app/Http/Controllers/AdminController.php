@@ -111,7 +111,6 @@ class AdminController extends Controller
                 $users_array[] = $user['username'];
             }//in array
 
-            
         }//foreach
 
         return response()->json($users_array);
