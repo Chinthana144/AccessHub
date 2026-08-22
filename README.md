@@ -179,13 +179,16 @@ Authorization is not limited to application roles. Access can also be restricted
 
 ## Installation
 1. Clone the Repository
+
     git clone https://github.com/Chinthana144/AccessHub.git
     cd accesshub
 
 2. Install PHP Dependencies
+
     composer install
 
 3. Install Frontend Dependencies
+
     npm install
     npm run build
 
@@ -208,9 +211,11 @@ Configure the required environment variables, including:
 - Sanctum configuration
 
 5. Run Database Migrations
+
     php artisan migrate
 
 6. Start the Application
+
     php artisan serve
 
 The application will be available at:

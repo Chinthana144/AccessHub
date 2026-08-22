@@ -13,6 +13,7 @@ use App\Http\Controllers\ResetController;
 use App\Http\Controllers\SheetController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\UserController;
+use Google\Service\PubsubLite\Resource\Admin;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -130,6 +131,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/fetchSession', [AdminController::class, 'fetchSession']);
 
         Route::get('/codeCheck', [AdminController::class, 'codeCheck']);
+
+        //generator
+        Route::get('/generator', [AdminController::class, 'generatorView'])->name('admin.generator');
     });//admin middleware
 
 });//auth middleware

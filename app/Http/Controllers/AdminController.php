@@ -108,11 +108,21 @@ class AdminController extends Controller
 
             if(!in_array($username, $code_array))
             {
-                $users_array[] = $user['username'];
+                $mac = $user['caller-id'] ?? "00";
+                $profile = $user['actual-profile'] ?? "NoProfile";
+                $users_array[] = $user['username'] . " " . $user['password'] ." ".$mac . " " . $profile;
             }//in array
 
         }//foreach
 
         return response()->json($users_array);
-    }
+    }//code check
+
+    //================================ generator ===============================//
+    public function generatorView()
+    {
+        $camps = Camps::all();
+
+        return view('admin.generator_view', compact('camps'));
+    }//generator view
 }//class
