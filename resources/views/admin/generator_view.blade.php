@@ -1,4 +1,4 @@
-@extends('layouts.layout')
+@extends('layouts.admin_layout')
 
 @section('content')
     <div class="card">
@@ -20,7 +20,7 @@
                     <input type="number" step="1" class="form-control" value="10">
                 </div>
                 <div class="col-md-4">
-                    <label for="">Initial Number</label>
+                    <label for="">First Charactor</label>
                     <input type="number" step="1" class="form-control">
                 </div>
 
@@ -37,4 +37,6 @@
             </div>
         </div>
     </div>
+
+    <script src="{{ asset('js/admin_generator.js') }}"></script>
 @endsection

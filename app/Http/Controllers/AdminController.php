@@ -125,4 +125,6 @@ class AdminController extends Controller
 
         return view('admin.generator_view', compact('camps'));
     }//generator view
+
+    
 }//class
