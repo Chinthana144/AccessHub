@@ -5,6 +5,7 @@ use App\Http\Controllers\CampAccessController;
 use App\Http\Controllers\CampController;
 use App\Http\Controllers\CodeController;
 use App\Http\Controllers\CodeResetController;
+use App\Http\Controllers\GeneratorController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProfileController;
@@ -133,7 +134,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/codeCheck', [AdminController::class, 'codeCheck']);
 
         //generator
-        Route::get('/generator', [AdminController::class, 'generatorView'])->name('admin.generator');
+        Route::get('/generator', [GeneratorController::class, 'index'])->name('generator.index');
+        Route::get('/fetchUserCodes', [GeneratorController::class, 'fetchUserCodes']);
+        Route::get('/generateCodes', [GeneratorController::class, 'generateCodes']);
     });//admin middleware
 
 });//auth middleware

@@ -7,7 +7,7 @@
         </div>
         <div class="card-body">
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <label for="">Select Camp</label>
                     <select name="cmb_camp" id="cmb_camp" class="form-select">
                         @foreach ($camps as $camp)
@@ -15,24 +15,38 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="col-md-4">
-                    <label for="">Code Count</label>
-                    <input type="number" step="1" class="form-control" value="10">
-                </div>
-                <div class="col-md-4">
+                
+                <div class="col-md-3">
                     <label for="">First Charactor</label>
-                    <input type="number" step="1" class="form-control">
+                    <input type="number" step="1" id="first_charactor" class="form-control">
+                </div>
+
+                
+
+                <div class="col-md-3">
+                    <button id="btn_fetch_codes" class="btn btn-success mt-4 w-100">Fetch Codes</button>
                 </div>
 
                 <div class="col-md-12 mt-3">
+
+                    <p id="p_fetch_status"></p>
+
                     <label for="">Filter</label>
                     <textarea name="txt_code_filter" id="txt_code_filter" cols="30" rows="5" class="form-control"></textarea>
                 </div>
-            </div>
 
-            <div class="row">
-                <div class="col-md-3">
-                    <button type="button" id="btn_generate" class="btn btn-primary mt-2">Generate</button>
+                <div class="col-md-3 mt-2">
+                    <label for="">Code Count</label>
+                    <input type="number" step="1" id="code_count" class="form-control" value="10">
+                </div>
+
+                <div class="col-md-3 mt-2">
+                    <label for="">Profile Name</label>
+                    <input type="text" id="txt_profile" class="form-control" value="Unlimited 30 Days">
+                </div>
+
+                <div class="col-md-3 mt-2">
+                    <button type="button" id="btn_generate" class="btn btn-primary mt-4 w-100">Generate</button>
                 </div>
             </div>
         </div>
