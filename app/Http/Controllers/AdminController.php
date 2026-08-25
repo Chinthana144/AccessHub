@@ -54,6 +54,25 @@ class AdminController extends Controller
         return response()->json($data);
     }
 
+    public function getOneUser(Request $request)
+    {
+        $camp_id = $request->input('camp_id');
+        $username = $request->input('username');
+
+        $camp = Camps::find($camp_id);
+
+        $host = $camp->mikrotikHost;
+        $user = $camp->mikrotikUsername;
+        $pwd = $camp->mikrotikPassword;
+        $port = $camp->mikrotikPort;
+
+        $mikrotikService = new MikrotikService($host, $user, $pwd, $port);
+
+        $user = $mikrotikService->getOneUser($username);
+
+        return response()->json($user);
+    }//get one user
+
     //================================= Sessions Section =================================//
     public function viewSession()
     {
@@ -118,13 +137,19 @@ class AdminController extends Controller
         return response()->json($users_array);
     }//code check
 
-    //================================ generator ===============================//
-    public function generatorView()
+    //================================ Restart ===============================//
+    public function codeRestartView()
     {
         $camps = Camps::all();
 
-        return view('admin.generator_view', compact('camps'));
-    }//generator view
+        return view('admin.restart_view', compact('camps'));
+    }//code restart
 
-    
+    public function codeRestart(Request $request)
+    {
+        $camp_id = $request->input('camp_id');
+
+        
+
+    }//codeRestart
 }//class

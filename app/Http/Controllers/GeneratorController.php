@@ -54,6 +54,15 @@ class GeneratorController extends Controller
         $profile_name = $request->input('profile_name');
         $prefix = $request->input('first_charactor');
 
+        $camp = Camps::find($camp_id);
+
+        $host = $camp->mikrotikHost;
+        $user = $camp->mikrotikUsername;
+        $pwd = $camp->mikrotikPassword;
+        $port = $camp->mikrotikPort;
+
+        $mikrotikService = new MikrotikService($host, $user, $pwd, $port);
+
         $code_array = [];
         $new_users = [];
 
@@ -78,6 +87,10 @@ class GeneratorController extends Controller
                     'username' => $username,
                     'password' => $password,
                 ];
+
+            $mikrotikService->createUser($username, $password);
+            $mikrotikService->activateProfile($username, $profile_name);
+
         }//for loop
 
         return response()->json($new_users);

@@ -18,6 +18,7 @@
         <a href="{{ route('admin.index') }}" class="btn btn-outline-primary btn-sm ms-1">Admin</a>
         <a href="{{ route('admin.session') }}" class="btn btn-outline-primary btn-sm ms-1">Sessions</a>
         <a href="{{ route('generator.index') }}" class="btn btn-outline-primary btn-sm ms-1">Generator</a>
+        <a href="{{ route('admin.restart') }}" class="btn btn-outline-primary btn-sm ms-1">Restart</a>
     </div>
 
     @yield('content')

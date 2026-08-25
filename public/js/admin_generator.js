@@ -26,8 +26,7 @@ $(document).ready(function () {
                 $("#txt_code_filter").val(response);
 
             }
-        });
-
+        });//ajax
     });
 
     $("#btn_generate").click(function (e) { 

@@ -45,6 +45,40 @@ class MikrotikService{
     }//get identity
 
     //======================= User Manager =========================//
+    public function createUser(string $username, string $password)
+    {
+        if (!$this->isConnected) {
+            return [];
+        }
+
+        $query = (new Query('/user-manager/user/add'))
+            ->equal('username', $username)
+            ->equal('password', $password)
+            ->equal('caller-id', 'bind')
+            ->equal('customer', 'admin')
+            ->equal('shared-users', '1');
+
+        return $this->client
+            ->query($query)
+            ->read();
+    }//create user
+
+    public function activateProfile(string $username, string $profile)
+    {
+        if (!$this->isConnected) {
+            return [];
+        }
+
+        $query = (new Query('/tool/user-manager/user/create-and-activate-profile'))
+            ->equal('customer', 'admin')
+            ->equal('profile', $profile)
+            ->equal('numbers', $username);
+
+        return $this->client
+            ->query($query)
+            ->read();
+    }
+
     public function getUserManagerUsers()
     {
         if (!$this->isConnected) {

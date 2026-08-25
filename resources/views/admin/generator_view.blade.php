@@ -20,9 +20,7 @@
                     <label for="">First Charactor</label>
                     <input type="number" step="1" id="first_charactor" class="form-control">
                 </div>
-
                 
-
                 <div class="col-md-3">
                     <button id="btn_fetch_codes" class="btn btn-success mt-4 w-100">Fetch Codes</button>
                 </div>

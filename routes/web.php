@@ -126,7 +126,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
         Route::get('/general-cli', [AdminController::class, 'generalCli']);
         Route::get('/testing-cli', [AdminController::class, 'testing']);
-        Route::get('/getOneUserAdmin', [CodeResetController::class, 'getOneUser']);
+        Route::get('/getOneUserAdmin', [AdminController::class, 'getOneUser']);
 
         Route::get('/session', [AdminController::class, 'viewSession'])->name('admin.session');
         Route::get('/fetchSession', [AdminController::class, 'fetchSession']);
@@ -137,6 +137,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/generator', [GeneratorController::class, 'index'])->name('generator.index');
         Route::get('/fetchUserCodes', [GeneratorController::class, 'fetchUserCodes']);
         Route::get('/generateCodes', [GeneratorController::class, 'generateCodes']);
+
+        //restart
+        Route::get('/restart', [AdminController::class, 'codeRestartView'])->name('admin.restart');
     });//admin middleware
 
 });//auth middleware
