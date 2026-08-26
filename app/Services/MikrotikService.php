@@ -51,7 +51,7 @@ class MikrotikService{
             return [];
         }
 
-        $query = (new Query('/user-manager/user/add'))
+        $query = (new Query('.tool/user-manager/user/add'))
             ->equal('username', $username)
             ->equal('password', $password)
             ->equal('caller-id', 'bind')
@@ -62,6 +62,20 @@ class MikrotikService{
             ->query($query)
             ->read();
     }//create user
+
+    public function deleteUser(string $user_id)
+    {
+        if (!$this->isConnected) {
+            return [];
+        }
+
+        $query = (new Query('/tool/user-manager/user/remove'))
+            ->equal('.id', $user_id);
+        
+        return $this->client
+            ->query($query)
+            ->read();
+    }//delete user
 
     public function activateProfile(string $username, string $profile)
     {

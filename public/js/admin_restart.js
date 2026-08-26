@@ -6,7 +6,19 @@ $(document).ready(function () {
         var campID = $("#cmb_camp").val();
         var txtCode = $("#txt_code").val();
 
-        
+        $.ajax({
+            type: "get",
+            url: "/codeRestart",
+            data: {
+                camp_id: campID,
+                code : txtCode,
+            },
+            // dataType: "dataType",
+            success: function (response) {
+                console.log(response);
+                
+            }
+        });
 
     });
 

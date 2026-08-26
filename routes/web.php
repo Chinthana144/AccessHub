@@ -140,6 +140,7 @@ Route::middleware('auth')->group(function () {
 
         //restart
         Route::get('/restart', [AdminController::class, 'codeRestartView'])->name('admin.restart');
+        Route::get('/codeRestart', [AdminController::class, 'codeRestart']);
     });//admin middleware
 
 });//auth middleware
