@@ -100,7 +100,6 @@ $(document).ready(function () {
                 end_date: row.find(".end_date").val(),
                 has_code: row.find(".chk_code").is(":checked") ? 1 : 0
             });
-
         });
         console.log(sheetData);
         

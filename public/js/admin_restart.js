@@ -13,6 +13,12 @@ $(document).ready(function () {
                 camp_id: campID,
                 code : txtCode,
             },
+            beforeSend: function(){
+                $("#p_status").text("Processing ...");
+            },
+            complete: function(){
+                $("#p_status").text("");
+            },
             // dataType: "dataType",
             success: function (response) {
                 console.log(response);

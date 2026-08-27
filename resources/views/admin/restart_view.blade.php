@@ -23,6 +23,10 @@
                     <button type="button" id="btn_restart" class="btn btn-success mt-4">Restart</button>
                 </div>
             </div>
+            
+            <div class="row mt-2">
+                <p id="p_status">Status</p>
+            </div>
         </div>
     </div>
 
