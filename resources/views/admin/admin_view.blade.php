@@ -1,4 +1,4 @@
-@extends('layouts.layout')
+@extends('layouts.admin_layout')
 
 @section('content')
     <div class="card">
@@ -41,13 +41,6 @@
             <hr>
             <h5>Testing</h5>
             <button class="btn btn-primary btn-sm" id="btn_testing">Click</button>
-
-
-            <p>create token table</p>
-            <form action="{{ route('create.tokenTable') }}" method="post">
-                @csrf
-                <button type="submit" class="btn btn-primary">Create Table</button>
-            </form>
 
         </div>
     </div>

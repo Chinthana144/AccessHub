@@ -5,6 +5,7 @@ use App\Http\Controllers\CampAccessController;
 use App\Http\Controllers\CampController;
 use App\Http\Controllers\CodeController;
 use App\Http\Controllers\CodeResetController;
+use App\Http\Controllers\GeneratorController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProfileController;
@@ -13,6 +14,7 @@ use App\Http\Controllers\ResetController;
 use App\Http\Controllers\SheetController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\UserController;
+use Google\Service\PubsubLite\Resource\Admin;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -124,12 +126,21 @@ Route::middleware('auth')->group(function () {
         Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
         Route::get('/general-cli', [AdminController::class, 'generalCli']);
         Route::get('/testing-cli', [AdminController::class, 'testing']);
-        Route::get('/getOneUserAdmin', [CodeResetController::class, 'getOneUser']);
+        Route::get('/getOneUserAdmin', [AdminController::class, 'getOneUser']);
 
         Route::get('/session', [AdminController::class, 'viewSession'])->name('admin.session');
         Route::get('/fetchSession', [AdminController::class, 'fetchSession']);
 
         Route::get('/codeCheck', [AdminController::class, 'codeCheck']);
+
+        //generator
+        Route::get('/generator', [GeneratorController::class, 'index'])->name('generator.index');
+        Route::get('/fetchUserCodes', [GeneratorController::class, 'fetchUserCodes']);
+        Route::get('/generateCodes', [GeneratorController::class, 'generateCodes']);
+
+        //restart
+        Route::get('/restart', [AdminController::class, 'codeRestartView'])->name('admin.restart');
+        Route::get('/codeRestart', [AdminController::class, 'codeRestart']);
     });//admin middleware
 
 });//auth middleware

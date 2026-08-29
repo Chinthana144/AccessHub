@@ -29,7 +29,7 @@ class SheetController extends Controller
 
     public function saveSheetNames(Request $request)
     {
-        $sheets = $request->sheets;
+        $sheets = $request->input('sheets');
 
         foreach($sheets as $sheet)
         {
@@ -41,12 +41,15 @@ class SheetController extends Controller
             $has_data = $sheet['has_code'] == 1 ? 1 : 0;
 
             //check name duplicates
-            $name_duplicate_exist = Sheets::where("name", $sheet_name)->exists();
+            $name_duplicate_exist = Sheets::where("name", $sheet_name)
+                ->where('camp_id', $camp_id)
+                ->exists();
             
             if(!$name_duplicate_exist)
             {
                 //check startdate and end date
-                $sheet_tab = Sheets::where("start_date" , $start_date)
+                $sheet_tab = Sheets::where('camp_id', $camp_id)
+                    ->where("start_date" , $start_date)
                     ->where('end_date', $end_date)
                     ->first();
 
@@ -76,7 +79,7 @@ class SheetController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Sheet synchronized successfully!'
+            'message' => 'Sheet synchronized successfully!',
         ]);
     }//save sheet names
 
@@ -86,23 +89,28 @@ class SheetController extends Controller
             $this->authorize('update', $sheet);
 
             $sheet_id = $request->input('hide_sheet_id');
-
             $sheet = Sheets::find($sheet_id);
 
             $sheet->start_date = $request->input('start_date');
             $sheet->end_date = $request->input('end_date');
 
-            $has_code = $request->has('chk_has_code');
-            $status = $request->has('chk_active_sheet');
-
-            $sheet->has_data = $has_code ? 1 : 0;
-            $sheet->status = $status ? 1 : 0;
+            $sheet->has_data = $request->has('chk_has_code') ? 1 : 0;
+            $sheet->status = $request->has('chk_active_sheet') ? 1 : 0;
 
             $sheet->save();
 
             return redirect()->route('sheets.index')->with('success', 'Sheet updated successfully!');
         } catch (\Throwable $th) {
-            return redirect()->route('sheets.index')->with('error', 'You are not authorized to update this sheet!');
+            // \Log::error('Sheet update failed', [
+            //     'message' => $th->getMessage(),
+            //     'file' => $th->getFile(),
+            //     'line' => $th->getLine(),
+            //     'trace' => $th->getTraceAsString(),
+            // ]);
+
+            return redirect()
+                ->route('sheets.index')
+                ->with('error', $th->getMessage());
         }
         
     }//update sheet
