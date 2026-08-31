@@ -91,7 +91,7 @@ class MikrotikService{
         return $this->client
             ->query($query)
             ->read();
-    }
+    }//activate profile
 
     public function getUserManagerUsers()
     {

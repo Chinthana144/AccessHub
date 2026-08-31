@@ -81,6 +81,6 @@
 
     <script src="{{ asset('js/code_view.js') }}"></script>
 
-    @include('codes.code_edit_modal');
+    @include('codes.code_edit_modal')
 
 @endsection
