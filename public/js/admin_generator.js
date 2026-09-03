@@ -51,6 +51,14 @@ $(document).ready(function () {
             success: function (response) {
                 console.log(response);
                 
+                let htmlData = "";
+                
+                $.each(response['users'], function (key, value) { 
+                    htmlData += value['username'] + " " + value['password'] + "<br>";
+                });
+                
+                $("#p_codes").html(htmlData);
+
             }
         });        
     });

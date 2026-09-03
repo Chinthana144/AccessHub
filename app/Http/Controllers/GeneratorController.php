@@ -71,6 +71,9 @@ class GeneratorController extends Controller
             $code_array = explode(',', $codes);
         }//has codes
 
+        $user_create = "";
+        $active_profile = "";
+
         for($i=0; $i<$code_count; $i++)
         {
             $username = "";
@@ -88,12 +91,32 @@ class GeneratorController extends Controller
                     'password' => $password,
                 ];
 
-            $mikrotikService->createUser($username, $password);
-            $mikrotikService->activateProfile($username, $profile_name);
+            $user_create = $mikrotikService->createUser($username, $password);
+            if(empty($user_create))
+            {
+                return response()->json([
+                    'success' => false,
+                    'message' => "user create failed!"
+                ]);
+            }
+
+            $active_profile = $mikrotikService->activateProfile($username, $profile_name);
+            
+            // if(empty($active_profile))
+            // {
+            //     return response()->json([
+            //         'success' => false,
+            //         'message' => "profile activate failed!"
+            //     ]);
+            // }
 
         }//for loop
 
-        return response()->json($new_users);
+        return response()->json([
+            'users' => $new_users,
+            'last_user' => $new_users,
+            'profile' => $active_profile
+        ]);
 
     }//generate codes
 }//class

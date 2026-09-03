@@ -48,7 +48,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/getSheetByCampID', [SheetController::class, 'getSheetByCampID']);
         Route::get('/getActiveSheetByCampID', [SheetController::class, 'getActiveSheetByCampID']);
 
-         //codes
+        //codes
         Route::get('/codes', [CodeController::class, 'index'])->name('codes.index');
         Route::get('/code_upload_view', [CodeController::class, 'codeUploadView'])->name('codeUpload.view');
         Route::get('/getCodes', [CodeController::class, 'getCodes']);

@@ -23,7 +23,15 @@ $(document).ready(function () {
             success: function (response) {
                 console.log(response);
                 
-            }
+                if(response['success'])
+                {
+                    alert(response['message']);
+                }//success
+                else
+                {
+                    alert(response['message']);
+                }
+            }//success response
         });
 
     });

@@ -47,6 +47,36 @@
                     <button type="button" id="btn_generate" class="btn btn-primary mt-4 w-100">Generate</button>
                 </div>
             </div>
+
+            <div class="row mt-2">
+                <p id="p_codes"></p>
+            </div>
+        </div>
+    </div>
+
+    {{-- remover --}}
+    <div class="card mt-3">
+        <div class="card-header">
+            <h5>Remover</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="">Select Camp</label>
+                    <select name="cmb_remove_camp" id="cmb_remove_camp" class="form-select">
+                        @foreach ($camps as $camp)
+                            <option value="{{ $camp->id }}">{{ $camp->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-12">
+                    <label for="">Codes to remove</label>
+                    <textarea name="txt_remove_codes" id="txt_remove_codes" cols="30" rows="5" class="form-control"></textarea>
+                </div>
+                <div class="col-md-4">
+                    <button class="btn btn-danger mt-2">Remove</button>
+                </div>
+            </div>
         </div>
     </div>
 

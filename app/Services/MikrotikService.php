@@ -51,7 +51,7 @@ class MikrotikService{
             return [];
         }
 
-        $query = (new Query('.tool/user-manager/user/add'))
+        $query = (new Query('/tool/user-manager/user/add'))
             ->equal('username', $username)
             ->equal('password', $password)
             ->equal('caller-id', 'bind')
@@ -87,7 +87,7 @@ class MikrotikService{
             ->equal('customer', 'admin')
             ->equal('profile', $profile)
             ->equal('numbers', $username);
-
+            
         return $this->client
             ->query($query)
             ->read();
