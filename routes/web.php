@@ -138,6 +138,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/fetchUserCodes', [GeneratorController::class, 'fetchUserCodes']);
         Route::get('/generateCodes', [GeneratorController::class, 'generateCodes']);
 
+        //remover
+        Route::get('/removeCodes', [GeneratorController::class, 'removeCodes']);
+
         //restart
         Route::get('/restart', [AdminController::class, 'codeRestartView'])->name('admin.restart');
         Route::get('/codeRestart', [AdminController::class, 'codeRestart']);

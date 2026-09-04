@@ -74,7 +74,10 @@
                     <textarea name="txt_remove_codes" id="txt_remove_codes" cols="30" rows="5" class="form-control"></textarea>
                 </div>
                 <div class="col-md-4">
-                    <button class="btn btn-danger mt-2">Remove</button>
+                    <button class="btn btn-danger mt-2" id="btn_remove">Remove</button>
+                </div>
+                <div class="col-md-12">
+                    <p id="p_removed_codes"></p>
                 </div>
             </div>
         </div>

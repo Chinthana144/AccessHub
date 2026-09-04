@@ -119,4 +119,57 @@ class GeneratorController extends Controller
         ]);
 
     }//generate codes
+
+    //code remover
+    public function removeCodes(Request $request)
+    {
+        $camp_id = $request->input('camp_id');
+        $txt_codes = $request->input('txt_codes');
+
+        $camp = Camps::find($camp_id);
+
+        $host = $camp->mikrotikHost;
+        $user = $camp->mikrotikUsername;
+        $pwd = $camp->mikrotikPassword;
+        $port = $camp->mikrotikPort;
+
+        $mikrotikService = new MikrotikService($host, $user, $pwd, $port);
+        
+        if(!empty($txt_codes))
+        {
+            $code_array = explode(",", $txt_codes);
+
+            //fetch all users
+            $all_users = $mikrotikService->getAllUsers();
+            $removed_users = [];
+
+            foreach($all_users as $user)
+            {
+                $username = $user['username'];
+                $user_id = $user['.id'];
+
+                if(in_array($username, $code_array))
+                {
+                    $mikrotikService->deleteUser($user_id);
+
+                    $removed_users[] = $username;
+                }
+            }//foreach user
+
+            return response()->json([
+                'success' => true,
+                'message' => 'users removed successfully!',
+                'users' => $removed_users,
+            ]);
+
+        }//has codes
+        else{
+            return response()->json([
+                'success' => false,
+                'message' => 'Invalid input'
+            ]);
+        }
+
+    }//remove codes
+
 }//class

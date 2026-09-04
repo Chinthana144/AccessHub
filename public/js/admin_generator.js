@@ -63,4 +63,37 @@ $(document).ready(function () {
         });        
     });
 
+    $("#btn_remove").click(function (e) { 
+        e.preventDefault();
+        var campID = $("#cmb_remove_camp").val();
+        var txtCodes = $.trim($("#txt_remove_codes").val());
+
+        if(txtCodes.length != 0)
+        {
+            $.ajax({
+                type: "get",
+                url: "/removeCodes",
+                data: {
+                    camp_id : campID,
+                    txt_codes: txtCodes
+                },
+                // dataType: "dataType",
+                beforeSend: function(){
+                    $("p_removed_codes").val("Processing...");
+                },
+                success: function (response) {
+                    console.log(response);
+                    
+                    if(response['success'])
+                    {   
+                        $("p_removed_codes").val("show data");
+                    }
+                }//success
+            });
+        }//has codes
+        else{
+            alert('Null input as codes');
+        }
+    });
+
 });//jquery
