@@ -188,44 +188,26 @@ class AdminController extends Controller
             }//has session
 
             //remove curret user
-            $delete_user = $mikrotikService->deleteUser($user_id);
-
-            if(!empty($delete_user))
+            $mikrotikService->deleteUser($user_id);
+                
+            //create same user again
+            $new_user = $mikrotikService->createUser($username, $password);
+            if(!empty($new_user))
             {
-                //create same user again
-                $new_user = $mikrotikService->createUser($username, $password);
-                if(!empty($new_user))
-                {
-                    //create and activate profile
-                    $active_profile = $mikrotikService->activateProfile($username, $profile);
+                //create and activate profile
+                $mikrotikService->activateProfile($username, $profile);
 
-                    if(!empty($active_profile))
-                    {
-                        return response()->json([
-                            'success' => true,
-                            'message' => 'Code restarted successfully!', 
-                        ]);
-                    }//profile
-                    else{
-                        return response()->json([
-                            'success' => false,
-                            'message' => 'Profile activation failed!', 
-                        ]);
-                    }
-                }//new user
-                else{
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'Username create failed!', 
-                    ]);
-                }//user create failed
-            }//delete user
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Code restarted successfully!', 
+                ]);
+            }//new user
             else{
                 return response()->json([
                     'success' => false,
-                    'message' => 'Username delete failed!', 
+                    'message' => 'Username create failed!', 
                 ]);
-            }
+            }//user create failed
         }//has user
         else{
             return response()->json([

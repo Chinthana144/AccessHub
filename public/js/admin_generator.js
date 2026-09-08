@@ -87,6 +87,17 @@ $(document).ready(function () {
                     if(response['success'])
                     {   
                         $("p_removed_codes").val("show data");
+
+                        let htmlData = "";
+
+                        $.each(response['users'], function (key, value) { 
+                            htmlData += value + "<br>";
+                        });
+
+                        $("#p_removed_codes").html(htmlData);
+                    }//success
+                    else{
+                        $("#p_removed_codes").val("Remove Failed");
                     }
                 }//success
             });
