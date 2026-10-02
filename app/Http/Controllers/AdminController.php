@@ -141,7 +141,7 @@ class AdminController extends Controller
     public function codeRestartView()
     {
         $camps = Camps::all();
-
+        
         return view('admin.restart_view', compact('camps'));
     }//code restart
 
@@ -175,7 +175,7 @@ class AdminController extends Controller
             $user_id = $user[0]['.id'];
             $username = $user[0]['username'];
             $password = $user[0]['password'];
-            $profile = $user[0]['actual-profile'];
+            $profile = $user[0]['actual-profile'] ?? 'Unlimited 30 Days';
 
             $sessions = $mikrotikService->getSession($code);
             if(!empty($sessions))
@@ -199,7 +199,7 @@ class AdminController extends Controller
 
                 return response()->json([
                     'success' => true,
-                    'message' => 'Code restarted successfully!', 
+                    'message' => 'Code restarted successfully!',
                 ]);
             }//new user
             else{

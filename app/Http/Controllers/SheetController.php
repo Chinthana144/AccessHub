@@ -184,7 +184,6 @@ class SheetController extends Controller
 
     public function fetchGoogleSheets(Request $request)
     {
-
         $camp_id = $request->input('camp_id');
         $camp = Camps::find($camp_id);
         $sheet_id = $camp->sheetID;
@@ -194,26 +193,33 @@ class SheetController extends Controller
         $sheet_names = $sheet_service->getSheetNames($sheet_id);
 
         $new_sheets = [];
-
-        foreach ($sheet_names as $sheet) 
+        if(!empty($sheet_names))
         {
-            $sheet_name = $sheet;
-
-            $name_exist = Sheets::where('camp_id', $camp_id)
-                ->where('name', $sheet_name)
-                ->exists();
-
-            if($name_exist)
+            foreach ($sheet_names as $sheet) 
             {
-                continue;   
-            }
-            else
-            {
-                $new_sheets[] = $sheet_name;
-            }
-        }//foreach
+                $sheet_name = $sheet;
 
-        return response()->json($new_sheets);
+                $name_exist = Sheets::where('camp_id', $camp_id)
+                    ->where('name', $sheet_name)
+                    ->exists();
 
+                if($name_exist)
+                {
+                    continue;   
+                }
+                else
+                {
+                    $new_sheets[] = $sheet_name;
+                }
+            }//foreach
+
+            return response()->json($new_sheets);
+        }
+        else{
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to fetch sheet names',
+            ]);
+        }
     }//fetch sheets
 }//class
