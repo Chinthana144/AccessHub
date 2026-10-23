@@ -130,6 +130,7 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/session', [AdminController::class, 'viewSession'])->name('admin.session');
         Route::get('/fetchSession', [AdminController::class, 'fetchSession']);
+        Route::get('/fetchAllUsers', [AdminController::class, 'fetchAllUsers']);
 
         Route::get('/codeCheck', [AdminController::class, 'codeCheck']);
 

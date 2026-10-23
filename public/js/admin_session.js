@@ -68,4 +68,26 @@ $(document).ready(function () {
         
     });
 
+    $("#btn_fetch_all").click(function(){
+        
+        console.log('fetching users');
+        
+
+        var campID = $("#cmb_camp").val();
+        //fetch all users
+        $.ajax({
+            type: "get",
+            url: "/fetchAllUsers",
+            data: {
+                camp_id: campID,
+            },
+            // dataType: "dataType",
+            success: function (response) {
+                console.log(response);
+                
+            }//success
+        });
+
+    });
+
 });//jquery

@@ -112,7 +112,7 @@ class MikrotikService{
             return [];
         }
 
-        $query = (new Query('/tool/user-manager/user/print'))->where('username', $username);
+        $query = (new Query('/user-manager/user/print'))->where('name', $username);
 
         return $this->client
             ->query($query)
@@ -125,11 +125,12 @@ class MikrotikService{
             return [];
         }
 
-        $query = (new Query('/tool/user-manager/user/set'))
-            ->equal('caller-id', 'bind')
-            ->equal('caller-id-bind-on-first-use', 'yes')
-            ->equal('disabled', 'false')
-            ->equal('.id', $id);
+        $query = (new Query('/user-manager/user/set'))
+            ->equal('.id', $id)
+            ->equal('caller-id', 'bind');
+            // ->equal('caller-id-bind-on-first-use', 'yes');
+            // ->equal('disabled', 'false');
+            
 
         return $this->client
             ->query($query)
@@ -219,7 +220,7 @@ class MikrotikService{
             return [];
         }
 
-        $query = new Query('/tool/user-manager/user/print');
+        $query = new Query('/user-manager/user/print');
 
         return $this->client
             ->query($query)

@@ -115,7 +115,7 @@ $(document).ready(function () {
             },
             // dataType: "dataType",
             success: function (response) {
-                // console.log(response);
+                console.log(response);
                 if(response.length > 0)
                 {
                     $("#div_identity").html("<span class='badge bg-success'>"+ response[0]['name'] +" online</span>");

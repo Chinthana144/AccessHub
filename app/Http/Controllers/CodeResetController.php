@@ -70,14 +70,16 @@ class CodeResetController extends Controller
 
         $user_data = $mikrotikService->getOneUser($username);
 
+        // dd($user_data);
+
         if(count($user_data) > 0) 
         {
             $code_id = $user_data[0]['.id'];
-            $active = $user_data[0]['active'];
+            // $active = $user_data[0]['active'];
             $profile = $user_data[0]['actual-profile'] ?? "N/A";
             $mac = $user_data[0]['caller-id'] ?? "N/A";
             $disabled = $user_data[0]['disabled'];
-            $username = $user_data[0]['username'];
+            $username = $user_data[0]['name'];
             $password = $user_data[0]['password'];
 
             $code_data = CodeUsage::where('camp_id', $camp_id)
@@ -177,7 +179,7 @@ class CodeResetController extends Controller
 
             $data = [
                 'code_id' => $user_data[0]['.id'],
-                'username'=> $user_data[0]['username'],
+                'username'=> $user_data[0]['name'],
                 'password' => $user_data[0]['password'],
                 'sessions' => count($session_data),
             ];

@@ -73,6 +73,24 @@ class AdminController extends Controller
         return response()->json($user);
     }//get one user
 
+    public function fetchAllUsers(Request $request)
+    {
+        $camp_id = $request->input('camp_id');
+
+        $camp = Camps::find($camp_id);
+
+        $host = $camp->mikrotikHost;
+        $user = $camp->mikrotikUsername;
+        $pwd = $camp->mikrotikPassword;
+        $port = $camp->mikrotikPort;
+
+        $mikrotikService = new MikrotikService($host, $user, $pwd, $port);
+
+        $users = $mikrotikService->getAllUsers();
+
+        return response()->json($users);
+    }//fetch all users
+
     //================================= Sessions Section =================================//
     public function viewSession()
     {
