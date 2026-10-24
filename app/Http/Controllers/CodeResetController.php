@@ -72,15 +72,16 @@ class CodeResetController extends Controller
 
         // dd($user_data);
 
-        if(count($user_data) > 0) 
+        if(!empty($user_data)) 
         {
-            $code_id = $user_data[0]['.id'];
-            // $active = $user_data[0]['active'];
-            $profile = $user_data[0]['actual-profile'] ?? "N/A";
-            $mac = $user_data[0]['caller-id'] ?? "N/A";
-            $disabled = $user_data[0]['disabled'];
-            $username = $user_data[0]['name'];
-            $password = $user_data[0]['password'];
+            $decode_data = json_decode($user_data);
+
+            $code_id = $decode_data->id;
+            $profile = $decode_data->profile ?? "N/A";
+            $mac = $decode_data->mac ?? "N/A";
+            $disabled = $decode_data->disabled;
+            $username = $decode_data->username;
+            $password = $decode_data->password;
 
             $code_data = CodeUsage::where('camp_id', $camp_id)
                 ->where('username', $username)
@@ -109,6 +110,9 @@ class CodeResetController extends Controller
             // }
             
             $lease_data = $mikrotikService->getAddress($mac);
+
+            // dd($mac);
+            // dd($lease_data);
 
             $ip_address = $lease_data[0]['active-address'] ?? "N/A";
             $device_name = $lease_data[0]['host-name'] ?? "N/A";
@@ -157,10 +161,12 @@ class CodeResetController extends Controller
         $mikrotikService = new MikrotikService($host, $user, $pwd, $port);
 
         $user_data = $mikrotikService->getOneUser($username);
-        // dd($user_data);
+
         if(!empty($user_data))
         {
-            $code_id = $user_data[0]['.id'];
+            $decode_data = json_decode($user_data);
+
+            $code_id = $decode_data->id;
 
             //remove session
             $session_data = $mikrotikService->getSession($username);
@@ -169,7 +175,6 @@ class CodeResetController extends Controller
                 //remove all sessions for the user
                 foreach($session_data as $session)
                 {
-                    // dd($session['.id']);
                     $session_id = $session['.id'];
                     $mikrotikService->removeSession($session_id);
                 }//session
@@ -178,9 +183,9 @@ class CodeResetController extends Controller
             $mikrotikService->resetMac($code_id);
 
             $data = [
-                'code_id' => $user_data[0]['.id'],
-                'username'=> $user_data[0]['name'],
-                'password' => $user_data[0]['password'],
+                'code_id' => $decode_data->id,
+                'username'=> $decode_data->username,
+                'password' => $decode_data->password,
                 'sessions' => count($session_data),
             ];
 

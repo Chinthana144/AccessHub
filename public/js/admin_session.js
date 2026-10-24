@@ -87,20 +87,4 @@ $(document).ready(function () {
 
     });
 
-    $("#btn_get_routeros").click(function(){
-        var campID = $("#cmb_camp").val();
-
-        $.ajax({
-            type: "get",
-            url: "/getRouterOS",
-            data: {
-                camp_id : campID,
-            },
-            // dataType: "dataType",
-            success: function (response) {
-                console.log(response);
-            }
-        });
-    });
-
 });//jquery

@@ -54,6 +54,8 @@ class AdminController extends Controller
         return response()->json($data);
     }
 
+//==================================== users ==================================//
+
     public function getOneUser(Request $request)
     {
         $camp_id = $request->input('camp_id');

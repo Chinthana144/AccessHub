@@ -18,10 +18,11 @@
                 <div class="col-md-6">
                     <label for="">code</label>
                     <input type="text" id="txt_username" class="form-control">
+
                     <button class="btn btn-success mt-2" id="btn_fetch_session">Session</button>
                     <button class="btn btn-primary mt-2" id="btn_fetch_user">Fetch User</button>
                     <button class="btn btn-warning mt-2" id="btn_fetch_all">fetch all users</button>
-                    <button class="btn btn-warning mt-2" id="btn_get_routeros">Get Router OS</button>
+                    {{-- <button class="btn btn-warning mt-2" id="btn_get_address">Get Address</button> --}}
                     
                 </div>
             </div>
