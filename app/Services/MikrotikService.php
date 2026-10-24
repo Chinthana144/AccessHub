@@ -255,4 +255,17 @@ class MikrotikService{
             ->query($query)
             ->read(); 
     }//remove session
+
+    public function detectRouterOSVersion()
+    {
+        if (!$this->isConnected) {
+            return [];
+        }
+
+        $query = (new Query('/system/resource/print'));
+
+        return $this->client
+            ->query($query)
+            ->read(); 
+    }//get router OS version
 }//class

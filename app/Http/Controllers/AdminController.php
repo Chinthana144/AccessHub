@@ -235,4 +235,23 @@ class AdminController extends Controller
         }
     }//codeRestart
 
+    //================================= Resources ==============================//
+    public function getRouterOS(Request $request)
+    {
+        $camp_id = $request->input('camp_id');
+
+        $camp = Camps::find($camp_id);
+
+        $host = $camp->mikrotikHost;
+        $user = $camp->mikrotikUsername;
+        $pwd = $camp->mikrotikPassword;
+        $port = $camp->mikrotikPort;
+
+        $mikrotikService = new MikrotikService($host, $user, $pwd, $port);
+
+        $router_data = $mikrotikService->detectRouterOSVersion();
+
+        return response()->json($router_data);
+    }//get router os
+
 }//class

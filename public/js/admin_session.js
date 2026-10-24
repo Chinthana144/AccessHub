@@ -70,9 +70,6 @@ $(document).ready(function () {
 
     $("#btn_fetch_all").click(function(){
         
-        console.log('fetching users');
-        
-
         var campID = $("#cmb_camp").val();
         //fetch all users
         $.ajax({
@@ -88,6 +85,22 @@ $(document).ready(function () {
             }//success
         });
 
+    });
+
+    $("#btn_get_routeros").click(function(){
+        var campID = $("#cmb_camp").val();
+
+        $.ajax({
+            type: "get",
+            url: "/getRouterOS",
+            data: {
+                camp_id : campID,
+            },
+            // dataType: "dataType",
+            success: function (response) {
+                console.log(response);
+            }
+        });
     });
 
 });//jquery
