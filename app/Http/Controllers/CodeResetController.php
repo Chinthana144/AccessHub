@@ -220,7 +220,8 @@ class CodeResetController extends Controller
         
         if(!empty($user_data))
         {
-            $code_id = $user_data[0]['.id'];
+            $decode_data = json_decode($user_data);
+            $code_id = $decode_data->id;
 
             //remove session
             $session_data = $mikrotikService->getSession($username);
@@ -234,9 +235,9 @@ class CodeResetController extends Controller
             $mikrotikService->disableUser($code_id);
 
             $data = [
-                'code_id' => $user_data[0]['.id'],
-                'username'=> $user_data[0]['username'],
-                'password' => $user_data[0]['password'],
+                'code_id' => $decode_data->id,
+                'username'=> $decode_data->username,
+                'password' => $decode_data->password,
             ];
 
             return response()->json([
@@ -269,14 +270,15 @@ class CodeResetController extends Controller
 
         if(!empty($user_data))
         {
-            $code_id = $user_data[0]['.id'];
+            $decode_data = json_decode($user_data);
+            $code_id = $decode_data->id;
 
             $mikrotikService->enableUser($code_id);
 
             $data = [
-                'code_id' => $user_data[0]['.id'],
-                'username'=> $user_data[0]['username'],
-                'password' => $user_data[0]['password'],
+                'code_id' => $decode_data->id,
+                'username'=> $decode_data->username,
+                'password' => $decode_data->password,
             ];
 
             return response()->json([
