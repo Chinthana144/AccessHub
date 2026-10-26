@@ -84,6 +84,28 @@ $(document).ready(function () {
                 
             }//success
         });
+    });
+
+    $("#btn_get_profile").click(function (e) { 
+        e.preventDefault();
+        // alert("working");
+        
+        var campID = $("#cmb_camp").val();
+        var username = $("#txt_username").val();
+
+        $.ajax({
+            type: "get",
+            url: "/getUserProfile",
+            data: {
+                camp_id: campID,
+                username: username,
+            },
+            // dataType: "dataType",
+            success: function (response) {
+                console.log(response);
+                
+            }
+        });
 
     });
 

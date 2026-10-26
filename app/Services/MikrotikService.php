@@ -81,6 +81,7 @@ class MikrotikService{
             $query = (new Query('/tool/user-manager/user/print'))->where('username', $username);
 
             $user_data = $this->client->query($query)->read();
+
             $encode_data = json_encode([
                 'id' => $user_data[0]['.id'],
                 'profile' => $user_data[0]['actual-profile'],
@@ -89,20 +90,25 @@ class MikrotikService{
                 'username' => $user_data[0]['username'],
                 'password' => $user_data[0]['password'],
             ]);
-        }
+        }//OS 6
         else{
             $query = (new Query('/user-manager/user/print'))->where('name', $username);
 
             $user_data = $this->client->query($query)->read();
+
+            $user_profile = $this->getUserProfile($username);
             
             if(!empty($user_data))
             {
                 $encode_data = json_encode([
                     'id' => $user_data[0]['.id'],
+                    'profile' => $user_profile[0]['profile'],
                     'mac' => $user_data[0]['caller-id'],
                     'disabled' => $user_data[0]['disabled'],
                     'username' => $user_data[0]['name'],
                     'password' => $user_data[0]['password'],
+                    'end_time' => $user_profile[0]['end-time'],
+                    'state' => $user_profile[0]['state'],
                 ]);
             }  
         }//else OS 7
@@ -265,7 +271,20 @@ class MikrotikService{
             ->read();
     }//get user manager users
 
+    public function getUserProfile(string $username)
+    {
+        if (!$this->isConnected) {
+            return [];
+        }
 
+        $query = (new Query('/user-manager/user-profile/print'))
+            ->where('user', $username);
+
+        return $this->client
+            ->query($query)
+            ->read();
+
+    }//get user manager profile
 
     public function getSessionByUsername(string $username)
     {

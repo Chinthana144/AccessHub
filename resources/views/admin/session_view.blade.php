@@ -21,8 +21,8 @@
 
                     <button class="btn btn-success mt-2" id="btn_fetch_session">Session</button>
                     <button class="btn btn-primary mt-2" id="btn_fetch_user">Fetch User</button>
-                    <button class="btn btn-warning mt-2" id="btn_fetch_all">fetch all users</button>
-                    {{-- <button class="btn btn-warning mt-2" id="btn_get_address">Get Address</button> --}}
+                    {{-- <button class="btn btn-warning mt-2" id="btn_fetch_all">fetch all users</button> --}}
+                    <button class="btn btn-warning mt-2" id="btn_get_profile">Fetch Profile</button>
                     
                 </div>
             </div>

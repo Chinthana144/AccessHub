@@ -133,6 +133,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/fetchAllUsers', [AdminController::class, 'fetchAllUsers']);
         Route::get('/getRouterOS', [AdminController::class, 'getRouterOS']);
 
+        Route::get('/getUserProfile', [AdminController::class, 'getUserProfile']);
+
         Route::get('/codeCheck', [AdminController::class, 'codeCheck']);
 
         //generator

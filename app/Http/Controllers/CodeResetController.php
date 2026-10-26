@@ -72,7 +72,7 @@ class CodeResetController extends Controller
 
         // dd($user_data);
 
-        if(!empty($user_data)) 
+        if(!empty($user_data))
         {
             $decode_data = json_decode($user_data);
 
@@ -91,23 +91,9 @@ class CodeResetController extends Controller
             $code_expire_at = $code_data['expire_at'] ?? '';
             $code_status = $code_data['status'] ?? 0;
 
-            // $start_time = "";
-            // if(isset($user_data[0]['comment']))
-            // {
-            //     if($user_data[0]['comment'] != "")
-            //     {
-            //         $date_time = new DateTime($user_data[0]['comment']);
-            //         $start_time = $date_time->format("Y-m-d H:i:s");
-            //     }
-            //     else
-            //     {
-            //         $start_time = "N/A";   
-            //     }
-            // }//has commet
-            // else
-            // {
-            //     $start_time = "N/A";
-            // }
+            //Router OS 7
+            $code_expire_at = $decode_data->end_time ?? $code_expire_at;
+            $code_status = $decode_data->state ?? $code_status;
             
             $lease_data = $mikrotikService->getAddress($mac);
 
@@ -116,6 +102,7 @@ class CodeResetController extends Controller
 
             $ip_address = $lease_data[0]['active-address'] ?? "N/A";
             $device_name = $lease_data[0]['host-name'] ?? "N/A";
+
 
             //get mac type
             $mac_data = $this->getMacType($mac);
@@ -133,6 +120,7 @@ class CodeResetController extends Controller
                 'password' => $password,
                 'ip_address' => $ip_address,
                 'device_name' => $device_name,
+                // 'state' => 
             ];
             return response()->json([
                 'success' => true,

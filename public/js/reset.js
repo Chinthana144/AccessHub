@@ -4,6 +4,8 @@ $(document).ready(function () {
     var campID = $("#cmb_camp").val();
     getIdentity(campID);
 
+    $("#end_time").val("");
+
     //get one user
     $("#btn_fetch_user").click(function (e) { 
         e.preventDefault();
@@ -50,7 +52,7 @@ $(document).ready(function () {
                     let statusClass = "";
                     switch (response['data']['code_status']) {
                         case 1:
-                            codeStatus = "Generated";
+                            codeStatus = "Active";
                             statusClass = "bg-primary"; 
                         break;
                         case 2:
@@ -302,37 +304,44 @@ $(document).ready(function () {
 
     //countdown
     function countdown()
-    {
+    {   
         var endTime = $("#end_time").val();
         var time = "";
 
-        if(endTime != "")
+        if(endTime == "not-yet-running")
         {
-            const expireTime = new Date(endTime).getTime();
-            const now = new Date().getTime();
-            let distance = expireTime - now;
-
-            if (distance <= 0) {
-                time = "Expired!";
-            }
-
-            if(isNaN(distance))
-            {
-                time = "N/A";
-            }
-
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            time = "Expire in : <span class='text-success'><b>"+days+"d "+ hours+"h "+ minutes+"m "+ seconds +"s</b></span>";
-
-            $("#p_countdown").html(time);
-        }//has time
-        else{
             $("#p_countdown").html("");
-        }     
+        }
+        else{
+            if(endTime != "")
+            {
+                const expireTime = new Date(endTime).getTime();
+                const now = new Date().getTime();
+                let distance = expireTime - now;
+
+                if (distance <= 0) {
+                    time = "Expired!";
+                }
+
+                if(isNaN(distance))
+                {
+                    time = "N/A";
+                }
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                time = "Expire in : <span class='text-success'><b>"+days+"d "+ hours+"h "+ minutes+"m "+ seconds +"s</b></span>";
+
+                $("#p_countdown").html(time);
+            }//has time
+            else{
+                $("#p_countdown").html("");
+            }
+        }//else
+           
     }//time count down
 
     setInterval(countdown, 1000);
