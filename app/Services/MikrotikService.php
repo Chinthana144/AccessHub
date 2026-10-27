@@ -82,14 +82,17 @@ class MikrotikService{
 
             $user_data = $this->client->query($query)->read();
 
-            $encode_data = json_encode([
-                'id' => $user_data[0]['.id'],
-                'profile' => $user_data[0]['actual-profile'],
-                'mac' => $user_data[0]['caller-id'],
-                'disabled' => $user_data[0]['disabled'],
-                'username' => $user_data[0]['username'],
-                'password' => $user_data[0]['password'],
-            ]);
+            if(!empty($user_data))
+            {
+                $encode_data = json_encode([
+                    'id' => $user_data[0]['.id'],
+                    'profile' => $user_data[0]['actual-profile'],
+                    'mac' => $user_data[0]['caller-id'],
+                    'disabled' => $user_data[0]['disabled'],
+                    'username' => $user_data[0]['username'],
+                    'password' => $user_data[0]['password'],
+                ]);
+            }//has user
         }//OS 6
         else{
             $query = (new Query('/user-manager/user/print'))->where('name', $username);

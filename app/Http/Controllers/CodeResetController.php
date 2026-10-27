@@ -94,15 +94,30 @@ class CodeResetController extends Controller
             //Router OS 7
             $code_expire_at = $decode_data->end_time ?? $code_expire_at;
             $code_status = $decode_data->state ?? $code_status;
-            
-            $lease_data = $mikrotikService->getAddress($mac);
 
-            // dd($mac);
-            // dd($lease_data);
+            //state OS 7
+            if($decode_data->state != null)
+            {
+                switch ($decode_data->state) {
+                    case 'waiting':
+                        $code_status = 1;
+                        break;
+                    case 'running-active':
+                        $code_status = 2;
+                        break;
+                    case 'used':
+                        $code_status = 3;
+                        break;
+                    default:
+                        $code_status = 0;
+                        break;
+                }//switch
+            }//has state
+                        
+            $lease_data = $mikrotikService->getAddress($mac);
 
             $ip_address = $lease_data[0]['active-address'] ?? "N/A";
             $device_name = $lease_data[0]['host-name'] ?? "N/A";
-
 
             //get mac type
             $mac_data = $this->getMacType($mac);
@@ -120,7 +135,7 @@ class CodeResetController extends Controller
                 'password' => $password,
                 'ip_address' => $ip_address,
                 'device_name' => $device_name,
-                // 'state' => 
+                'state' => $code_status,
             ];
             return response()->json([
                 'success' => true,
