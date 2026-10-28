@@ -4,6 +4,8 @@ $(document).ready(function () {
     var campID = $("#cmb_camp").val();
     getIdentity(campID);
 
+    $("#end_time").val("");
+
     //get one user
     $("#btn_fetch_user").click(function (e) { 
         e.preventDefault();
@@ -115,7 +117,7 @@ $(document).ready(function () {
             },
             // dataType: "dataType",
             success: function (response) {
-                // console.log(response);
+                console.log(response);
                 if(response.length > 0)
                 {
                     $("#div_identity").html("<span class='badge bg-success'>"+ response[0]['name'] +" online</span>");
@@ -131,8 +133,15 @@ $(document).ready(function () {
     //countdown
     function countdown()
     {
+        console.log("running count down");
+        
         var endTime = $("#end_time").val();
         var time = "";
+
+        if(endTime != "not-yet-running")
+        {
+            $("#p_countdown").html("Not Yet Running.");
+        }
 
         if(endTime != "")
         {

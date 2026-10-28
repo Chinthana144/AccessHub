@@ -226,7 +226,7 @@ class CodeController extends Controller
                     'password' => $dt['Password'],
                     'customer_name' => $dt['Name'],
                     'room_no' =>$dt['Room No'],
-                    'amount' =>$dt['Amount'],
+                    'amount' => is_numeric($dt['Amount']) ? $dt['Amount'] : 0,
                     'note' => $dt['Note'],
                     'status' => 1,
                     'user_id' => $user_id,

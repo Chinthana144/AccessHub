@@ -25,6 +25,8 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             AdminSeeder::class,
             PageSeeder::class,
+            CampSeeder::class,
+            CampAccessSeeder::class,
         ]);
     }
 }

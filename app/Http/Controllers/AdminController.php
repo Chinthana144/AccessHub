@@ -54,6 +54,8 @@ class AdminController extends Controller
         return response()->json($data);
     }
 
+//==================================== users ==================================//
+
     public function getOneUser(Request $request)
     {
         $camp_id = $request->input('camp_id');
@@ -72,6 +74,24 @@ class AdminController extends Controller
 
         return response()->json($user);
     }//get one user
+
+    public function fetchAllUsers(Request $request)
+    {
+        $camp_id = $request->input('camp_id');
+
+        $camp = Camps::find($camp_id);
+
+        $host = $camp->mikrotikHost;
+        $user = $camp->mikrotikUsername;
+        $pwd = $camp->mikrotikPassword;
+        $port = $camp->mikrotikPort;
+
+        $mikrotikService = new MikrotikService($host, $user, $pwd, $port);
+
+        $users = $mikrotikService->getAllUsers();
+
+        return response()->json($users);
+    }//fetch all users
 
     //================================= Sessions Section =================================//
     public function viewSession()
@@ -99,6 +119,26 @@ class AdminController extends Controller
 
         return response()->json($data);
     }//fetch session
+
+    //==================================== User Profile =====================================//
+    public function getUserProfile(Request $request)
+    {
+        $camp_id = $request->input('camp_id');
+        $username = $request->input('username');
+
+        $camp = Camps::find($camp_id);
+
+        $host = $camp->mikrotikHost;
+        $user = $camp->mikrotikUsername;
+        $pwd = $camp->mikrotikPassword;
+        $port = $camp->mikrotikPort;
+
+        $mikrotikService = new MikrotikService($host, $user, $pwd, $port);
+
+        $profiles = $mikrotikService->getUserProfile($username);
+
+        return response()->json($profiles);
+    }//get user profile
 
     //==================================== Code Check =====================================//
     public function codeCheck(Request $request)
@@ -141,7 +181,7 @@ class AdminController extends Controller
     public function codeRestartView()
     {
         $camps = Camps::all();
-
+        
         return view('admin.restart_view', compact('camps'));
     }//code restart
 
@@ -175,7 +215,7 @@ class AdminController extends Controller
             $user_id = $user[0]['.id'];
             $username = $user[0]['username'];
             $password = $user[0]['password'];
-            $profile = $user[0]['actual-profile'];
+            $profile = $user[0]['actual-profile'] ?? 'Unlimited 30 Days';
 
             $sessions = $mikrotikService->getSession($code);
             if(!empty($sessions))
@@ -188,44 +228,26 @@ class AdminController extends Controller
             }//has session
 
             //remove curret user
-            $delete_user = $mikrotikService->deleteUser($user_id);
-
-            if(!empty($delete_user))
+            $mikrotikService->deleteUser($user_id);
+                
+            //create same user again
+            $new_user = $mikrotikService->createUser($username, $password);
+            if(!empty($new_user))
             {
-                //create same user again
-                $new_user = $mikrotikService->createUser($username, $password);
-                if(!empty($new_user))
-                {
-                    //create and activate profile
-                    $active_profile = $mikrotikService->activateProfile($username, $profile);
+                //create and activate profile
+                $mikrotikService->activateProfile($username, $profile);
 
-                    if(!empty($active_profile))
-                    {
-                        return response()->json([
-                            'success' => true,
-                            'message' => 'Code restarted successfully!', 
-                        ]);
-                    }//profile
-                    else{
-                        return response()->json([
-                            'success' => false,
-                            'message' => 'Profile activation failed!', 
-                        ]);
-                    }
-                }//new user
-                else{
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'Username create failed!', 
-                    ]);
-                }//user create failed
-            }//delete user
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Code restarted successfully!',
+                ]);
+            }//new user
             else{
                 return response()->json([
                     'success' => false,
-                    'message' => 'Username delete failed!', 
+                    'message' => 'Username create failed!', 
                 ]);
-            }
+            }//user create failed
         }//has user
         else{
             return response()->json([
@@ -234,4 +256,24 @@ class AdminController extends Controller
             ]);
         }
     }//codeRestart
+
+    //================================= Resources ==============================//
+    public function getRouterOS(Request $request)
+    {
+        $camp_id = $request->input('camp_id');
+
+        $camp = Camps::find($camp_id);
+
+        $host = $camp->mikrotikHost;
+        $user = $camp->mikrotikUsername;
+        $pwd = $camp->mikrotikPassword;
+        $port = $camp->mikrotikPort;
+
+        $mikrotikService = new MikrotikService($host, $user, $pwd, $port);
+
+        $router_data = $mikrotikService->detectRouterOSVersion();
+
+        return response()->json($router_data);
+    }//get router os
+
 }//class

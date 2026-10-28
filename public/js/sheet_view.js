@@ -58,7 +58,7 @@ $(document).ready(function () {
 
                 }//has new sheets
                 else{
-                    dataHtml = "<p class='text-success'>All sheets are up to date!</p>";
+                    dataHtml = "<p class='text-danger'>"+ response['message'] +"</p>";
                 }
 
                 $("#div_content").html(dataHtml);

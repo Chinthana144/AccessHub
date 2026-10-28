@@ -70,15 +70,18 @@ class CodeResetController extends Controller
 
         $user_data = $mikrotikService->getOneUser($username);
 
-        if(count($user_data) > 0) 
+        // dd($user_data);
+
+        if(!empty($user_data))
         {
-            $code_id = $user_data[0]['.id'];
-            $active = $user_data[0]['active'];
-            $profile = $user_data[0]['actual-profile'] ?? "N/A";
-            $mac = $user_data[0]['caller-id'] ?? "N/A";
-            $disabled = $user_data[0]['disabled'];
-            $username = $user_data[0]['username'];
-            $password = $user_data[0]['password'];
+            $decode_data = json_decode($user_data);
+
+            $code_id = $decode_data->id;
+            $profile = $decode_data->profile ?? "N/A";
+            $mac = $decode_data->mac ?? "N/A";
+            $disabled = $decode_data->disabled;
+            $username = $decode_data->username;
+            $password = $decode_data->password;
 
             $code_data = CodeUsage::where('camp_id', $camp_id)
                 ->where('username', $username)
@@ -88,24 +91,29 @@ class CodeResetController extends Controller
             $code_expire_at = $code_data['expire_at'] ?? '';
             $code_status = $code_data['status'] ?? 0;
 
-            // $start_time = "";
-            // if(isset($user_data[0]['comment']))
-            // {
-            //     if($user_data[0]['comment'] != "")
-            //     {
-            //         $date_time = new DateTime($user_data[0]['comment']);
-            //         $start_time = $date_time->format("Y-m-d H:i:s");
-            //     }
-            //     else
-            //     {
-            //         $start_time = "N/A";   
-            //     }
-            // }//has commet
-            // else
-            // {
-            //     $start_time = "N/A";
-            // }
-            
+            //Router OS 7
+            $code_expire_at = $decode_data->end_time ?? $code_expire_at;
+            $code_status = $decode_data->state ?? $code_status;
+
+            //state OS 7
+            if(!empty($decode_data->state))
+            {
+                switch ($decode_data->state) {
+                    case 'waiting':
+                        $code_status = 1;
+                        break;
+                    case 'running-active':
+                        $code_status = 2;
+                        break;
+                    case 'used':
+                        $code_status = 3;
+                        break;
+                    default:
+                        $code_status = 0;
+                        break;
+                }//switch
+            }//has state
+                        
             $lease_data = $mikrotikService->getAddress($mac);
 
             $ip_address = $lease_data[0]['active-address'] ?? "N/A";
@@ -127,6 +135,7 @@ class CodeResetController extends Controller
                 'password' => $password,
                 'ip_address' => $ip_address,
                 'device_name' => $device_name,
+                'state' => $code_status,
             ];
             return response()->json([
                 'success' => true,
@@ -155,10 +164,12 @@ class CodeResetController extends Controller
         $mikrotikService = new MikrotikService($host, $user, $pwd, $port);
 
         $user_data = $mikrotikService->getOneUser($username);
-        // dd($user_data);
+
         if(!empty($user_data))
         {
-            $code_id = $user_data[0]['.id'];
+            $decode_data = json_decode($user_data);
+
+            $code_id = $decode_data->id;
 
             //remove session
             $session_data = $mikrotikService->getSession($username);
@@ -167,7 +178,6 @@ class CodeResetController extends Controller
                 //remove all sessions for the user
                 foreach($session_data as $session)
                 {
-                    // dd($session['.id']);
                     $session_id = $session['.id'];
                     $mikrotikService->removeSession($session_id);
                 }//session
@@ -176,9 +186,9 @@ class CodeResetController extends Controller
             $mikrotikService->resetMac($code_id);
 
             $data = [
-                'code_id' => $user_data[0]['.id'],
-                'username'=> $user_data[0]['username'],
-                'password' => $user_data[0]['password'],
+                'code_id' => $decode_data->id,
+                'username'=> $decode_data->username,
+                'password' => $decode_data->password,
                 'sessions' => count($session_data),
             ];
 
@@ -213,7 +223,8 @@ class CodeResetController extends Controller
         
         if(!empty($user_data))
         {
-            $code_id = $user_data[0]['.id'];
+            $decode_data = json_decode($user_data);
+            $code_id = $decode_data->id;
 
             //remove session
             $session_data = $mikrotikService->getSession($username);
@@ -227,9 +238,9 @@ class CodeResetController extends Controller
             $mikrotikService->disableUser($code_id);
 
             $data = [
-                'code_id' => $user_data[0]['.id'],
-                'username'=> $user_data[0]['username'],
-                'password' => $user_data[0]['password'],
+                'code_id' => $decode_data->id,
+                'username'=> $decode_data->username,
+                'password' => $decode_data->password,
             ];
 
             return response()->json([
@@ -262,14 +273,15 @@ class CodeResetController extends Controller
 
         if(!empty($user_data))
         {
-            $code_id = $user_data[0]['.id'];
+            $decode_data = json_decode($user_data);
+            $code_id = $decode_data->id;
 
             $mikrotikService->enableUser($code_id);
 
             $data = [
-                'code_id' => $user_data[0]['.id'],
-                'username'=> $user_data[0]['username'],
-                'password' => $user_data[0]['password'],
+                'code_id' => $decode_data->id,
+                'username'=> $decode_data->username,
+                'password' => $decode_data->password,
             ];
 
             return response()->json([
@@ -307,7 +319,6 @@ class CodeResetController extends Controller
 
         return response()->json($user_data);
     }//get session
-
 
     //========================= Other methods ==========================//
     public function getMacType(string $mac)

@@ -51,9 +51,60 @@ $(document).ready(function () {
             success: function (response) {
                 console.log(response);
                 
+                let htmlData = "";
+                
+                $.each(response['users'], function (key, value) { 
+                    htmlData += value['username'] + " " + value['password'] + "<br>";
+                });
+                
+                $("#p_codes").html(htmlData);
+
             }
-        });
-        
+        });        
+    });
+
+    $("#btn_remove").click(function (e) { 
+        e.preventDefault();
+        var campID = $("#cmb_remove_camp").val();
+        var txtCodes = $.trim($("#txt_remove_codes").val());
+
+        if(txtCodes.length != 0)
+        {
+            $.ajax({
+                type: "get",
+                url: "/removeCodes",
+                data: {
+                    camp_id : campID,
+                    txt_codes: txtCodes
+                },
+                // dataType: "dataType",
+                beforeSend: function(){
+                    $("p_removed_codes").val("Processing...");
+                },
+                success: function (response) {
+                    console.log(response);
+                    
+                    if(response['success'])
+                    {   
+                        $("p_removed_codes").val("show data");
+
+                        let htmlData = "";
+
+                        $.each(response['users'], function (key, value) { 
+                            htmlData += value + "<br>";
+                        });
+
+                        $("#p_removed_codes").html(htmlData);
+                    }//success
+                    else{
+                        $("#p_removed_codes").val("Remove Failed");
+                    }
+                }//success
+            });
+        }//has codes
+        else{
+            alert('Null input as codes');
+        }
     });
 
 });//jquery

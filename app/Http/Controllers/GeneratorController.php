@@ -71,6 +71,9 @@ class GeneratorController extends Controller
             $code_array = explode(',', $codes);
         }//has codes
 
+        $user_create = "";
+        $active_profile = "";
+
         for($i=0; $i<$code_count; $i++)
         {
             $username = "";
@@ -88,12 +91,85 @@ class GeneratorController extends Controller
                     'password' => $password,
                 ];
 
-            $mikrotikService->createUser($username, $password);
-            $mikrotikService->activateProfile($username, $profile_name);
+            $user_create = $mikrotikService->createUser($username, $password);
+            if(empty($user_create))
+            {
+                return response()->json([
+                    'success' => false,
+                    'message' => "user create failed!"
+                ]);
+            }
+
+            $active_profile = $mikrotikService->activateProfile($username, $profile_name);
+            
+            // if(empty($active_profile))
+            // {
+            //     return response()->json([
+            //         'success' => false,
+            //         'message' => "profile activate failed!"
+            //     ]);
+            // }
 
         }//for loop
 
-        return response()->json($new_users);
+        return response()->json([
+            'users' => $new_users,
+            'last_user' => $new_users,
+            'profile' => $active_profile
+        ]);
 
     }//generate codes
+
+    //code remover
+    public function removeCodes(Request $request)
+    {
+        $camp_id = $request->input('camp_id');
+        $txt_codes = $request->input('txt_codes');
+
+        $camp = Camps::find($camp_id);
+
+        $host = $camp->mikrotikHost;
+        $user = $camp->mikrotikUsername;
+        $pwd = $camp->mikrotikPassword;
+        $port = $camp->mikrotikPort;
+
+        $mikrotikService = new MikrotikService($host, $user, $pwd, $port);
+        
+        if(!empty($txt_codes))
+        {
+            $code_array = explode(",", $txt_codes);
+
+            //fetch all users
+            $all_users = $mikrotikService->getAllUsers();
+            $removed_users = [];
+
+            foreach($all_users as $user)
+            {
+                $username = $user['username'];
+                $user_id = $user['.id'];
+
+                if(in_array($username, $code_array))
+                {
+                    $mikrotikService->deleteUser($user_id);
+
+                    $removed_users[] = $username;
+                }
+            }//foreach user
+
+            return response()->json([
+                'success' => true,
+                'message' => 'users removed successfully!',
+                'users' => $removed_users,
+            ]);
+
+        }//has codes
+        else{
+            return response()->json([
+                'success' => false,
+                'message' => 'Invalid input'
+            ]);
+        }
+
+    }//remove codes
+
 }//class

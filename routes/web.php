@@ -48,7 +48,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/getSheetByCampID', [SheetController::class, 'getSheetByCampID']);
         Route::get('/getActiveSheetByCampID', [SheetController::class, 'getActiveSheetByCampID']);
 
-         //codes
+        //codes
         Route::get('/codes', [CodeController::class, 'index'])->name('codes.index');
         Route::get('/code_upload_view', [CodeController::class, 'codeUploadView'])->name('codeUpload.view');
         Route::get('/getCodes', [CodeController::class, 'getCodes']);
@@ -130,6 +130,10 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/session', [AdminController::class, 'viewSession'])->name('admin.session');
         Route::get('/fetchSession', [AdminController::class, 'fetchSession']);
+        Route::get('/fetchAllUsers', [AdminController::class, 'fetchAllUsers']);
+        Route::get('/getRouterOS', [AdminController::class, 'getRouterOS']);
+
+        Route::get('/getUserProfile', [AdminController::class, 'getUserProfile']);
 
         Route::get('/codeCheck', [AdminController::class, 'codeCheck']);
 
@@ -137,6 +141,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/generator', [GeneratorController::class, 'index'])->name('generator.index');
         Route::get('/fetchUserCodes', [GeneratorController::class, 'fetchUserCodes']);
         Route::get('/generateCodes', [GeneratorController::class, 'generateCodes']);
+
+        //remover
+        Route::get('/removeCodes', [GeneratorController::class, 'removeCodes']);
 
         //restart
         Route::get('/restart', [AdminController::class, 'codeRestartView'])->name('admin.restart');
