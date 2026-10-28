@@ -86,7 +86,7 @@ class MikrotikService{
             {
                 $encode_data = json_encode([
                     'id' => $user_data[0]['.id'],
-                    'profile' => $user_data[0]['actual-profile'],
+                    'profile' => $user_data[0]['actual-profile'] ?? "N/A",
                     'mac' => $user_data[0]['caller-id'],
                     'disabled' => $user_data[0]['disabled'],
                     'username' => $user_data[0]['username'],
@@ -362,7 +362,6 @@ class MikrotikService{
             ->read(); 
     }//remove session
 
-   
 
-
+    
 }//class

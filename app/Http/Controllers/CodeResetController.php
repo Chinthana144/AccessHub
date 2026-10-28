@@ -96,7 +96,7 @@ class CodeResetController extends Controller
             $code_status = $decode_data->state ?? $code_status;
 
             //state OS 7
-            if($decode_data->state != null)
+            if(!empty($decode_data->state))
             {
                 switch ($decode_data->state) {
                     case 'waiting':
@@ -319,7 +319,6 @@ class CodeResetController extends Controller
 
         return response()->json($user_data);
     }//get session
-
 
     //========================= Other methods ==========================//
     public function getMacType(string $mac)
