@@ -42,6 +42,11 @@
             <h5>Testing</h5>
             <button class="btn btn-primary btn-sm" id="btn_testing">Click</button>
 
+            <hr>
+            <h5>Search by IP and Mac</h5>
+            <input type="text" id="txt_search">
+            <button id="btn_search">Check</button>
+
         </div>
     </div>
 

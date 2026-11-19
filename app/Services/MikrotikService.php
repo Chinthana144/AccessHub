@@ -66,7 +66,6 @@ class MikrotikService{
         return intval($result[0][0]);
     }//get router OS version
 
-
     public function getOneUser(string $username)
     {
         if (!$this->isConnected) {
@@ -201,7 +200,7 @@ class MikrotikService{
                 ->equal('.id', $id);
         }
         else{
-            $query = (new Query('/tool/user-manager/user/set'))
+            $query = (new Query('/user-manager/user/set'))
                 ->equal('.id', $id)
                 ->equal('caller-id', 'bind')
                 ->equal('disabled', 'false');
@@ -211,6 +210,21 @@ class MikrotikService{
             ->query($query)
             ->read();
     }//enable user
+
+    //======================= Search by IP =========================//
+    public function getAddressByIP(string $ip_address)
+    {
+        if (!$this->isConnected) {
+            return [];
+        }
+
+        $query = (new Query('/ip/dhcp-server/lease/print'))
+            ->where('active-address', $ip_address);
+
+        return $this->client
+            ->query($query)
+            ->read();
+    }//get address by IP
 
     //======================= User Manager =========================//
     public function createUser(string $username, string $password)
@@ -320,6 +334,29 @@ class MikrotikService{
             ->read();   
     }//get users
 
+    public function getUserByUsername(string $username)
+    {
+        if (!$this->isConnected) {
+            return [];
+        }
+
+        $query = "";
+        $encode_data = [];
+
+        if($this->version == 6)
+        {
+            $query = (new Query('/tool/user-manager/user/print'))->where('username', $username);
+        }//version 6
+        else{
+            $query = (new Query('/user-manager/user/print'))->where('name', $username);
+        }//version 7
+
+        $user_data = $this->client->query($query)->read();
+
+        return $user_data;
+                
+    }//get user by username
+
     public function getAllUsers()
     {
        if (!$this->isConnected) {
@@ -362,6 +399,4 @@ class MikrotikService{
             ->read(); 
     }//remove session
 
-
-    
 }//class

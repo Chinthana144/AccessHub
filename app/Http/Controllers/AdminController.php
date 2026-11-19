@@ -93,6 +93,29 @@ class AdminController extends Controller
         return response()->json($users);
     }//fetch all users
 
+    public function getUserByUsername(Request $request)
+    {
+        $camp_id = $request->input('camp_id');
+        $txt_search = $request->input('txt_search');
+
+        $camp = Camps::find($camp_id);
+
+        $host = $camp->mikrotikHost;
+        $user = $camp->mikrotikUsername;
+        $pwd = $camp->mikrotikPassword;
+        $port = $camp->mikrotikPort;
+
+        $mikrotikService = new MikrotikService($host, $user, $pwd, $port);
+
+        $user = $mikrotikService->getUserByUsername($txt_search);
+        $address = $mikrotikService->getAddress($user[0]['caller-id']);
+
+        return response()->json([
+            'user' => $user,
+            'address' => $address,
+        ]);
+    }//get user by username
+
     //================================= Sessions Section =================================//
     public function viewSession()
     {

@@ -109,4 +109,23 @@ $(document).ready(function () {
 
     });
 
+    $("#btn_search").click(function(){
+        var campID = $("#cmb_camp").val();
+        var txtSearch = $("#txt_username").val();
+
+        $.ajax({
+            type: "get",
+            url: "/getUserByUsername",
+            data: {
+                camp_id : campID,
+                txt_search : txtSearch,
+            },
+            // dataType: "dataType",
+            success: function (response) {
+                console.log(response);
+
+            }
+        });
+    });
+
 });//jquery

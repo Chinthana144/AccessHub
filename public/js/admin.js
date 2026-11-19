@@ -40,4 +40,27 @@ $(document).ready(function () {
         });
     });
 
+    //search user
+    $("#btn_search").click(function (e) { 
+        e.preventDefault();
+        
+        var campID = $("#cmb_camp").val();
+
+        var txtSearch = $("#txt_search").val();
+
+        $.ajax({
+            type: "get",
+            url: "/getOneUserAdmin",
+            data: {
+                camp_id : campID,
+                username : txtSearch,
+            },
+            // dataType: "dataType",
+            success: function (response) {
+                console.log(response);
+                
+            }
+        });
+    });
+
 });//jquery
