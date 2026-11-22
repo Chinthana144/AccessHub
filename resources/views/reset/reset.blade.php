@@ -39,6 +39,15 @@
                         <button id="btn_enable_user" class="btn_input">Enable</button>
                     </div>
 
+                    <div id="ip_search_row">
+                        <div>
+                            <label for="" class="input_label">Search by IP</label>
+                            <input type="text" name="txt_search" class="input" id="txt_search">
+                        </div>
+                        
+                        <button id="btn_search" class="btn_input">Search</button>
+                    </div>
+
                 </div>
                 
             </div>

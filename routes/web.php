@@ -168,6 +168,9 @@ Route::middleware('reset')->group(function(){
     Route::get('/getOneUser', [CodeResetController::class, 'getOneUser']);
     Route::get('/getSessionByUsername', [CodeResetController::class, "getSessionByUsername"]);
 
+    //search
+    Route::get('/getUserByIP', [CodeResetController::class, 'getUserByIP']);
+
     Route::get('/resetCode', [CodeResetController::class, 'resetCode']);
     Route::get('/disableUser', [CodeResetController::class, 'disableUser']);
     Route::get('/enableUser', [CodeResetController::class, 'enableUser']);

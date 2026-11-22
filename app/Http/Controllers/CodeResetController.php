@@ -320,6 +320,25 @@ class CodeResetController extends Controller
         return response()->json($user_data);
     }//get session
 
+    public function getUserByIP(Request $request)
+    {
+        $camp_id = $request->input('camp_id');
+        $ip_address = $request->input('ip_address');
+
+        $camp = Camps::find($camp_id);
+
+        $host = $camp->mikrotikHost;
+        $user = $camp->mikrotikUsername;
+        $pwd = $camp->mikrotikPassword;
+        $port = $camp->mikrotikPort;
+
+        $mikrotikService = new MikrotikService($host, $user, $pwd, $port);
+
+        $user_data = $mikrotikService->getAddressByIP($ip_address);
+
+        return response()->json($user_data);
+    }//get user by ip
+
     //========================= Other methods ==========================//
     public function getMacType(string $mac)
     {

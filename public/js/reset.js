@@ -278,6 +278,50 @@ $(document).ready(function () {
         });
     });//enable user
 
+    $("#btn_search").click(function (e) { 
+        e.preventDefault();
+        var campID = $("#cmb_camp").val();
+        var txtSearch = $("#txt_search").val();
+
+        if(txtSearch)
+        {
+            var ipArray = txtSearch.trim().split('.');
+            var macArray = txtSearch.trim().split(':');
+
+            if(ipArray.length == 4 && macArray.length == 1)
+            {
+                $.ajax({
+                    type: "get",
+                    url: "/getUserByIP",
+                    data: {
+                        camp_id : campID,
+                        ip_address : txtSearch.trim(),
+                    },
+                    // dataType: "dataType",
+                    success: function (response) {
+                        console.log(response);
+                        var macAddress = response[0]['active-mac-address'];
+
+                        
+                    }
+                });
+            }//ip address
+            else if(ipArray.length == 1 && macArray.length == 6)
+            {
+
+            }//mac address
+            else{
+                alert("Please enter valid IP or MAC address.");
+            }
+                        
+        }//search text
+        else{
+            alert("Please add text to search");
+        }
+        
+        
+    });
+
     //get identity
     function getIdentity(campID)
     {
