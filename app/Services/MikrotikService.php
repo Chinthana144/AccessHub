@@ -226,6 +226,33 @@ class MikrotikService{
             ->read();
     }//get address by IP
 
+    //get user by mac
+    public function getUserByMac(string $mac)
+    {
+        if (!$this->isConnected) {
+            return [];
+        }
+
+        $query = "";
+        $encode_data = [];
+
+        if($this->version == 6)
+        {
+            $query = (new Query('/tool/user-manager/user/print'))->where('caller-id', $mac);
+
+            // $user_data = $this->client->query($query)->read();
+        }//version 6
+        else{
+            $query = (new Query('/user-manager/user/print'))->where('caller-id', $mac);
+
+            // $user_data = $this->client->query($query)->read();
+        }
+
+        $user_data = $this->client->query($query)->read();
+
+        return $user_data;
+    }//get user by mac
+
     //======================= User Manager =========================//
     public function createUser(string $username, string $password)
     {

@@ -334,9 +334,43 @@ class CodeResetController extends Controller
 
         $mikrotikService = new MikrotikService($host, $user, $pwd, $port);
 
-        $user_data = $mikrotikService->getAddressByIP($ip_address);
+        $ip_data = $mikrotikService->getAddressByIP($ip_address);
+        $mac_data = [];
+        if($ip_data)
+        {
+            $mac_address = $ip_data[0]['mac-address'];
 
-        return response()->json($user_data);
+            $mac_data = $mikrotikService->getUserByMac($mac_address);
+            
+            $decode_data = json_decode($mac_data);
+
+            $data = [
+                'code_id' => $mac_data[0]['.id'],
+                // 'code_status' => $mac_data[0][''],
+                // 'profile' => $profile,
+                // 'mac' => $mac,
+                // 'mac_type' => $mac_data['type'],
+                // 'start_time' => $code_login_at,
+                // 'end_time' => $code_expire_at,
+                // 'disabled' => $disabled,
+                // 'username' => $username,
+                // 'password' => $password,
+                // 'ip_address' => $ip_address,
+                // 'device_name' => $device_name,
+                // 'state' => $code_status,
+            ];
+            return response()->json([
+                'success' => true,
+                'data' => $data,
+            ]);
+        }
+        else{
+            return response()->json([
+                'success' => true,
+                'message' => 'IP not found!',
+            ]);
+        }
+        
     }//get user by ip
 
     //========================= Other methods ==========================//

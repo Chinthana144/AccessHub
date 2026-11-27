@@ -300,7 +300,7 @@ $(document).ready(function () {
                     // dataType: "dataType",
                     success: function (response) {
                         console.log(response);
-                        var macAddress = response[0]['active-mac-address'];
+                        // var macAddress = response[0]['mac-address'];
 
                         
                     }
