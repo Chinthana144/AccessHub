@@ -127,6 +127,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/general-cli', [AdminController::class, 'generalCli']);
         Route::get('/testing-cli', [AdminController::class, 'testing']);
         Route::get('/getOneUserAdmin', [AdminController::class, 'getOneUser']);
+        Route::get('/getUserByUsername', [AdminController::class, 'getUserByUsername']);
 
         Route::get('/session', [AdminController::class, 'viewSession'])->name('admin.session');
         Route::get('/fetchSession', [AdminController::class, 'fetchSession']);
@@ -166,6 +167,9 @@ Route::middleware('reset')->group(function(){
     Route::get('/getUserManagerUsers', [CodeResetController::class, 'getUserManagerUsers']);
     Route::get('/getOneUser', [CodeResetController::class, 'getOneUser']);
     Route::get('/getSessionByUsername', [CodeResetController::class, "getSessionByUsername"]);
+
+    //search
+    Route::get('/getUserByIP', [CodeResetController::class, 'getUserByIP']);
 
     Route::get('/resetCode', [CodeResetController::class, 'resetCode']);
     Route::get('/disableUser', [CodeResetController::class, 'disableUser']);

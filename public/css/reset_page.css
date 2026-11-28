@@ -54,7 +54,7 @@ body{
     border: none;
     width: 40%;
     margin-top: 10px;
-    opacity: 0.9;
+    opacity: 0.8;
     transition: 0.3s;
 }
 .btn_input:hover{
@@ -143,4 +143,14 @@ body{
 #btn_enable_user{
     background-color: rgb(41, 169, 41);
     color: antiquewhite;
+}
+
+/* ip search */
+#ip_search_row{
+    margin-top: 20px;
+    padding: 5px;
+}
+#btn_search{
+    color: rgb(232, 229, 229);
+    background-color: #3869c5;
 }

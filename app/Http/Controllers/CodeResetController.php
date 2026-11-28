@@ -320,6 +320,59 @@ class CodeResetController extends Controller
         return response()->json($user_data);
     }//get session
 
+    public function getUserByIP(Request $request)
+    {
+        $camp_id = $request->input('camp_id');
+        $ip_address = $request->input('ip_address');
+
+        $camp = Camps::find($camp_id);
+
+        $host = $camp->mikrotikHost;
+        $user = $camp->mikrotikUsername;
+        $pwd = $camp->mikrotikPassword;
+        $port = $camp->mikrotikPort;
+
+        $mikrotikService = new MikrotikService($host, $user, $pwd, $port);
+
+        $ip_data = $mikrotikService->getAddressByIP($ip_address);
+        $mac_data = [];
+        if($ip_data)
+        {
+            $mac_address = $ip_data[0]['mac-address'];
+
+            $mac_data = $mikrotikService->getUserByMac($mac_address);
+            
+            $decode_data = json_decode($mac_data);
+
+            $data = [
+                'code_id' => $mac_data[0]['.id'],
+                // 'code_status' => $mac_data[0][''],
+                // 'profile' => $profile,
+                // 'mac' => $mac,
+                // 'mac_type' => $mac_data['type'],
+                // 'start_time' => $code_login_at,
+                // 'end_time' => $code_expire_at,
+                // 'disabled' => $disabled,
+                // 'username' => $username,
+                // 'password' => $password,
+                // 'ip_address' => $ip_address,
+                // 'device_name' => $device_name,
+                // 'state' => $code_status,
+            ];
+            return response()->json([
+                'success' => true,
+                'data' => $data,
+            ]);
+        }
+        else{
+            return response()->json([
+                'success' => true,
+                'message' => 'IP not found!',
+            ]);
+        }
+        
+    }//get user by ip
+
     //========================= Other methods ==========================//
     public function getMacType(string $mac)
     {
