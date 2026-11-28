@@ -129,16 +129,16 @@ AccessHub demonstrates several real-world application development concepts:
 
 The application integrates multiple external systems:
 
-AccessHub
-   │
-   ├── Google Sheets
-   │      └── Google Apps Script
-   │
-   ├── MikroTik
-   │      └── RouterOS API
-   │
-   └── Flutter Mobile Application
-          └── Laravel Sanctum API
+AccessHub<br>
+   │<br>
+   ├── Google Sheets<br>
+   │      └── Google Apps Script<br>
+   │<br>
+   ├── MikroTik<br>
+   │      └── RouterOS API<br>
+   │<br>
+   └── Flutter Mobile Application<br>
+          └── Laravel Sanctum API<br>
 ### API Authentication
 
 The mobile application uses Laravel Sanctum personal access tokens to securely communicate with protected API endpoints.
